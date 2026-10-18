@@ -1,0 +1,799 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us | CampusConnect Pro</title>
+
+<style>
+:root {
+    --bg: #080d1c;
+    --card: #111a2e;
+    --border: #26334e;
+    --text: #f4f7ff;
+    --muted: #9caac4;
+    --purple: #8872ff;
+    --cyan: #45e5d1;
+    --green: #36dda0;
+    --red: #ff8295;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.container {
+    width: min(1120px, 92%);
+    margin: auto;
+}
+
+header {
+    background: #0d1527;
+    border-bottom: 1px solid var(--border);
+}
+
+nav {
+    min-height: 74px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 14px 0;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: var(--purple);
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.nav-links a {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--cyan);
+}
+
+.menu-toggle {
+    display: none;
+    background: var(--card);
+    color: white;
+    border: 1px solid var(--border);
+    padding: 6px 11px;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.login-btn {
+    background: var(--purple);
+    padding: 9px 13px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.hero {
+    padding: 55px 0 35px;
+    background:
+        radial-gradient(ellipse at 80% 10%, rgba(136,114,255,.16), transparent 45%);
+}
+
+.breadcrumb {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 22px;
+}
+
+.breadcrumb a {
+    color: var(--cyan);
+}
+
+.eyebrow {
+    color: var(--cyan);
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+h1 {
+    font-size: clamp(34px, 5vw, 50px);
+    line-height: 1.2;
+    margin-bottom: 16px;
+}
+
+.gradient {
+    color: #a99aff;
+}
+
+.hero p {
+    max-width: 650px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.contact-layout {
+    display: grid;
+    grid-template-columns: .8fr 1.2fr;
+    gap: 22px;
+    padding: 25px 0 55px;
+    align-items: start;
+}
+
+.info-panel,
+.form-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    padding: 27px;
+}
+
+.panel-title {
+    font-size: 22px;
+    margin-bottom: 9px;
+}
+
+.panel-description {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 25px;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 17px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-icon {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    background: rgba(136,114,255,.14);
+    border-radius: 11px;
+    font-size: 21px;
+}
+
+.info-item h3 {
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.info-item p,
+.info-item a {
+    font-size: 12px;
+    color: var(--muted);
+    overflow-wrap: anywhere;
+}
+
+.info-item a:hover {
+    color: var(--cyan);
+}
+
+.notice {
+    margin-top: 22px;
+    padding: 15px;
+    background: rgba(69,229,209,.06);
+    border: 1px solid rgba(69,229,209,.17);
+    border-radius: 10px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.notice strong {
+    color: var(--cyan);
+}
+
+.form-panel form {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+.field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+label {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: #0b1325;
+    color: var(--text);
+    font: inherit;
+    font-size: 13px;
+    outline: none;
+    transition: border-color .2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--purple);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #7785a1;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 135px;
+}
+
+select option {
+    background: #111a2e;
+}
+
+.submit-btn {
+    border: none;
+    border-radius: 9px;
+    padding: 14px 18px;
+    background: var(--purple);
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.submit-btn:hover {
+    background: #7259f7;
+}
+
+.submit-btn:disabled {
+    opacity: .65;
+    cursor: not-allowed;
+}
+
+.form-message {
+    display: none;
+    padding: 13px;
+    border-radius: 9px;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.form-message.success {
+    display: block;
+    color: var(--green);
+    background: rgba(54,221,160,.08);
+    border: 1px solid rgba(54,221,160,.25);
+}
+
+.form-message.error {
+    display: block;
+    color: var(--red);
+    background: rgba(255,130,149,.08);
+    border: 1px solid rgba(255,130,149,.25);
+}
+
+.faq-section {
+    padding: 15px 0 55px;
+}
+
+.section-label {
+    color: var(--cyan);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.faq-title {
+    font-size: clamp(25px, 4vw, 34px);
+    margin-bottom: 22px;
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.faq-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 21px;
+}
+
+.faq-item h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.faq-item p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+footer {
+    background: #060a15;
+    border-top: 1px solid var(--border);
+    padding: 24px 0;
+}
+
+.footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+footer p,
+.footer-links a {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.footer-links a:hover {
+    color: var(--cyan);
+}
+
+@media (max-width: 950px) {
+    .nav-links {
+        gap: 10px;
+    }
+
+    .nav-links a {
+        font-size: 10px;
+    }
+
+    .contact-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 760px) {
+    .menu-toggle {
+        display: block;
+        margin-left: auto;
+    }
+
+    .login-btn {
+        display: none;
+    }
+
+    .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        gap: 0;
+        order: 3;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .hero {
+        padding: 38px 0 25px;
+    }
+
+    .field-row,
+    .faq-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .info-panel,
+    .form-panel {
+        padding: 20px;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="logo">
+                CampusConnect <span>Pro.</span>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle"
+                type="button" aria-label="Toggle navigation"
+                aria-expanded="false">☰</button>
+
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="events.html">Events</a>
+                <a href="clubs.html">Clubs</a>
+                <a href="calendar.html">Calendar</a>
+                <a href="announcements.html">Notices</a>
+                <a href="achievements.html">Achievements</a>
+                <a href="about.html">About</a>
+                <a href="contact.html" class="active">Contact</a>
+            </div>
+
+            <a href="student/login.html" class="login-btn">
+                Student Login ↗
+            </a>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <div class="container">
+
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / Contact
+            </div>
+
+            <div class="eyebrow">WE ARE HERE TO HELP</div>
+
+            <h1>
+                Let's start a <span class="gradient">conversation.</span>
+            </h1>
+
+            <p>
+                Have a question about campus events, clubs or
+                registrations? Send us a message using the form below.
+            </p>
+
+        </div>
+    </section>
+
+    <section class="container contact-layout">
+
+        <aside class="info-panel">
+            <h2 class="panel-title">Get in touch</h2>
+
+            <p class="panel-description">
+                Choose the appropriate contact option or send a
+                message through the form.
+            </p>
+
+            <div class="info-item">
+                <div class="info-icon">📍</div>
+                <div>
+                    <h3>Campus</h3>
+                    <p>Contact your college administration for campus details.</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon">📧</div>
+                <div>
+                    <h3>Email</h3>
+                    <a href="mailto:campusconnect@example.com">
+                        campusconnect@example.com
+                    </a>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon">🎓</div>
+                <div>
+                    <h3>Student Support</h3>
+                    <p>Questions about event registrations and tickets.</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon">🕒</div>
+                <div>
+                    <h3>Response Time</h3>
+                    <p>Response time depends on your college support team.</p>
+                </div>
+            </div>
+
+            <div class="notice">
+                <strong>Demo project:</strong>
+                The contact information above is sample information.
+                Replace it with your college's real details before publishing.
+            </div>
+        </aside>
+
+        <section class="form-panel">
+            <h2 class="panel-title">Send us a message</h2>
+
+            <p class="panel-description">
+                Fields marked with * are required.
+            </p>
+
+            <form id="contactForm">
+
+                <div class="field-row">
+
+                    <div class="field">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name"
+                            placeholder="Enter your full name"
+                            maxlength="80" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email"
+                            placeholder="you@example.com"
+                            maxlength="120" required>
+                    </div>
+
+                </div>
+
+                <div class="field-row">
+
+                    <div class="field">
+                        <label for="subject">Subject *</label>
+                        <input type="text" id="subject" name="subject"
+                            placeholder="What is this about?"
+                            maxlength="120" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="category">Category *</label>
+                        <select id="category" name="category" required>
+                            <option value="">Select category</option>
+                            <option value="Events">Events</option>
+                            <option value="Clubs">Clubs</option>
+                            <option value="Registration">Registration</option>
+                            <option value="Tickets">Tickets</option>
+                            <option value="Technical Support">Technical Support</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="field">
+                    <label for="message">Your Message *</label>
+                    <textarea id="message" name="message"
+                        placeholder="Write your message here..."
+                        minlength="10" maxlength="2000"
+                        required></textarea>
+                </div>
+
+                <div class="form-message" id="formMessage"
+                    role="status" aria-live="polite"></div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Send Message →
+                </button>
+
+                <p style="color:var(--muted);font-size:11px">
+                    Demo mode: messages are saved only in this browser.
+                    No email is sent automatically.
+                </p>
+
+            </form>
+        </section>
+
+    </section>
+
+    <section class="container faq-section">
+
+        <div class="section-label">QUICK HELP</div>
+
+        <h2 class="faq-title">Frequently asked questions</h2>
+
+        <div class="faq-grid">
+
+            <article class="faq-item">
+                <h3>How can I find campus events?</h3>
+                <p>
+                    Open the Events page to browse the available events
+                    and filter them by club.
+                </p>
+            </article>
+
+            <article class="faq-item">
+                <h3>Where can I find my registrations?</h3>
+                <p>
+                    Sign in through the student section and visit your
+                    dashboard or tickets page.
+                </p>
+            </article>
+
+            <article class="faq-item">
+                <h3>Which clubs are available?</h3>
+                <p>
+                    CampusConnect Pro includes Tech Club, Cultural Club
+                    and Sports Club.
+                </p>
+            </article>
+
+            <article class="faq-item">
+                <h3>Is the contact form connected to email?</h3>
+                <p>
+                    Not in this demo version. A server or email service
+                    is needed to deliver messages to an inbox.
+                </p>
+            </article>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    <div class="container footer-inner">
+
+        <p>
+            © <span id="year"></span> CampusConnect Pro.
+            All rights reserved.
+        </p>
+
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="events.html">Events</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="student/login.html">Student Login</a>
+        </div>
+
+    </div>
+</footer>
+
+<script>
+"use strict";
+
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", function () {
+    const isOpen = navLinks.classList.toggle("open");
+
+    menuToggle.textContent = isOpen ? "✕" : "☰";
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+});
+
+navLinks.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () {
+        navLinks.classList.remove("open");
+        menuToggle.textContent = "☰";
+        menuToggle.setAttribute("aria-expanded", "false");
+    });
+});
+
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+const contactForm = document.getElementById("contactForm");
+const formMessage = document.getElementById("formMessage");
+const submitBtn = document.getElementById("submitBtn");
+
+contactForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    formMessage.className = "form-message";
+    formMessage.textContent = "";
+
+    if (!contactForm.checkValidity()) {
+        contactForm.reportValidity();
+        return;
+    }
+
+    const formData = {
+        id: "MSG-" + Date.now(),
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        subject: document.getElementById("subject").value.trim(),
+        category: document.getElementById("category").value,
+        message: document.getElementById("message").value.trim(),
+        submittedAt: new Date().toISOString()
+    };
+
+    if (
+        formData.name.length < 2 ||
+        formData.subject.length < 2 ||
+        formData.message.length < 10
+    ) {
+        formMessage.className = "form-message error";
+        formMessage.textContent =
+            "Please enter a valid name, subject and message.";
+        return;
+    }
+
+    try {
+        const storageKey = "campusConnectContactMessages";
+        const savedMessages = JSON.parse(
+            localStorage.getItem(storageKey) || "[]"
+        );
+
+        if (!Array.isArray(savedMessages)) {
+            throw new Error("Invalid saved data");
+        }
+
+        savedMessages.push(formData);
+
+        localStorage.setItem(
+            storageKey,
+            JSON.stringify(savedMessages)
+        );
+
+        formMessage.className = "form-message success";
+        formMessage.textContent =
+            "✓ Message saved successfully in this browser! " +
+            "Please note: no email has been sent.";
+
+        contactForm.reset();
+
+    } catch (error) {
+        formMessage.className = "form-message error";
+        formMessage.textContent =
+            "Unable to save the message. Please check browser storage settings and try again.";
+    }
+});
+</script>
+
+</body>
+</html>

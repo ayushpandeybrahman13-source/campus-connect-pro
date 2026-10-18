@@ -1,0 +1,669 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard | CampusConnect Pro</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #080d1b;
+    --card: #111a2e;
+    --border: #26334e;
+    --text: #f4f7ff;
+    --muted: #9caac4;
+    --purple: #8872ff;
+    --green: #36dda0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+header {
+    background: #0d1527;
+    border-bottom: 1px solid var(--border);
+}
+
+nav {
+    width: min(1150px, 92%);
+    min-height: 72px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: var(--purple);
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.nav-links a {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.nav-links a:hover {
+    color: var(--green);
+}
+
+.container {
+    width: min(1150px, 92%);
+    margin: auto;
+    padding: 38px 0 55px;
+}
+
+.welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+}
+
+.eyebrow {
+    color: var(--green);
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+h1 {
+    font-size: clamp(28px, 4vw, 38px);
+    margin: 10px 0;
+    overflow-wrap: anywhere;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 16px;
+    border: 0;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.btn-primary {
+    background: var(--purple);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #7259f7;
+}
+
+.btn-secondary {
+    background: #202b43;
+    color: white;
+}
+
+.btn-danger {
+    background: #351d2a;
+    color: #ffabb8;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 23px;
+    border-radius: 15px;
+}
+
+.stat-label {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+.stat-number {
+    font-size: 30px;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 35px 0 18px;
+}
+
+.section-heading h2 {
+    font-size: 22px;
+}
+
+.profile-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 22px;
+}
+
+.avatar {
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    border-radius: 15px;
+    background: #242044;
+    color: #c5baff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.profile-info h3 {
+    font-size: 17px;
+    margin-bottom: 6px;
+    overflow-wrap: anywhere;
+}
+
+.profile-info p {
+    color: var(--muted);
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.profile-status {
+    color: var(--green);
+    font-size: 11px;
+    background: #12352e;
+    border-radius: 20px;
+    padding: 7px 10px;
+    white-space: nowrap;
+}
+
+.event-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.event-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 22px;
+}
+
+.event-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.event-icon {
+    font-size: 32px;
+}
+
+.club-tag {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 5px 9px;
+    border-radius: 7px;
+    background: #242044;
+    color: #c5baff;
+    font-size: 10px;
+}
+
+.event-card h3 {
+    font-size: 19px;
+    margin-bottom: 8px;
+    overflow-wrap: anywhere;
+}
+
+.event-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.registration-number {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    overflow-wrap: anywhere;
+}
+
+.registration-number strong {
+    color: #c5baff;
+}
+
+.event-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 17px;
+}
+
+.event-actions .btn {
+    flex: 1;
+}
+
+.empty {
+    grid-column: 1 / -1;
+    padding: 42px 20px;
+    text-align: center;
+    background: var(--card);
+    border: 1px dashed var(--border);
+    border-radius: 15px;
+}
+
+.empty-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+.empty h3 {
+    margin-bottom: 10px;
+}
+
+.empty p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+footer {
+    border-top: 1px solid var(--border);
+    padding: 22px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+@media (max-width: 700px) {
+    nav {
+        padding: 15px 0;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .event-list {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-card {
+        grid-template-columns: auto 1fr;
+    }
+
+    .profile-status {
+        grid-column: 1 / -1;
+        justify-self: start;
+    }
+
+    .welcome .btn {
+        width: 100%;
+    }
+}
+
+@media print {
+    header, footer, .no-print {
+        display: none;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    .stat, .profile-card, .event-card {
+        background: white;
+        color: black;
+        border-color: #aaa;
+        break-inside: avoid;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a href="../index.html" class="logo">
+            CampusConnect <span>Pro.</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="../index.html">Home</a>
+            <a href="../events.html">Events</a>
+            <a href="../my-tickets.html">My Tickets</a>
+            <a href="ticket.html">Digital Ticket</a>
+        </div>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="welcome">
+        <div>
+            <div class="eyebrow">STUDENT PORTAL</div>
+            <h1 id="welcomeTitle">Welcome to your dashboard!</h1>
+            <p class="subtitle">
+                Manage your profile and all your campus event registrations.
+            </p>
+        </div>
+
+        <a href="../events.html" class="btn btn-primary">
+            + Explore Events
+        </a>
+    </section>
+
+    <section class="stats">
+        <div class="stat">
+            <span class="stat-label">Total Registrations</span>
+            <strong class="stat-number" id="totalCount">0</strong>
+        </div>
+
+        <div class="stat">
+            <span class="stat-label">Tech Events</span>
+            <strong class="stat-number" id="techCount">0</strong>
+        </div>
+
+        <div class="stat">
+            <span class="stat-label">Cultural & Sports</span>
+            <strong class="stat-number" id="otherCount">0</strong>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-heading">
+            <h2>My Profile</h2>
+        </div>
+
+        <div class="profile-card">
+            <div class="avatar" id="avatar">S</div>
+
+            <div class="profile-info">
+                <h3 id="studentName">Student</h3>
+                <p id="studentEmail">No demo login details saved</p>
+            </div>
+
+            <span class="profile-status" id="loginStatus">
+                Guest Mode
+            </span>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-heading">
+            <h2>My Registered Events</h2>
+            <a href="../my-tickets.html" class="btn btn-secondary">
+                View All Tickets →
+            </a>
+        </div>
+
+        <div class="event-list" id="eventList"></div>
+    </section>
+
+    <section class="no-print" style="margin-top:25px">
+        <button type="button" class="btn btn-secondary" id="logoutButton">
+            Log Out of Demo Session
+        </button>
+    </section>
+
+</main>
+
+<footer>
+    © <span id="year"></span> CampusConnect Pro.
+    Student Event Management Platform
+</footer>
+
+<script>
+"use strict";
+
+const STUDENT_KEY = "campusConnectStudent";
+const REGISTRATIONS_KEY = "campusConnectRegistrations";
+
+const eventDetails = {
+    TECH101: { name: "CodeSprint", club: "Tech", icon: "💻", venue: "Computer Lab" },
+    TECH102: { name: "Web Design Challenge", club: "Tech", icon: "🌐", venue: "Innovation Lab" },
+    TECH103: { name: "Debugging Battle", club: "Tech", icon: "🐞", venue: "Computer Lab" },
+    TECH104: { name: "Tech Quiz", club: "Tech", icon: "🧠", venue: "Seminar Hall" },
+    TECH105: { name: "Project Expo", club: "Tech", icon: "🚀", venue: "Main Auditorium" },
+
+    CULT101: { name: "Dance Fiesta", club: "Cultural", icon: "💃", venue: "Main Stage" },
+    CULT102: { name: "Singing Star", club: "Cultural", icon: "🎤", venue: "Auditorium" },
+    CULT103: { name: "Drama & Acting", club: "Cultural", icon: "🎭", venue: "Auditorium" },
+    CULT104: { name: "Fashion Walk", club: "Cultural", icon: "✨", venue: "Main Stage" },
+    CULT105: { name: "Battle of Bands", club: "Cultural", icon: "🎸", venue: "Open Stage" },
+
+    SPORT101: { name: "Cricket Championship", club: "Sports", icon: "🏏", venue: "Sports Ground" },
+    SPORT102: { name: "Football Cup", club: "Sports", icon: "⚽", venue: "Football Ground" },
+    SPORT103: { name: "Badminton Tournament", club: "Sports", icon: "🏸", venue: "Indoor Court" },
+    SPORT104: { name: "Chess Challenge", club: "Sports", icon: "♟️", venue: "Activity Room" },
+    SPORT105: { name: "Athletics Meet", club: "Sports", icon: "🏃", venue: "Athletics Track" }
+};
+
+const eventList = document.getElementById("eventList");
+
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function(char) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[char];
+    });
+}
+
+function readStorage(key, fallback) {
+    try {
+        const value = JSON.parse(localStorage.getItem(key) || "null");
+        return value === null ? fallback : value;
+    } catch (error) {
+        return fallback;
+    }
+}
+
+function getEventInfo(registration) {
+    const id = String(registration.eventId || "");
+    const known = eventDetails[id] || {};
+
+    return {
+        id: id,
+        name: registration.eventName || known.name || "College Event",
+        club: registration.club || known.club || "Other",
+        icon: known.icon || "🎟️",
+        venue: registration.venue || known.venue || "Check announcements"
+    };
+}
+
+function formatDate(value) {
+    if (!value) return "Not available";
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) return String(value);
+
+    return date.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
+}
+
+function renderDashboard() {
+    const student = readStorage(STUDENT_KEY, null);
+    const allRegistrations = readStorage(REGISTRATIONS_KEY, []);
+
+    const registrations = Array.isArray(allRegistrations)
+        ? allRegistrations
+        : [];
+
+    const studentName = student && student.name
+        ? student.name
+        : "";
+
+    const studentEmail = student && student.email
+        ? String(student.email).toLowerCase()
+        : "";
+
+    document.getElementById("welcomeTitle").textContent =
+        studentName ? "Welcome, " + studentName + "!" : "Welcome to your dashboard!";
+
+    document.getElementById("studentName").textContent =
+        studentName || "Guest Student";
+
+    document.getElementById("studentEmail").textContent =
+        studentEmail || "Login to save your demo profile";
+
+    document.getElementById("avatar").textContent =
+        studentName ? studentName.charAt(0).toUpperCase() : "S";
+
+    document.getElementById("loginStatus").textContent =
+        student ? "Demo Session" : "Guest Mode";
+
+    document.getElementById("totalCount").textContent =
+        registrations.length;
+
+    document.getElementById("techCount").textContent =
+        registrations.filter(function(item) {
+            return getEventInfo(item).club === "Tech";
+        }).length;
+
+    document.getElementById("otherCount").textContent =
+        registrations.filter(function(item) {
+            const club = getEventInfo(item).club;
+            return club === "Cultural" || club === "Sports";
+        }).length;
+
+    if (registrations.length === 0) {
+        eventList.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">🎟️</div>
+                <h3>No registrations yet</h3>
+                <p>
+                    Explore campus events and register to see your tickets here.
+                </p>
+                <a href="../events.html" class="btn btn-primary">
+                    Explore Events →
+                </a>
+            </div>
+        `;
+        return;
+    }
+
+    eventList.innerHTML = registrations.slice().reverse().map(function(item) {
+        const event = getEventInfo(item);
+        const registrationId = String(item.registrationId || "");
+        const registeredOn = formatDate(item.registeredAt);
+
+        return `
+            <article class="event-card">
+                <div class="event-top">
+                    <div class="event-icon">${event.icon}</div>
+                    <span class="club-tag">${escapeHTML(event.club)} CLUB</span>
+                </div>
+
+                <h3>${escapeHTML(event.name)}</h3>
+
+                <p>
+                    Event ID: ${escapeHTML(event.id || "N/A")}<br>
+                    Venue: ${escapeHTML(event.venue)}<br>
+                    Registered on: ${escapeHTML(registeredOn)}
+                </p>
+
+                <div class="registration-number">
+                    Registration ID:
+                    <strong>${escapeHTML(registrationId || "Not available")}</strong>
+                </div>
+
+                <div class="event-actions">
+                    <a class="btn btn-primary"
+                       href="ticket.html?id=${encodeURIComponent(registrationId)}">
+                       View Ticket →
+                    </a>
+                </div>
+            </article>
+        `;
+    }).join("");
+}
+
+document.getElementById("logoutButton").addEventListener("click", function() {
+    const confirmed = confirm(
+        "Log out of this demo session? Your saved event registrations will remain in this browser."
+    );
+
+    if (!confirmed) return;
+
+    localStorage.removeItem(STUDENT_KEY);
+    renderDashboard();
+
+    alert("Demo session ended. Your registrations have not been deleted.");
+});
+
+renderDashboard();
+
+window.addEventListener("storage", function(event) {
+    if (event.key === STUDENT_KEY || event.key === REGISTRATIONS_KEY) {
+        renderDashboard();
+    }
+});
+</script>
+
+</body>
+</html>

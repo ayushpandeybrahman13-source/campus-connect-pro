@@ -1,0 +1,936 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Achievements | CampusConnect Pro</title>
+
+<style>
+:root {
+    --bg: #080d1c;
+    --card: #111a2e;
+    --border: #26334e;
+    --text: #f4f7ff;
+    --muted: #9caac4;
+    --purple: #8872ff;
+    --cyan: #45e5d1;
+    --gold: #ffcc70;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button, input, select {
+    font: inherit;
+}
+
+.container {
+    width: min(1120px, 92%);
+    margin: auto;
+}
+
+/* NAVIGATION */
+
+header {
+    background: #0d1527;
+    border-bottom: 1px solid var(--border);
+}
+
+nav {
+    min-height: 74px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 14px 0;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.logo span {
+    color: var(--purple);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--cyan);
+}
+
+.login-btn {
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: var(--purple);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.menu-toggle {
+    display: none;
+    padding: 6px 11px;
+    background: var(--card);
+    color: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 20px;
+}
+
+/* HERO */
+
+.hero {
+    padding: 55px 0 40px;
+    background:
+        radial-gradient(ellipse at 90% 0%, rgba(136,114,255,.17), transparent 45%),
+        radial-gradient(ellipse at 0% 100%, rgba(69,229,209,.07), transparent 45%);
+}
+
+.breadcrumb {
+    margin-bottom: 22px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.breadcrumb a {
+    color: var(--cyan);
+}
+
+.eyebrow {
+    display: inline-block;
+    padding: 6px 11px;
+    border: 1px solid rgba(69,229,209,.25);
+    border-radius: 30px;
+    background: rgba(69,229,209,.08);
+    color: var(--cyan);
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.hero h1 {
+    font-size: clamp(34px, 5vw, 52px);
+    line-height: 1.2;
+    letter-spacing: -1px;
+    margin-bottom: 15px;
+}
+
+.gradient {
+    color: #a99aff;
+}
+
+.hero p {
+    max-width: 650px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 28px;
+}
+
+.stat {
+    padding: 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+}
+
+.stat strong {
+    display: block;
+    font-size: 27px;
+    color: var(--cyan);
+}
+
+.stat span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* ACHIEVEMENTS */
+
+main {
+    padding-bottom: 65px;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 15px;
+    margin: 32px 0 20px;
+}
+
+.section-heading h2 {
+    font-size: 25px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.results-count {
+    color: var(--cyan);
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.filters {
+    display: grid;
+    grid-template-columns: 1fr 220px auto;
+    gap: 12px;
+    padding: 16px;
+    margin-bottom: 25px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+}
+
+input, select {
+    width: 100%;
+    min-height: 44px;
+    padding: 11px 13px;
+    background: #0c1425;
+    color: white;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    outline: none;
+    font-size: 12px;
+}
+
+input:focus, select:focus {
+    border-color: var(--purple);
+}
+
+select option {
+    background: var(--card);
+}
+
+.reset-btn {
+    padding: 0 15px;
+    background: #202b43;
+    color: white;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.achievement-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.achievement-card {
+    padding: 22px;
+    background: linear-gradient(145deg, #131e35, #0e1628);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: .25s;
+}
+
+.achievement-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--purple);
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.achievement-icon {
+    width: 54px;
+    height: 54px;
+    display: grid;
+    place-items: center;
+    background: rgba(136,114,255,.12);
+    border: 1px solid rgba(136,114,255,.22);
+    border-radius: 14px;
+    font-size: 27px;
+}
+
+.position {
+    padding: 6px 9px;
+    border-radius: 20px;
+    background: rgba(255,204,112,.1);
+    color: var(--gold);
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.category {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 5px 9px;
+    border-radius: 6px;
+    color: var(--cyan);
+    background: rgba(69,229,209,.08);
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.achievement-card h3 {
+    font-size: 18px;
+    line-height: 1.45;
+    margin-bottom: 8px;
+}
+
+.achievement-card p {
+    min-height: 58px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.achievement-details {
+    display: grid;
+    gap: 9px;
+    padding-top: 15px;
+    margin-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+.detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 10px;
+    font-size: 11px;
+}
+
+.detail span {
+    color: var(--muted);
+}
+
+.detail strong {
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.certificate-btn {
+    display: block;
+    width: 100%;
+    padding: 11px;
+    margin-top: 17px;
+    background: rgba(136,114,255,.12);
+    border: 1px solid rgba(136,114,255,.3);
+    border-radius: 9px;
+    color: #c5baff;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.certificate-btn:hover {
+    background: rgba(136,114,255,.24);
+}
+
+.empty {
+    display: none;
+    grid-column: 1 / -1;
+    padding: 45px 20px;
+    text-align: center;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+}
+
+.empty.show {
+    display: block;
+}
+
+.empty div {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.empty p {
+    margin-top: 7px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* FOOTER */
+
+footer {
+    padding: 25px 0;
+    background: #060a15;
+    border-top: 1px solid var(--border);
+}
+
+.footer-inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+footer p, footer a {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+footer a:hover {
+    color: var(--cyan);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+    .achievement-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .nav-links {
+        gap: 10px;
+    }
+
+    .nav-links a {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 760px) {
+    .nav-inner {
+        padding: 12px 0;
+    }
+
+    .menu-toggle {
+        display: block;
+        margin-left: auto;
+    }
+
+    .login-btn {
+        display: none;
+    }
+
+    .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        order: 3;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .filters {
+        grid-template-columns: 1fr;
+    }
+
+    .reset-btn {
+        min-height: 44px;
+    }
+
+    .hero {
+        padding-top: 38px;
+    }
+}
+
+@media (max-width: 520px) {
+    .achievement-grid,
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .section-heading {
+        align-items: start;
+        flex-direction: column;
+    }
+
+    .achievement-card {
+        padding: 18px;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="container nav-inner">
+        <a href="index.html" class="logo">
+            CampusConnect <span>Pro.</span>
+        </a>
+
+        <button class="menu-toggle" id="menuToggle"
+            type="button" aria-label="Toggle navigation"
+            aria-expanded="false">☰</button>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="events.html">Events</a>
+            <a href="clubs.html">Clubs</a>
+            <a href="calendar.html">Calendar</a>
+            <a href="announcements.html">Notices</a>
+            <a href="achievements.html" class="active">Achievements</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <a href="student/login.html" class="login-btn">Student Login ↗</a>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> / Achievements
+        </div>
+
+        <div class="eyebrow">CELEBRATING STUDENT SUCCESS</div>
+
+        <h1>
+            Big Dreams.<br>
+            <span class="gradient">Real Achievements.</span>
+        </h1>
+
+        <p>
+            Celebrate student excellence in technology, culture and sports.
+            Explore competition results, outstanding performances and
+            achievements from our campus community.
+        </p>
+
+        <div class="stats">
+            <div class="stat">
+                <strong id="totalAchievements">0</strong>
+                <span>Achievements listed</span>
+            </div>
+
+            <div class="stat">
+                <strong id="goldCount">0</strong>
+                <span>First-place finishes</span>
+            </div>
+
+            <div class="stat">
+                <strong id="categoryCount">0</strong>
+                <span>Categories</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<main class="container">
+
+    <div class="section-heading">
+        <div>
+            <h2>Student Hall of Fame 🏆</h2>
+            <p>Discover achievements across our three campus clubs.</p>
+        </div>
+
+        <span class="results-count" id="resultsCount">0 achievements</span>
+    </div>
+
+    <section class="filters">
+        <input type="search" id="searchInput"
+            placeholder="🔍 Search student, event or achievement..."
+            aria-label="Search achievements">
+
+        <select id="categoryFilter" aria-label="Filter achievements">
+            <option value="all">All Categories</option>
+            <option value="Tech Club">Tech Club</option>
+            <option value="Cultural Club">Cultural Club</option>
+            <option value="Sports Club">Sports Club</option>
+        </select>
+
+        <button class="reset-btn" id="resetBtn" type="button">
+            ↻ Reset Filters
+        </button>
+    </section>
+
+    <section class="achievement-grid" id="achievementGrid"></section>
+
+    <div class="empty" id="emptyState">
+        <div>🔎</div>
+        <h3>No achievements found</h3>
+        <p>Try another keyword or select a different category.</p>
+    </div>
+
+</main>
+
+<footer>
+    <div class="container footer-inner">
+        <p>
+            © <span id="year"></span> CampusConnect Pro.
+            Student Achievement Portal.
+        </p>
+
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="events.html">Events</a>
+            <a href="announcements.html">Notices</a>
+            <a href="my-tickets.html">My Tickets</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+"use strict";
+
+/* MOBILE NAVIGATION */
+
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", function () {
+    const isOpen = navLinks.classList.toggle("open");
+    menuToggle.textContent = isOpen ? "✕" : "☰";
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+});
+
+navLinks.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () {
+        navLinks.classList.remove("open");
+        menuToggle.textContent = "☰";
+        menuToggle.setAttribute("aria-expanded", "false");
+    });
+});
+
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+/* DEMONSTRATION ACHIEVEMENT DATA */
+
+const achievements = [
+    {
+        id: 1,
+        student: "Aarav Sharma",
+        title: "Inter-College Coding Challenge",
+        category: "Tech Club",
+        position: "1st Place",
+        icon: "💻",
+        event: "CodeSprint",
+        date: "2026-09-12",
+        description: "Recognised for problem-solving, programming skills and creative technical thinking."
+    },
+    {
+        id: 2,
+        student: "Priya Verma",
+        title: "Web Design Competition",
+        category: "Tech Club",
+        position: "2nd Place",
+        icon: "🌐",
+        event: "Web Design Challenge",
+        date: "2026-08-20",
+        description: "Created a responsive website with a clear layout and user-friendly experience."
+    },
+    {
+        id: 3,
+        student: "Rohan Gupta",
+        title: "Innovation Project Showcase",
+        category: "Tech Club",
+        position: "1st Place",
+        icon: "🚀",
+        event: "Project Expo",
+        date: "2026-07-18",
+        description: "Presented an innovative project concept focused on solving a practical problem."
+    },
+    {
+        id: 4,
+        student: "Ananya Singh",
+        title: "Campus Dance Competition",
+        category: "Cultural Club",
+        position: "1st Place",
+        icon: "💃",
+        event: "Dance Fiesta",
+        date: "2026-09-05",
+        description: "Delivered an energetic dance performance highlighting creativity and stage presence."
+    },
+    {
+        id: 5,
+        student: "Meera Patel",
+        title: "Solo Singing Competition",
+        category: "Cultural Club",
+        position: "2nd Place",
+        icon: "🎤",
+        event: "Singing Star",
+        date: "2026-08-11",
+        description: "Recognised for musical expression, vocal performance and confidence on stage."
+    },
+    {
+        id: 6,
+        student: "Kabir Khan",
+        title: "College Drama Festival",
+        category: "Cultural Club",
+        position: "1st Place",
+        icon: "🎭",
+        event: "Drama & Acting",
+        date: "2026-07-22",
+        description: "Showcased expressive acting and teamwork in a student theatre performance."
+    },
+    {
+        id: 7,
+        student: "Ishaan Verma",
+        title: "Inter-College Cricket Tournament",
+        category: "Sports Club",
+        position: "1st Place",
+        icon: "🏏",
+        event: "Cricket Championship",
+        date: "2026-09-16",
+        description: "Contributed to strong team performance through discipline and match preparation."
+    },
+    {
+        id: 8,
+        student: "Sana Ali",
+        title: "Badminton Championship",
+        category: "Sports Club",
+        position: "2nd Place",
+        icon: "🏸",
+        event: "Badminton Tournament",
+        date: "2026-08-24",
+        description: "Demonstrated excellent court movement, focus and competitive spirit."
+    },
+    {
+        id: 9,
+        student: "Aditya Mishra",
+        title: "Campus Chess Challenge",
+        category: "Sports Club",
+        position: "1st Place",
+        icon: "♟️",
+        event: "Chess Challenge",
+        date: "2026-07-09",
+        description: "Earned recognition for strategic thinking and consistent performance."
+    }
+];
+
+/* HELPER FUNCTIONS */
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function (character) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[character];
+    });
+}
+
+function formatDate(value) {
+    const date = new Date(value + "T00:00:00");
+
+    if (Number.isNaN(date.getTime())) {
+        return "Not specified";
+    }
+
+    return date.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
+}
+
+/* ELEMENTS */
+
+const grid = document.getElementById("achievementGrid");
+const searchInput = document.getElementById("searchInput");
+const categoryFilter = document.getElementById("categoryFilter");
+const emptyState = document.getElementById("emptyState");
+
+/* STATISTICS */
+
+document.getElementById("totalAchievements").textContent =
+    achievements.length;
+
+document.getElementById("goldCount").textContent =
+    achievements.filter(function (item) {
+        return item.position === "1st Place";
+    }).length;
+
+document.getElementById("categoryCount").textContent =
+    new Set(achievements.map(function (item) {
+        return item.category;
+    })).size;
+
+/* RENDER ACHIEVEMENTS */
+
+function renderAchievements() {
+    const query = searchInput.value.trim().toLowerCase();
+    const selectedCategory = categoryFilter.value;
+
+    const filtered = achievements.filter(function (item) {
+        const text = [
+            item.student,
+            item.title,
+            item.category,
+            item.position,
+            item.event,
+            item.description
+        ].join(" ").toLowerCase();
+
+        const matchesSearch = text.includes(query);
+
+        const matchesCategory =
+            selectedCategory === "all" ||
+            item.category === selectedCategory;
+
+        return matchesSearch && matchesCategory;
+    });
+
+    document.getElementById("resultsCount").textContent =
+        filtered.length +
+        (filtered.length === 1 ? " achievement" : " achievements");
+
+    grid.innerHTML = "";
+    emptyState.classList.toggle("show", filtered.length === 0);
+
+    filtered.forEach(function (item) {
+        const card = document.createElement("article");
+        card.className = "achievement-card";
+
+        card.innerHTML = `
+            <div class="card-top">
+                <div class="achievement-icon">
+                    ${escapeHTML(item.icon)}
+                </div>
+                <span class="position">
+                    🏆 ${escapeHTML(item.position)}
+                </span>
+            </div>
+
+            <span class="category">
+                ${escapeHTML(item.category)}
+            </span>
+
+            <h3>${escapeHTML(item.title)}</h3>
+
+            <p>${escapeHTML(item.description)}</p>
+
+            <div class="achievement-details">
+                <div class="detail">
+                    <span>Student</span>
+                    <strong>${escapeHTML(item.student)}</strong>
+                </div>
+
+                <div class="detail">
+                    <span>Competition</span>
+                    <strong>${escapeHTML(item.event)}</strong>
+                </div>
+
+                <div class="detail">
+                    <span>Date</span>
+                    <strong>${escapeHTML(formatDate(item.date))}</strong>
+                </div>
+            </div>
+
+            <button class="certificate-btn"
+                type="button"
+                data-achievement-id="${item.id}">
+                🏅 View Achievement Details
+            </button>
+        `;
+
+        grid.appendChild(card);
+    });
+}
+
+/* ACHIEVEMENT DETAILS */
+
+grid.addEventListener("click", function (event) {
+    const button = event.target.closest("[data-achievement-id]");
+
+    if (!button) return;
+
+    const item = achievements.find(function (achievement) {
+        return achievement.id === Number(button.dataset.achievementId);
+    });
+
+    if (!item) return;
+
+    alert(
+        "STUDENT ACHIEVEMENT\n\n" +
+        "Student: " + item.student + "\n" +
+        "Achievement: " + item.title + "\n" +
+        "Club: " + item.category + "\n" +
+        "Competition: " + item.event + "\n" +
+        "Position: " + item.position + "\n" +
+        "Date: " + formatDate(item.date) +
+        "\n\n" + item.description +
+        "\n\nNote: This is sample demonstration data. It is not an official certificate."
+    );
+});
+
+/* SEARCH, FILTER AND RESET */
+
+searchInput.addEventListener("input", renderAchievements);
+categoryFilter.addEventListener("change", renderAchievements);
+
+document.getElementById("resetBtn").addEventListener("click", function () {
+    searchInput.value = "";
+    categoryFilter.value = "all";
+    renderAchievements();
+});
+
+/* INITIALISE */
+
+renderAchievements();
+</script>
+
+</body>
+</html>

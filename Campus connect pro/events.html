@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Explore Events | CampusConnect Pro</title>
+
+    <meta name="description"
+          content="Discover college events, workshops, coding competitions and cultural activities with CampusConnect Pro.">
+
+    <meta name="theme-color" content="#080d1c">
+
+    <style>
+        :root {
+            --bg: #080d1c;
+            --surface: #10182a;
+            --surface2: #151f35;
+            --primary: #7c5cff;
+            --cyan: #45e5d1;
+            --text: #f8fafc;
+            --muted: #9ba8bf;
+            --border: rgba(255,255,255,.09);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button, input, select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .container {
+            width: min(1160px, 92%);
+            margin: auto;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(8,13,28,.94);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            min-height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            color: #080d1c;
+            background: linear-gradient(135deg, #7c5cff, #45e5d1);
+        }
+
+        .brand-name span {
+            color: #a99aff;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #bdc8db;
+            font-size: 12px;
+            font-weight: 700;
+            transition: color .2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--cyan);
+        }
+
+        .nav-button {
+            display: inline-block;
+            padding: 11px 16px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #7c5cff, #5940d4);
+            color: white;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .menu-toggle {
+            display: none;
+            padding: 8px 12px;
+            background: var(--surface);
+            color: white;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            font-size: 20px;
+        }
+
+        /* HERO */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 75px 0 55px;
+            background:
+                radial-gradient(ellipse at 90% 0%, rgba(124,92,255,.18), transparent 45%),
+                radial-gradient(ellipse at 0% 70%, rgba(69,229,209,.07), transparent 40%);
+        }
+
+        .breadcrumb {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 25px;
+        }
+
+        .breadcrumb a {
+            color: var(--cyan);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 7px 12px;
+            border: 1px solid rgba(69,229,209,.2);
+            border-radius: 30px;
+            background: rgba(69,229,209,.07);
+            color: var(--cyan);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 17px;
+        }
+
+        .hero h1 {
+            max-width: 800px;
+            font-size: clamp(38px, 5vw, 58px);
+            line-height: 1.15;
+            letter-spacing: -1.7px;
+            margin-bottom: 18px;
+        }
+
+        .gradient {
+            background: linear-gradient(90deg, #a99aff, #45e5d1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 650px;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.9;
+        }
+
+        /* STATS */
+
+        .stats {
+            padding: 0 0 35px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background: rgba(255,255,255,.025);
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            overflow: hidden;
+        }
+
+        .stat {
+            padding: 22px;
+            text-align: center;
+            border-right: 1px solid var(--border);
+        }
+
+        .stat:last-child {
+            border-right: none;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 27px;
+            color: white;
+        }
+
+        .stat span {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        /* EVENT SECTION */
+
+        .events-section {
+            padding: 45px 0 90px;
+        }
+
+        .section-heading {
+            margin-bottom: 30px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(27px, 3vw, 38px);
+            margin-bottom: 8px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* FILTERS */
+
+        .filter-panel {
+            display: grid;
+            grid-template-columns: minmax(200px, 1fr) 200px 180px auto;
+            gap: 12px;
+            padding: 17px;
+            margin-bottom: 25px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 11px;
+            color: var(--muted);
+            font-size: 17px;
+        }
+
+        .filter-panel input,
+        .filter-panel select {
+            width: 100%;
+            min-width: 0;
+            height: 44px;
+            padding: 0 12px;
+            outline: none;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: #0b1222;
+            color: white;
+            font-size: 12px;
+        }
+
+        .filter-panel input {
+            padding-left: 39px;
+        }
+
+        .filter-panel input:focus,
+        .filter-panel select:focus {
+            border-color: var(--primary);
+        }
+
+        .filter-panel select option {
+            background: #10182a;
+        }
+
+        .reset-button {
+            padding: 0 16px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--surface2);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .reset-button:hover {
+            border-color: var(--primary);
+        }
+
+        .results-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .results-line strong {
+            color: white;
+        }
+
+        /* EVENT CARDS */
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .event-card {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            overflow: hidden;
+            background: linear-gradient(145deg, #111a2d, #0d1425);
+            border: 1px solid var(--border);
+            border-radius: 19px;
+            transition: transform .25s, border-color .25s;
+            animation: appear .35s ease both;
+        }
+
+        .event-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(124,92,255,.65);
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .event-art {
+            min-height: 165px;
+            position: relative;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+        }
+
+        .event-art::before {
+            content: "";
+            position: absolute;
+            width: 145px;
+            height: 145px;
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 20px rgba(255,255,255,.025),
+                0 0 0 40px rgba(255,255,255,.02);
+        }
+
+        .event-emoji {
+            position: relative;
+            z-index: 1;
+            font-size: 55px;
+            transition: transform .25s;
+        }
+
+        .event-card:hover .event-emoji {
+            transform: scale(1.13) rotate(5deg);
+        }
+
+        .purple {
+            background: linear-gradient(135deg, #35235e, #6847c9);
+        }
+
+        .cyan {
+            background: linear-gradient(135deg, #164e63, #167f83);
+        }
+
+        .pink {
+            background: linear-gradient(135deg, #702c61, #bd4e91);
+        }
+
+        .blue {
+            background: linear-gradient(135deg, #203b78, #426fd2);
+        }
+
+        .green {
+            background: linear-gradient(135deg, #205c4a, #369b78);
+        }
+
+        .orange {
+            background: linear-gradient(135deg, #733b2a, #c56a36);
+        }
+
+        .date-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 2;
+            padding: 7px 10px;
+            border-radius: 8px;
+            background: rgba(8,13,28,.82);
+            border: 1px solid rgba(255,255,255,.12);
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .event-content {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .category {
+            color: var(--cyan);
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+        }
+
+        .event-content h3 {
+            margin: 9px 0;
+            font-size: 19px;
+            line-height: 1.4;
+        }
+
+        .description {
+            min-height: 60px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+            margin-bottom: 17px;
+        }
+
+        .event-details {
+            display: grid;
+            gap: 9px;
+            margin-bottom: 20px;
+            color: #c6d0e0;
+            font-size: 11px;
+        }
+
+        .event-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+
+        .event-status {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .register-button {
+            padding: 10px 12px;
+            border: none;
+            border-radius: 9px;
+            background: linear-gradient(135deg, #7c5cff, #5940d4);
+            color: white;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .register-button:hover {
+            filter: brightness(1.15);
+        }
+
+        .empty-state {
+            display: none;
+            padding: 50px 20px;
+            text-align: center;
+            border: 1px dashed var(--border);
+            border-radius: 16px;
+            color: var(--muted);
+        }
+
+        .empty-state .empty-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .empty-state h3 {
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            padding: 28px 0;
+            border-top: 1px solid var(--border);
+            background: #060a15;
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer p {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .footer-links a:hover {
+            color: var(--cyan);
+        }
+
+        /* TOAST */
+
+        .toast-container {
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            z-index: 999;
+            display: grid;
+            gap: 10px;
+        }
+
+        .toast {
+            max-width: 330px;
+            padding: 14px 17px;
+            background: #18243a;
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,.3);
+            font-size: 12px;
+            animation: appear .2s ease;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 11px;
+            }
+
+            .event-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .filter-panel {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .search-wrap {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .nav-inner {
+                flex-wrap: wrap;
+                padding: 12px 0;
+            }
+
+            .menu-toggle {
+                display: block;
+                margin-left: auto;
+            }
+
+            .nav-button {
+                display: none;
+            }
+
+            .nav-links {
+                display: none;
+                order: 3;
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 12px;
+                border-radius: 8px;
+                font-size: 13px;
+            }
+
+            .nav-links a:hover {
+                background: rgba(255,255,255,.04);
+            }
+
+            .hero {
+                padding: 50px 0 40px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .stat:last-child {
+                border-bottom: none;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .hero h1 {
+                font-size: 39px;
+            }
+
+            .hero p {
+                font-size: 13px;
+            }
+
+            .event-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .search-wrap {
+                grid-column: auto;
+            }
+
+            .reset-button {
+                min-height: 43px;
+            }
+
+            .results-line {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <header class="navbar">
+        <div class="container nav-inner">
+
+            <a href="index.html" class="brand">
+                <span class="brand-icon">✦</span>
+                <span class="brand-name">
+                    CampusConnect <span>Pro</span>
+                </span>
+            </a>
+
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                type="button"
+                aria-label="Toggle navigation"
+                aria-expanded="false"
+            >☰</button>
+
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="events.html" class="active">Events</a>
+                <a href="clubs.html">Clubs</a>
+                <a href="calendar.html">Calendar</a>
+                <a href="announcements.html">Notices</a>
+                <a href="achievements.html">Achievements</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <a href="student/login.html" class="nav-button">
+                Student Login ↗
+            </a>
+
+        </div>
+    </header>
+
+    <main>
+
+        <!-- PAGE HERO -->
+        <section class="hero">
+            <div class="container">
+
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a> / Events
+                </div>
+
+                <div class="hero-badge">
+                    ✦ DISCOVER · PARTICIPATE · ACHIEVE
+                </div>
+
+                <h1>
+                    Discover Your Next<br>
+                    <span class="gradient">Campus Experience.</span>
+                </h1>
+
+                <p>
+                    Explore coding competitions, cultural festivals, workshops,
+                    sports activities and academic events. Find your next opportunity
+                    and become a part of campus life.
+                </p>
+
+            </div>
+        </section>
+
+        <!-- EVENT STATISTICS -->
+        <section class="stats">
+            <div class="container">
+
+                <div class="stats-grid">
+
+                    <div class="stat">
+                        <strong id="totalEvents">06</strong>
+                        <span>Events Listed</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong id="totalCategories">06</strong>
+                        <span>Event Categories</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong id="totalRegistrations">00</strong>
+                        <span>Demo Registrations</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- EVENTS LIST -->
+        <section class="events-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <h2>Explore All Events <span class="gradient">✦</span></h2>
+                    <p>
+                        Search events, choose a category and find activities
+                        that interest you.
+                    </p>
+                </div>
+
+                <!-- SEARCH AND FILTERS -->
+                <div class="filter-panel">
+
+                    <div class="search-wrap">
+                        <span class="search-icon">⌕</span>
+
+                        <input
+                            type="search"
+                            id="eventSearch"
+                            placeholder="Search event, venue or organizer..."
+                            aria-label="Search events"
+                        >
+                    </div>
+
+                    <select id="categoryFilter" aria-label="Filter by category">
+                        <option value="all">All Categories</option>
+                        <option value="technology">Technology</option>
+                        <option value="competition">Competition</option>
+                        <option value="cultural">Cultural</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="sports">Sports</option>
+                        <option value="academic">Academic</option>
+                    </select>
+
+                    <select id="sortFilter" aria-label="Sort events">
+                        <option value="date">Sort: Event Date</option>
+                        <option value="name">Sort: Name A–Z</option>
+                    </select>
+
+                    <button class="reset-button" id="resetFilters" type="button">
+                        ↺ Reset
+                    </button>
+
+                </div>
+
+                <div class="results-line">
+                    <span>
+                        Showing <strong id="resultsCount">6</strong> events
+                    </span>
+
+                    <span>Explore. Participate. Make memories.</span>
+                </div>
+
+                <!-- EVENT CARDS -->
+                <div class="event-grid" id="eventsContainer">
+
+                    <article class="event-card"
+                        data-category="technology"
+                        data-name="innovation and tech fest"
+                        data-date="2026-11-15"
+                        data-search="innovation tech fest technology auditorium student ideas">
+
+                        <div class="event-art purple">
+                            <span class="date-badge">15 NOV 2026</span>
+                            <span class="event-emoji">🚀</span>
+                        </div>
+
+                        <div class="event-content">
+                            <span class="category">Technology</span>
+
+                            <h3>Innovation & Tech Fest</h3>
+
+                            <p class="description">
+                                Discover new technologies, showcase creative ideas
+                                and explore the future of innovation.
+                            </p>
+
+                            <div class="event-details">
+                                <span>📍 Main Auditorium</span>
+                                <span>🕒 10:00 AM onwards</span>
+                                <span>👥 Open to students</span>
+                            </div>
+
+                            <div class="event-bottom">
+                                <span class="event-status">Registration demo</span>
+
+                                <button
+                                    class="register-button"
+                                    type="button"
+                                    data-event-id="EVT1001"
+                                >Register →</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="event-card"
+                        data-category="competition"
+                        data-name="coding championship"
+                        data-date="2026-11-20"
+                        data-search="coding championship programming debugging computer lab">
+
+                        <div class="event-art cyan">
+                            <span class="date-badge">20 NOV 2026</span>
+                            <span class="event-emoji">💻</span>
+                        </div>
+
+                        <div class="event-content">
+                            <span class="category">Competition</span>
+
+                            <h3>Coding Championship</h3>
+
+                            <p class="description">
+                                Challenge your programming knowledge and
+                                problem-solving skills in a coding competition.
+                            </p>
+
+                            <div class="event-details">
+                                <span>📍 Computer Lab</span>
+                                <span>🕒 11:00 AM onwards</span>
+                                <span>👥 Individual participation</span>
+                            </div>
+
+                            <div class="event-bottom">
+                                <span class="event-status">Test your skills</span>
+
+                                <button
+                                    class="register-button"
+                                    type="button"
+                                    data-event-id="EVT1002"
+                                >Register →</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="event-card"
+                        data-category="cultural"
+                        data-name="rhythm cultural night"
+                        data-date="2026-11-25"
+                        data-search="rhythm cultural night music dance singing stage">
+
+                        <div class="event-art pink">
+                            <span class="date-badge">25 NOV 2026</span>
+                            <span class="event-emoji">🎤</span>
+                        </div>
+
+                        <div class="event-content">
+                            <span class="category">Cultural</span>
+
+                            <h3>Rhythm Cultural Night</h3>
+
+                            <p class="description">
+                                Celebrate music, dance, singing and the
+                                extraordinary talents of your campus.
+                            </p>
+
+                            <div class="event-details">
+                                <span>📍 Open Stage</span>
+                                <span>🕒 4:00 PM onwards</span>
+                                <span>👥 Performers and audience</span>
+                            </div>
+
+                            <div class="event-bottom">
+                                <span class="event-status">Celebrate together</span>
+
+                                <button
+                                    class="register-button"
+                                    type="button"
+                                    data-event-id="EVT1003"
+                                >Register →</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="event-card"
+                        data-category="workshop"
+                        data-name="web development workshop"
+                        data-date="2026-12-02"
+                        data-search="web development workshop html css javascript innovation lab">
+
+                        <div class="event-art blue">
+                            <span class="date-badge">02 DEC 2026</span>
+                            <span class="event-emoji">🌐</span>
+                        </div>
+
+                        <div class="event-content">
+                            <span class="category">Workshop</span>
+
+                            <h3>Web Development Workshop</h3>
+
+                            <p class="description">
+                                Explore web development fundamentals and learn
+                                how websites are created.
+                            </p>
+
+                            <div class="event-details">
+                                <span>📍 Innovation Lab</span>
+                                <span>🕒 10:30 AM onwards</span>
+                                <span>👥 Beginner friendly</span>
+                            </div>
+
+                            <div class="event-bottom">
+                                <span class="event-status">Learn by building</span>
+
+                                <button
+                                    class="register-button"
+                                    type="button"
+                                    data-event-id="EVT1004"
+                                >Register →</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="event-card"
+                        data-category="sports"
+                        data-name="campus sports challenge"
+                        data-date="2026-12-08"
+                        data-search="campus sports challenge athletics teamwork outdoor games">
+
+                        <div class="event-art green">
+                            <span class="date-badge">08 DEC 2026</span>
+                            <span class="event-emoji">🏆</span>
+                        </div>
+
+                        <div class="event-content">
+                            <span class="category">Sports</span>
+
+                            <h3>Campus Sports Challenge</h3>
+
+                            <p class="description">
+                                Bring your energy, teamwork and competitive
+                                spirit to exciting campus sports activities.
+                            </p>
+
+                            <div class="event-details">
+                                <span>📍 College Sports Ground</span>
+                                <span>🕒 9:00 AM onwards</span>
+                                <span>👥 Team activities</span>
+                            </div>
+
+                            <div class="event-bottom">
+                                <span class="event-status">Team spirit matters</span>
+
+                                <button
+                                    class="register-button"
+                                    type="button"
+                                    data-event-id="EVT1005"
+                                >Register →</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="event-card"
+                        data-category="academic"
+                        data-name="career and skills seminar"
+                        data-date="2026-12-12"
+                        data-search="career skills seminar professional guidance academic">
+
+                        <div class="event-art orange">
+                            <span class="date-badge">12 DEC 2026</span>
+                            <span class="event-emoji">🎓</span>
+                        </div>
+
+                        <div class="event-content">
+                            <span class="category">Academic</span>
+
+                            <h3>Career & Skills Seminar</h3>
+
+                            <p class="description">
+                                Explore career opportunities, professional skills
+                                and pathways for your future.
+                            </p>
+
+                            <div class="event-details">
+                                <span>📍 Seminar Hall</span>
+                                <span>🕒 11:30 AM onwards</span>
+                                <span>👥 Student focused</span>
+                            </div>
+
+                            <div class="event-bottom">
+                                <span class="event-status">Invest in your future</span>
+
+                                <button
+                                    class="register-button"
+                                    type="button"
+                                    data-event-id="EVT1006"
+                                >Register →</button>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+                <!-- NO RESULTS -->
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">🔎</div>
+                    <h3>No events found</h3>
+                    <p>Try another keyword or select a different category.</p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-inner">
+
+            <p>
+                © <span id="currentYear"></span> CampusConnect Pro.
+                College Event Management Demo.
+            </p>
+
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="clubs.html">Clubs</a>
+                <a href="my-tickets.html">My Tickets</a>
+                <a href="contact.html">Contact</a>
+                <a href="admin/login.html">Admin Portal</a>
+            </div>
+
+        </div>
+    </footer>
+
+    <div
+        class="toast-container"
+        id="toastContainer"
+        aria-live="polite"
+    ></div>
+
+    <script>
+        "use strict";
+
+        /* MOBILE MENU */
+
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        menuToggle.addEventListener("click", function () {
+            const open = navLinks.classList.toggle("open");
+
+            menuToggle.setAttribute("aria-expanded", String(open));
+            menuToggle.textContent = open ? "✕" : "☰";
+        });
+
+        navLinks.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                navLinks.classList.remove("open");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.textContent = "☰";
+            });
+        });
+
+        /* CURRENT YEAR */
+
+        document.getElementById("currentYear").textContent =
+            new Date().getFullYear();
+
+        /* ELEMENTS */
+
+        const searchInput = document.getElementById("eventSearch");
+        const categorySelect = document.getElementById("categoryFilter");
+        const sortSelect = document.getElementById("sortFilter");
+        const resetButton = document.getElementById("resetFilters");
+
+        const eventsContainer = document.getElementById("eventsContainer");
+        const emptyState = document.getElementById("emptyState");
+        const resultsCount = document.getElementById("resultsCount");
+
+        /* SEARCH, CATEGORY FILTER AND SORT */
+
+        function filterEvents() {
+            const search = searchInput.value.trim().toLowerCase();
+            const category = categorySelect.value;
+            const sortMode = sortSelect.value;
+
+            const cards = Array.from(
+                eventsContainer.querySelectorAll(".event-card")
+            );
+
+            cards.sort(function (a, b) {
+                if (sortMode === "name") {
+                    return a.dataset.name.localeCompare(b.dataset.name);
+                }
+
+                return a.dataset.date.localeCompare(b.dataset.date);
+            });
+
+            cards.forEach(function (card) {
+                eventsContainer.appendChild(card);
+            });
+
+            let visible = 0;
+
+            cards.forEach(function (card) {
+                const searchableText = (
+                    card.textContent + " " + card.dataset.search
+                ).toLowerCase();
+
+                const matchesSearch = searchableText.includes(search);
+
+                const matchesCategory =
+                    category === "all" ||
+                    card.dataset.category === category;
+
+                const shouldShow = matchesSearch && matchesCategory;
+
+                card.style.display = shouldShow ? "flex" : "none";
+
+                if (shouldShow) {
+                    visible++;
+                }
+            });
+
+            resultsCount.textContent = visible;
+
+            emptyState.style.display =
+                visible === 0 ? "block" : "none";
+        }
+
+        searchInput.addEventListener("input", filterEvents);
+        categorySelect.addEventListener("change", filterEvents);
+        sortSelect.addEventListener("change", filterEvents);
+
+        resetButton.addEventListener("click", function () {
+            searchInput.value = "";
+            categorySelect.value = "all";
+            sortSelect.value = "date";
+
+            filterEvents();
+        });
+
+        /* TOAST */
+
+        function showToast(message) {
+            const container = document.getElementById("toastContainer");
+            const toast = document.createElement("div");
+
+            toast.className = "toast";
+            toast.textContent = message;
+
+            container.appendChild(toast);
+
+            setTimeout(function () {
+                toast.remove();
+            }, 3500);
+        }
+
+        /* READ CURRENT STUDENT */
+
+        function getCurrentStudent() {
+            try {
+                return JSON.parse(
+                    localStorage.getItem("campusconnect_current_user") || "null"
+                );
+            } catch (error) {
+                return null;
+            }
+        }
+
+        /* REGISTRATION */
+
+        document.querySelectorAll(".register-button").forEach(function (button) {
+            button.addEventListener("click", function () {
+                const student = getCurrentStudent();
+
+                if (!student || !student.email) {
+                    const continueToLogin = confirm(
+                        "Student login required.\n\nPress OK to open the student login page."
+                    );
+
+                    if (continueToLogin) {
+                        window.location.href = "student/login.html";
+                    }
+
+                    return;
+                }
+
+                /*
+                  This page uses a local demo registration flow.
+                  It stores registrations in this browser only.
+                */
+
+                let registrations = [];
+
+                try {
+                    const stored = JSON.parse(
+                        localStorage.getItem("campusconnect_registrations") || "[]"
+                    );
+
+                    if (Array.isArray(stored)) {
+                        registrations = stored;
+                    }
+                } catch (error) {
+                    registrations = [];
+                }
+
+                const eventId = button.dataset.eventId;
+
+                const alreadyRegistered = registrations.some(function (registration) {
+                    return (
+                        registration.eventId === eventId &&
+                        String(registration.email || "").toLowerCase() ===
+                            String(student.email).toLowerCase()
+                    );
+                });
+
+                if (alreadyRegistered) {
+                    showToast("You are already registered for this event.");
+                    return;
+                }
+
+                const card = button.closest(".event-card");
+
+                const registration = {
+                    id: "REG" + Date.now(),
+                    ticketCode: "CC" + Math.random()
+                        .toString(36)
+                        .slice(2, 9)
+                        .toUpperCase(),
+
+                    eventId: eventId,
+
+                    eventName: card.querySelector("h3").textContent,
+
+                    name: student.name || student.fullName || "Student",
+
+                    email: student.email,
+
+                    date: card.dataset.date,
+
+                    venue: card.querySelector(".event-details span")
+                        .textContent.replace("📍", "").trim(),
+
+                    status: "confirmed",
+
+                    registeredAt: new Date().toISOString()
+                };
+
+                registrations.push(registration);
+
+                try {
+                    localStorage.setItem(
+                        "campusconnect_registrations",
+                        JSON.stringify(registrations)
+                    );
+
+                    updateRegistrationStats();
+
+                    showToast(
+                        "Registration successful! Ticket: " + registration.ticketCode
+                    );
+
+                    button.textContent = "Registered ✓";
+                    button.disabled = true;
+                    button.style.opacity = ".7";
+
+                } catch (error) {
+                    showToast(
+                        "Could not save registration. Please check browser storage."
+                    );
+                }
+            });
+        });
+
+        /* UPDATE LOCAL DEMO STATISTICS */
+
+        function updateRegistrationStats() {
+            let registrations = [];
+
+            try {
+                const stored = JSON.parse(
+                    localStorage.getItem("campusconnect_registrations") || "[]"
+                );
+
+                if (Array.isArray(stored)) {
+                    registrations = stored;
+                }
+            } catch (error) {
+                registrations = [];
+            }
+
+            document.getElementById("totalRegistrations").textContent =
+                String(registrations.length).padStart(2, "0");
+        }
+
+        function updateEventStats() {
+            const cards = eventsContainer.querySelectorAll(".event-card");
+
+            const categories = new Set();
+
+            cards.forEach(function (card) {
+                categories.add(card.dataset.category);
+            });
+
+            document.getElementById("totalEvents").textContent =
+                String(cards.length).padStart(2, "0");
+
+            document.getElementById("totalCategories").textContent =
+                String(categories.size).padStart(2, "0");
+        }
+
+        updateEventStats();
+        updateRegistrationStats();
+
+        filterEvents();
+    </script>
+
+</body>
+</html>

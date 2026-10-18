@@ -1,0 +1,823 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manage Clubs | CampusConnect Pro</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #080d1b;
+    --card: #111a2e;
+    --border: #26334e;
+    --text: #f4f7ff;
+    --muted: #9caac4;
+    --purple: #8872ff;
+    --green: #36dda0;
+    --red: #ff8295;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+header {
+    background: #0d1527;
+    border-bottom: 1px solid var(--border);
+}
+
+nav {
+    width: min(1200px, 94%);
+    min-height: 72px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: var(--purple);
+}
+
+.nav-links {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.nav-links a:hover {
+    color: var(--green);
+}
+
+.container {
+    width: min(1150px, 94%);
+    margin: auto;
+    padding: 35px 0 55px;
+}
+
+.eyebrow {
+    color: var(--green);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+h1 {
+    font-size: clamp(27px, 4vw, 38px);
+    margin: 10px 0;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 28px 0;
+}
+
+.stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.stat span {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.stat strong {
+    font-size: 27px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 330px minmax(0, 1fr);
+    gap: 22px;
+    align-items: start;
+}
+
+.panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 23px;
+    min-width: 0;
+}
+
+.panel h2 {
+    font-size: 19px;
+    margin-bottom: 20px;
+}
+
+.field {
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    background: #0c1426;
+    color: white;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font: inherit;
+    font-size: 13px;
+    outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--purple);
+}
+
+textarea {
+    min-height: 95px;
+    resize: vertical;
+}
+
+.btn {
+    display: inline-block;
+    padding: 11px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.btn-primary {
+    background: var(--purple);
+    color: white;
+}
+
+.btn-secondary {
+    background: #202b43;
+    color: white;
+}
+
+.btn-danger {
+    background: #351d2a;
+    color: var(--red);
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.message {
+    display: none;
+    margin-top: 14px;
+    padding: 12px;
+    border-radius: 9px;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.message.success {
+    display: block;
+    background: #12352e;
+    color: var(--green);
+}
+
+.message.error {
+    display: block;
+    background: #351d2a;
+    color: #ffabb8;
+}
+
+.toolbar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.toolbar input {
+    flex: 1;
+    min-width: 0;
+}
+
+.club-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.club-card {
+    padding: 20px;
+    background: #0d1629;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    min-width: 0;
+}
+
+.club-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.club-card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    overflow-wrap: anywhere;
+}
+
+.club-tag {
+    display: inline-block;
+    padding: 5px 8px;
+    background: #242044;
+    color: #c5baff;
+    border-radius: 6px;
+    font-size: 10px;
+    margin-bottom: 10px;
+}
+
+.club-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+    margin-bottom: 12px;
+    overflow-wrap: anywhere;
+}
+
+.club-meta {
+    color: #dce0f4;
+    font-size: 11px;
+    margin-bottom: 15px;
+    line-height: 1.8;
+}
+
+.card-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.card-actions button {
+    flex: 1;
+}
+
+.empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--muted);
+    padding: 35px 15px;
+    font-size: 13px;
+}
+
+.notice {
+    margin-top: 25px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #111a2e;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 22px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+@media (max-width: 900px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 580px) {
+    nav {
+        padding: 16px 0;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .club-list {
+        grid-template-columns: 1fr;
+    }
+
+    .panel {
+        padding: 18px;
+    }
+
+    .toolbar {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a href="../index.html" class="logo">
+            CampusConnect <span>Pro.</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="../index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="manage-events.html">Events</a>
+            <a href="manage-clubs.html">Clubs</a>
+            <a href="registrations.html">Registrations</a>
+        </div>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section>
+        <p class="eyebrow">CLUB MANAGEMENT</p>
+        <h1>Manage Campus Clubs 🏛️</h1>
+        <p class="subtitle">
+            Create clubs, update club information and maintain your campus club directory.
+        </p>
+    </section>
+
+    <section class="stats">
+        <div class="stat">
+            <span>Total Clubs</span>
+            <strong id="totalClubs">0</strong>
+        </div>
+
+        <div class="stat">
+            <span>Tech Club</span>
+            <strong id="techCount">0</strong>
+        </div>
+
+        <div class="stat">
+            <span>Cultural & Sports</span>
+            <strong id="otherCount">0</strong>
+        </div>
+    </section>
+
+    <div class="layout">
+
+        <section class="panel">
+            <h2 id="formTitle">➕ Add New Club</h2>
+
+            <form id="clubForm">
+
+                <div class="field">
+                    <label for="clubName">Club Name *</label>
+                    <input
+                        type="text"
+                        id="clubName"
+                        maxlength="80"
+                        placeholder="e.g. Photography Club"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="clubCategory">Category *</label>
+                    <select id="clubCategory" required>
+                        <option value="Tech">Technology</option>
+                        <option value="Cultural">Cultural</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="clubIcon">Club Icon / Emoji</label>
+                    <input
+                        type="text"
+                        id="clubIcon"
+                        maxlength="12"
+                        value="🏛️"
+                        placeholder="🏛️"
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="clubDescription">Description *</label>
+                    <textarea
+                        id="clubDescription"
+                        maxlength="500"
+                        placeholder="Describe the club and its activities..."
+                        required
+                    ></textarea>
+                </div>
+
+                <div class="field">
+                    <label for="clubCoordinator">Coordinator</label>
+                    <input
+                        type="text"
+                        id="clubCoordinator"
+                        maxlength="100"
+                        placeholder="Faculty or student coordinator"
+                    >
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="saveButton">
+                        Save Club
+                    </button>
+
+                    <button type="button" class="btn btn-secondary" id="resetButton">
+                        Clear Form
+                    </button>
+                </div>
+
+                <div class="message" id="formMessage" role="status"></div>
+            </form>
+        </section>
+
+        <section class="panel">
+            <h2>📋 Club Directory</h2>
+
+            <div class="toolbar">
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Search clubs..."
+                    aria-label="Search clubs"
+                >
+            </div>
+
+            <div class="club-list" id="clubList"></div>
+        </section>
+
+    </div>
+
+    <div class="notice">
+        <strong>Note:</strong> Club data is saved in this browser. This is a frontend demo;
+        it does not automatically synchronize data between devices. Updating club details
+        here does not automatically change existing events.
+    </div>
+
+</main>
+
+<footer>
+    © <span id="year"></span> CampusConnect Pro · Club Management
+</footer>
+
+<script>
+"use strict";
+
+const CLUBS_KEY = "campusConnectClubs";
+
+const defaultClubs = [
+    {
+        id: "TECH",
+        name: "Tech Club",
+        category: "Tech",
+        icon: "💻",
+        description: "Explore coding, web development, software projects and emerging technologies.",
+        coordinator: "Technology Faculty"
+    },
+    {
+        id: "CULT",
+        name: "Cultural Club",
+        category: "Cultural",
+        icon: "🎭",
+        description: "Celebrate creativity through dance, music, drama, fashion and cultural activities.",
+        coordinator: "Cultural Faculty"
+    },
+    {
+        id: "SPORT",
+        name: "Sports Club",
+        category: "Sports",
+        icon: "🏆",
+        description: "Promote teamwork, fitness and sportsmanship through campus sporting events.",
+        coordinator: "Sports Faculty"
+    }
+];
+
+const clubForm = document.getElementById("clubForm");
+const clubList = document.getElementById("clubList");
+const searchInput = document.getElementById("searchInput");
+const formMessage = document.getElementById("formMessage");
+
+let editingId = null;
+
+function readClubs() {
+    try {
+        const saved = localStorage.getItem(CLUBS_KEY);
+
+        if (saved === null) {
+            localStorage.setItem(
+                CLUBS_KEY,
+                JSON.stringify(defaultClubs)
+            );
+
+            return defaultClubs.map(club => ({ ...club }));
+        }
+
+        const parsed = JSON.parse(saved);
+
+        return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function saveClubs(clubs) {
+    try {
+        localStorage.setItem(CLUBS_KEY, JSON.stringify(clubs));
+        return true;
+    } catch (error) {
+        showMessage(
+            "Could not save clubs. Please check browser storage.",
+            "error"
+        );
+        return false;
+    }
+}
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+function showMessage(text, type) {
+    formMessage.textContent = text;
+    formMessage.className = "message " + type;
+}
+
+function hideMessage() {
+    formMessage.textContent = "";
+    formMessage.className = "message";
+}
+
+function updateStats(clubs) {
+    document.getElementById("totalClubs").textContent = clubs.length;
+
+    document.getElementById("techCount").textContent =
+        clubs.filter(club => club.category === "Tech").length;
+
+    document.getElementById("otherCount").textContent =
+        clubs.filter(club =>
+            club.category === "Cultural" || club.category === "Sports"
+        ).length;
+}
+
+function renderClubs() {
+    const clubs = readClubs();
+    const query = searchInput.value.trim().toLowerCase();
+
+    updateStats(clubs);
+
+    const filtered = clubs.filter(club => {
+        const text = [
+            club.id,
+            club.name,
+            club.category,
+            club.description,
+            club.coordinator
+        ].join(" ").toLowerCase();
+
+        return text.includes(query);
+    });
+
+    if (filtered.length === 0) {
+        clubList.innerHTML = `
+            <div class="empty">
+                No clubs found. Try another search or add a club.
+            </div>
+        `;
+        return;
+    }
+
+    clubList.innerHTML = filtered.map(club => `
+        <article class="club-card">
+            <div class="club-icon">${escapeHTML(club.icon || "🏛️")}</div>
+
+            <span class="club-tag">${escapeHTML(club.category || "Other")}</span>
+
+            <h3>${escapeHTML(club.name)}</h3>
+
+            <p>${escapeHTML(club.description)}</p>
+
+            <div class="club-meta">
+                Club ID: ${escapeHTML(club.id)}<br>
+                Coordinator: ${escapeHTML(club.coordinator || "Not assigned")}
+            </div>
+
+            <div class="card-actions">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-action="edit"
+                    data-id="${escapeHTML(club.id)}"
+                >Edit</button>
+
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-action="delete"
+                    data-id="${escapeHTML(club.id)}"
+                >Delete</button>
+            </div>
+        </article>
+    `).join("");
+}
+
+function resetForm() {
+    clubForm.reset();
+    editingId = null;
+
+    document.getElementById("formTitle").textContent = "➕ Add New Club";
+    document.getElementById("saveButton").textContent = "Save Club";
+    document.getElementById("clubIcon").value = "🏛️";
+
+    hideMessage();
+}
+
+function createClubId(clubs) {
+    let number = 1;
+    let id;
+
+    do {
+        id = "CLUB" + String(number).padStart(3, "0");
+        number++;
+    } while (clubs.some(club => club.id === id));
+
+    return id;
+}
+
+clubForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const clubs = readClubs();
+
+    const name = document.getElementById("clubName").value.trim();
+    const category = document.getElementById("clubCategory").value;
+    const icon = document.getElementById("clubIcon").value.trim() || "🏛️";
+    const description = document.getElementById("clubDescription").value.trim();
+    const coordinator = document.getElementById("clubCoordinator").value.trim();
+
+    if (!name || !description) {
+        showMessage("Please complete all required fields.", "error");
+        return;
+    }
+
+    const duplicate = clubs.some(club =>
+        club.name.toLowerCase() === name.toLowerCase() &&
+        club.id !== editingId
+    );
+
+    if (duplicate) {
+        showMessage("A club with this name already exists.", "error");
+        return;
+    }
+
+    if (editingId === null) {
+        const newClub = {
+            id: createClubId(clubs),
+            name,
+            category,
+            icon,
+            description,
+            coordinator
+        };
+
+        if (!saveClubs([...clubs, newClub])) return;
+
+        resetForm();
+        renderClubs();
+        showMessage("Club added successfully! ID: " + newClub.id, "success");
+        return;
+    }
+
+    const updated = clubs.map(club =>
+        club.id === editingId
+            ? { ...club, name, category, icon, description, coordinator }
+            : club
+    );
+
+    if (!saveClubs(updated)) return;
+
+    resetForm();
+    renderClubs();
+    showMessage("Club details updated successfully.", "success");
+});
+
+clubList.addEventListener("click", function(event) {
+    const button = event.target.closest("button[data-action]");
+
+    if (!button) return;
+
+    const id = button.dataset.id;
+    const action = button.dataset.action;
+    const clubs = readClubs();
+    const selected = clubs.find(club => club.id === id);
+
+    if (!selected) return;
+
+    if (action === "edit") {
+        editingId = id;
+
+        document.getElementById("clubName").value = selected.name || "";
+        document.getElementById("clubCategory").value =
+            selected.category || "Other";
+        document.getElementById("clubIcon").value = selected.icon || "🏛️";
+        document.getElementById("clubDescription").value =
+            selected.description || "";
+        document.getElementById("clubCoordinator").value =
+            selected.coordinator || "";
+
+        document.getElementById("formTitle").textContent = "✏️ Edit Club";
+        document.getElementById("saveButton").textContent = "Update Club";
+
+        hideMessage();
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        document.getElementById("clubName").focus();
+
+        return;
+    }
+
+    if (action === "delete") {
+        if (!confirm('Are you sure you want to delete "' + selected.name + '"?')) {
+            return;
+        }
+
+        const updated = clubs.filter(club => club.id !== id);
+
+        if (!saveClubs(updated)) return;
+
+        if (editingId === id) {
+            resetForm();
+        }
+
+        renderClubs();
+        showMessage("Club deleted successfully.", "success");
+    }
+});
+
+document.getElementById("resetButton").addEventListener("click", resetForm);
+
+searchInput.addEventListener("input", renderClubs);
+
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+renderClubs();
+
+window.addEventListener("storage", function(event) {
+    if (event.key === CLUBS_KEY) {
+        renderClubs();
+    }
+});
+</script>
+
+</body>
+</html>

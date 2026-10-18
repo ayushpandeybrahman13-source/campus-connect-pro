@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements | CampusConnect Pro</title>
+
+    <style>
+        :root {
+            --bg: #080d1c;
+            --surface: #10182a;
+            --surface2: #151f35;
+            --primary: #7c5cff;
+            --cyan: #45e5d1;
+            --text: #f8fafc;
+            --muted: #9ba8bf;
+            --border: rgba(255,255,255,.09);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .container {
+            width: min(1120px, 92%);
+            margin: auto;
+        }
+
+        /* NAVIGATION */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: rgba(8,13,28,.96);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            min-height: 72px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            color: #080d1c;
+            background: linear-gradient(135deg, var(--primary), var(--cyan));
+            border-radius: 12px;
+        }
+
+        .brand-name span {
+            color: #a99aff;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 17px;
+        }
+
+        .nav-links a {
+            color: #bdc8db;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--cyan);
+        }
+
+        .login-btn {
+            padding: 10px 14px;
+            background: linear-gradient(135deg, var(--primary), #5940d4);
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .menu-toggle {
+            display: none;
+            padding: 7px 11px;
+            background: var(--surface);
+            color: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 20px;
+        }
+
+        /* HERO */
+
+        .hero {
+            padding: 55px 0 40px;
+            background:
+                radial-gradient(ellipse at 90% 0%, rgba(124,92,255,.18), transparent 45%),
+                radial-gradient(ellipse at 0% 100%, rgba(69,229,209,.06), transparent 40%);
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .breadcrumb a {
+            color: var(--cyan);
+        }
+
+        .eyebrow {
+            display: inline-block;
+            padding: 6px 11px;
+            margin-bottom: 15px;
+            color: var(--cyan);
+            background: rgba(69,229,209,.08);
+            border: 1px solid rgba(69,229,209,.2);
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: clamp(35px, 5vw, 54px);
+            line-height: 1.2;
+            letter-spacing: -1.5px;
+            margin-bottom: 14px;
+        }
+
+        .gradient {
+            color: #a99aff;
+        }
+
+        .hero p {
+            max-width: 660px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .stat {
+            min-width: 125px;
+            padding: 13px 17px;
+            background: rgba(16,24,42,.8);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 22px;
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        /* MAIN CONTENT */
+
+        .main-section {
+            padding: 20px 0 80px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 22px;
+        }
+
+        .section-heading h2 {
+            font-size: 24px;
+        }
+
+        .section-heading p {
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .results-count {
+            color: var(--cyan);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        /* FILTERS */
+
+        .filters {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 220px auto;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding: 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+            min-height: 44px;
+            padding: 11px 12px;
+            color: var(--text);
+            background: #0c1425;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            outline: none;
+            font-size: 12px;
+        }
+
+        .filters input {
+            padding-left: 36px;
+        }
+
+        .filters input:focus,
+        .filters select:focus {
+            border-color: var(--primary);
+        }
+
+        .filters select option {
+            background: var(--surface);
+        }
+
+        .reset-btn {
+            padding: 0 15px;
+            color: white;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* NOTICE CARDS */
+
+        .notice-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .notice-card {
+            display: grid;
+            grid-template-columns: 65px minmax(0, 1fr) auto;
+            align-items: start;
+            gap: 17px;
+            padding: 22px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition: transform .2s, border-color .2s;
+        }
+
+        .notice-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(124,92,255,.55);
+        }
+
+        .notice-icon {
+            width: 60px;
+            height: 60px;
+            display: grid;
+            place-items: center;
+            background: rgba(124,92,255,.12);
+            border: 1px solid rgba(124,92,255,.2);
+            border-radius: 14px;
+            font-size: 25px;
+        }
+
+        .notice-content {
+            min-width: 0;
+        }
+
+        .notice-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            color: var(--cyan);
+            background: rgba(69,229,209,.08);
+            border-radius: 5px;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .priority {
+            color: #ffbd6b;
+            background: rgba(255,189,107,.1);
+        }
+
+        .notice-date {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .notice-content h3 {
+            margin-bottom: 7px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .notice-content p {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .notice-footer {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .notice-author {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .read-btn {
+            padding: 9px 12px;
+            color: #c5baff;
+            background: rgba(124,92,255,.1);
+            border: 1px solid rgba(124,92,255,.22);
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .read-btn:hover {
+            background: rgba(124,92,255,.2);
+        }
+
+        .empty-state {
+            display: none;
+            padding: 50px 20px;
+            text-align: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .empty-state.show {
+            display: block;
+        }
+
+        .empty-state div {
+            margin-bottom: 10px;
+            font-size: 35px;
+        }
+
+        .empty-state p {
+            margin-top: 7px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* MODAL */
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0,0,0,.75);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-box {
+            width: min(580px, 100%);
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 25px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 20px 70px rgba(0,0,0,.4);
+        }
+
+        .modal-top {
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modal-top h2 {
+            font-size: 22px;
+            line-height: 1.4;
+        }
+
+        .close-btn {
+            flex-shrink: 0;
+            width: 35px;
+            height: 35px;
+            color: white;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .modal-meta {
+            margin-bottom: 18px;
+            color: var(--cyan);
+            font-size: 11px;
+        }
+
+        .modal-body {
+            color: #c3cede;
+            font-size: 13px;
+            line-height: 1.9;
+            white-space: pre-line;
+        }
+
+        .modal-author {
+            margin-top: 22px;
+            padding-top: 15px;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+            font-size: 11px;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            padding: 25px 0;
+            background: #060a15;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer p,
+        .footer a {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer a:hover {
+            color: var(--cyan);
+        }
+
+        @media (max-width: 1000px) {
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a {
+                font-size: 10px;
+            }
+
+            .filters {
+                grid-template-columns: 1fr 200px;
+            }
+
+            .reset-btn {
+                min-height: 40px;
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .nav-inner {
+                flex-wrap: wrap;
+                padding: 12px 0;
+            }
+
+            .menu-toggle {
+                display: block;
+                margin-left: auto;
+            }
+
+            .login-btn {
+                display: none;
+            }
+
+            .nav-links {
+                display: none;
+                order: 3;
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 11px;
+                font-size: 13px;
+            }
+
+            .notice-card {
+                grid-template-columns: 48px minmax(0, 1fr);
+                gap: 13px;
+                padding: 16px;
+            }
+
+            .notice-icon {
+                width: 46px;
+                height: 46px;
+                font-size: 21px;
+            }
+
+            .read-btn {
+                grid-column: 2;
+                justify-self: start;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+
+            .reset-btn {
+                grid-column: auto;
+                min-height: 44px;
+            }
+
+            .hero {
+                padding-top: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-heading {
+                align-items: start;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .notice-content h3 {
+                font-size: 14px;
+            }
+
+            .notice-content p {
+                font-size: 11px;
+            }
+
+            .notice-card {
+                gap: 10px;
+                padding: 13px;
+            }
+
+            .notice-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .modal-box {
+                padding: 18px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="container nav-inner">
+
+        <a href="index.html" class="brand">
+            <span class="brand-icon">✦</span>
+            <span class="brand-name">CampusConnect <span>Pro</span></span>
+        </a>
+
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            type="button"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+        >☰</button>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="events.html">Events</a>
+            <a href="clubs.html">Clubs</a>
+            <a href="calendar.html">Calendar</a>
+            <a href="announcements.html" class="active">Notices</a>
+            <a href="achievements.html">Achievements</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <a href="student/login.html" class="login-btn">Student Login ↗</a>
+
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <div class="container">
+
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / Announcements
+            </div>
+
+            <div class="eyebrow">CAMPUS INFORMATION CENTER</div>
+
+            <h1>
+                Stay Updated.<br>
+                <span class="gradient">Never Miss a Notice.</span>
+            </h1>
+
+            <p>
+                Find important campus announcements, academic updates,
+                competition notices, registration deadlines and student
+                activity information in one place.
+            </p>
+
+            <div class="hero-stats">
+                <div class="stat">
+                    <strong id="totalNotices">0</strong>
+                    <span>Total notices</span>
+                </div>
+
+                <div class="stat">
+                    <strong id="importantNotices">0</strong>
+                    <span>Important notices</span>
+                </div>
+
+                <div class="stat">
+                    <strong id="categoryCount">0</strong>
+                    <span>Categories</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="main-section">
+        <div class="container">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Latest Announcements</h2>
+                    <p>Search notices or filter them by category.</p>
+                </div>
+
+                <span class="results-count" id="noticeResultsCount">
+                    0 notices found
+                </span>
+            </div>
+
+            <div class="filters">
+
+                <div class="input-wrap">
+                    <span class="search-icon">⌕</span>
+
+                    <input
+                        type="search"
+                        id="noticeSearch"
+                        placeholder="Search notices, keywords..."
+                        aria-label="Search announcements"
+                    >
+                </div>
+
+                <select id="noticeFilter" aria-label="Filter by category">
+                    <option value="all">All Categories</option>
+                    <option value="Academic">Academic</option>
+                    <option value="Events">Events</option>
+                    <option value="Examination">Examination</option>
+                    <option value="Competition">Competition</option>
+                    <option value="Placement">Placement</option>
+                    <option value="General">General</option>
+                </select>
+
+                <button class="reset-btn" id="resetFilters" type="button">
+                    ↻ Reset Filters
+                </button>
+
+            </div>
+
+            <div class="notice-list" id="noticeList"></div>
+
+            <div class="empty-state" id="noticeEmpty">
+                <div>🔎</div>
+                <h3>No announcements found</h3>
+                <p>Try another search term or select a different category.</p>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer class="footer">
+    <div class="container footer-inner">
+
+        <p>
+            © <span id="currentYear"></span> CampusConnect Pro.
+            College Event Management Demo.
+        </p>
+
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="events.html">Events</a>
+            <a href="calendar.html">Calendar</a>
+            <a href="my-tickets.html">My Tickets</a>
+            <a href="contact.html">Contact</a>
+        </div>
+
+    </div>
+</footer>
+
+<!-- NOTICE DETAILS MODAL -->
+
+<div
+    class="modal"
+    id="noticeModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalTitle"
+>
+    <div class="modal-box">
+
+        <div class="modal-top">
+            <h2 id="modalTitle">Notice details</h2>
+
+            <button
+                class="close-btn"
+                id="closeModal"
+                type="button"
+                aria-label="Close notice"
+            >✕</button>
+        </div>
+
+        <div class="modal-meta" id="modalMeta"></div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-author" id="modalAuthor"></div>
+
+    </div>
+</div>
+
+<script>
+"use strict";
+
+/* NAVIGATION */
+
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", function () {
+    const open = navLinks.classList.toggle("open");
+
+    menuToggle.textContent = open ? "✕" : "☰";
+    menuToggle.setAttribute("aria-expanded", String(open));
+});
+
+navLinks.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () {
+        navLinks.classList.remove("open");
+        menuToggle.textContent = "☰";
+        menuToggle.setAttribute("aria-expanded", "false");
+    });
+});
+
+document.getElementById("currentYear").textContent =
+    new Date().getFullYear();
+
+/* DEMO NOTICES
+   These are sample notices for the project demonstration.
+*/
+
+const notices = [
+    {
+        id: 1,
+        title: "Upcoming Semester Examination Guidelines",
+        category: "Examination",
+        date: "2026-10-15",
+        icon: "📝",
+        priority: true,
+        author: "Examination Department",
+        summary: "Students should review the examination instructions and keep their college identity cards ready.",
+        details: "IMPORTANT EXAMINATION NOTICE\n\nAll students are advised to check the official examination timetable and follow the instructions issued by the examination department.\n\n• Carry your valid college identity card.\n• Reach the examination centre before the reporting time.\n• Follow the examination rules and instructions.\n• Confirm dates and timings through the official college notice board.\n\nThis is a sample notice for the CampusConnect Pro demonstration. Please confirm actual examination details with your college."
+    },
+    {
+        id: 2,
+        title: "Campus Innovation Challenge Registration",
+        category: "Competition",
+        date: "2026-10-14",
+        icon: "💡",
+        priority: true,
+        author: "Innovation Cell",
+        summary: "Students interested in presenting innovative ideas and projects can prepare their submissions.",
+        details: "CAMPUS INNOVATION CHALLENGE\n\nStudents are invited to participate in a demonstration innovation challenge.\n\nSuggested preparation:\n• Identify a real-world problem.\n• Develop a practical solution.\n• Prepare a short presentation.\n• Explain the expected impact of your idea.\n\nThe registration deadline and event venue should be confirmed with the organiser. This is a sample project notice, not an official college announcement."
+    },
+    {
+        id: 3,
+        title: "Web Development Workshop",
+        category: "Events",
+        date: "2026-10-12",
+        icon: "💻",
+        priority: false,
+        author: "Technical Club",
+        summary: "A sample workshop announcement covering HTML, CSS, JavaScript and responsive website design.",
+        details: "WEB DEVELOPMENT WORKSHOP\n\nThis demonstration workshop is designed for students interested in frontend development.\n\nTopics may include:\n• HTML page structure\n• CSS layouts and responsive design\n• JavaScript fundamentals\n• Publishing projects online\n\nPlease contact the technical club to confirm the actual schedule, venue and registration process."
+    },
+    {
+        id: 4,
+        title: "Placement Preparation and Resume Session",
+        category: "Placement",
+        date: "2026-10-10",
+        icon: "🎯",
+        priority: false,
+        author: "Training & Placement Cell",
+        summary: "Learn about resume preparation, interview practice and professional communication.",
+        details: "PLACEMENT PREPARATION SESSION\n\nThis sample announcement highlights common placement preparation activities.\n\nStudents can prepare by:\n• Updating their resumes.\n• Practising aptitude questions.\n• Reviewing technical fundamentals.\n• Preparing for interview questions.\n• Improving communication skills.\n\nThe official placement cell should be contacted for confirmed session dates and participation details."
+    },
+    {
+        id: 5,
+        title: "Library Timings and Student Guidelines",
+        category: "Academic",
+        date: "2026-10-08",
+        icon: "📚",
+        priority: false,
+        author: "Library Department",
+        summary: "Students are encouraged to maintain library discipline and follow borrowing guidelines.",
+        details: "LIBRARY GUIDELINES\n\nStudents using the library should:\n• Maintain silence in study areas.\n• Keep borrowed books in good condition.\n• Return books according to the applicable due date.\n• Follow the library staff's instructions.\n\nLibrary timings and borrowing policies should be confirmed with the actual library."
+    },
+    {
+        id: 6,
+        title: "Student Club Membership Drive",
+        category: "General",
+        date: "2026-10-05",
+        icon: "🤝",
+        priority: false,
+        author: "Student Activities Team",
+        summary: "Explore technical, cultural, sports and creative clubs and discover activities that match your interests.",
+        details: "STUDENT CLUB MEMBERSHIP\n\nJoining a student club can help students explore their interests, collaborate with peers and develop practical skills.\n\nPossible club areas include:\n• Technology and coding\n• Culture and performing arts\n• Sports and fitness\n• Photography and design\n• Entrepreneurship and innovation\n\nContact the relevant club coordinator to confirm current membership availability."
+    },
+    {
+        id: 7,
+        title: "Academic Calendar Update",
+        category: "Academic",
+        date: "2026-10-02",
+        icon: "📅",
+        priority: true,
+        author: "Academic Office",
+        summary: "Students should regularly review their academic calendar for important academic dates.",
+        details: "ACADEMIC CALENDAR UPDATE\n\nStudents should regularly check their official academic calendar for information about classes, assessments, holidays and examinations.\n\nAny changes to the academic schedule must be verified through official college communication channels.\n\nThis notice is sample content for the CampusConnect Pro demonstration."
+    }
+];
+
+/* HELPERS */
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function (character) {
+        const entities = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        };
+
+        return entities[character];
+    });
+}
+
+function formatNoticeDate(value) {
+    const date = new Date(value + "T00:00:00");
+
+    if (Number.isNaN(date.getTime())) {
+        return "Date not specified";
+    }
+
+    return date.toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+    });
+}
+
+/* ELEMENTS */
+
+const noticeList = document.getElementById("noticeList");
+const noticeSearch = document.getElementById("noticeSearch");
+const noticeFilter = document.getElementById("noticeFilter");
+const noticeResultsCount = document.getElementById("noticeResultsCount");
+const noticeEmpty = document.getElementById("noticeEmpty");
+
+const noticeModal = document.getElementById("noticeModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalMeta = document.getElementById("modalMeta");
+const modalBody = document.getElementById("modalBody");
+const modalAuthor = document.getElementById("modalAuthor");
+
+/* SUMMARY STATS */
+
+document.getElementById("totalNotices").textContent = notices.length;
+
+document.getElementById("importantNotices").textContent =
+    notices.filter(function (notice) {
+        return notice.priority;
+    }).length;
+
+document.getElementById("categoryCount").textContent =
+    new Set(notices.map(function (notice) {
+        return notice.category;
+    })).size;
+
+/* FILTER AND RENDER */
+
+function renderNotices() {
+    const query = noticeSearch.value.trim().toLowerCase();
+    const category = noticeFilter.value;
+
+    const filtered = notices.filter(function (notice) {
+        const searchableText = [
+            notice.title,
+            notice.category,
+            notice.summary,
+            notice.details,
+            notice.author
+        ].join(" ").toLowerCase();
+
+        const matchesSearch = searchableText.includes(query);
+        const matchesCategory =
+            category === "all" || notice.category === category;
+
+        return matchesSearch && matchesCategory;
+    });
+
+    noticeList.innerHTML = "";
+
+    noticeResultsCount.textContent =
+        filtered.length + (filtered.length === 1 ? " notice found" : " notices found");
+
+    noticeEmpty.classList.toggle("show", filtered.length === 0);
+
+    filtered.forEach(function (notice) {
+        const card = document.createElement("article");
+
+        card.className = "notice-card";
+
+        const priorityTag = notice.priority
+            ? '<span class="tag priority">⚡ Important</span>'
+            : "";
+
+        card.innerHTML =
+            '<div class="notice-icon" aria-hidden="true">' +
+                escapeHTML(notice.icon) +
+            "</div>" +
+
+            '<div class="notice-content">' +
+
+                '<div class="notice-meta">' +
+                    '<span class="tag">' + escapeHTML(notice.category) + "</span>" +
+                    priorityTag +
+                    '<span class="notice-date">📅 ' +
+                        escapeHTML(formatNoticeDate(notice.date)) +
+                    "</span>" +
+                "</div>" +
+
+                "<h3>" + escapeHTML(notice.title) + "</h3>" +
+
+                "<p>" + escapeHTML(notice.summary) + "</p>" +
+
+                '<div class="notice-footer">' +
+                    '<span class="notice-author">By ' +
+                        escapeHTML(notice.author) +
+                    "</span>" +
+                "</div>" +
+
+            "</div>" +
+
+            '<button class="read-btn" type="button" data-notice-id="' +
+                notice.id +
+            '">Read Details ↗</button>';
+
+        noticeList.appendChild(card);
+    });
+}
+
+/* OPEN NOTICE DETAILS */
+
+function openNotice(noticeId) {
+    const notice = notices.find(function (item) {
+        return item.id === Number(noticeId);
+    });
+
+    if (!notice) {
+        return;
+    }
+
+    modalTitle.textContent = notice.title;
+
+    modalMeta.textContent =
+        notice.category + " • " + formatNoticeDate(notice.date) +
+        (notice.priority ? " • Important Notice" : "");
+
+    modalBody.textContent = notice.details;
+
+    modalAuthor.textContent = "Published by: " + notice.author;
+
+    noticeModal.classList.add("open");
+    document.body.style.overflow = "hidden";
+
+    document.getElementById("closeModal").focus();
+}
+
+function closeNoticeModal() {
+    noticeModal.classList.remove("open");
+    document.body.style.overflow = "";
+}
+
+noticeList.addEventListener("click", function (event) {
+    const button = event.target.closest("[data-notice-id]");
+
+    if (button) {
+        openNotice(button.dataset.noticeId);
+    }
+});
+
+document.getElementById("closeModal").addEventListener(
+    "click",
+    closeNoticeModal
+);
+
+noticeModal.addEventListener("click", function (event) {
+    if (event.target === noticeModal) {
+        closeNoticeModal();
+    }
+});
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+        closeNoticeModal();
+    }
+});
+
+/* SEARCH, FILTER AND RESET */
+
+noticeSearch.addEventListener("input", renderNotices);
+noticeFilter.addEventListener("change", renderNotices);
+
+document.getElementById("resetFilters").addEventListener("click", function () {
+    noticeSearch.value = "";
+    noticeFilter.value = "all";
+
+    renderNotices();
+});
+
+/* START */
+
+renderNotices();
+</script>
+
+</body>
+</html>

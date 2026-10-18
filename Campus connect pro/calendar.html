@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Event Calendar | CampusConnect Pro</title>
+
+    <meta name="description"
+          content="Explore campus events, important dates and upcoming activities with CampusConnect Pro.">
+
+    <style>
+        :root {
+            --bg: #080d1c;
+            --surface: #10182a;
+            --surface2: #151f35;
+            --primary: #7c5cff;
+            --cyan: #45e5d1;
+            --text: #f8fafc;
+            --muted: #9ba8bf;
+            --border: rgba(255,255,255,.09);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .container {
+            width: min(1150px, 92%);
+            margin: auto;
+        }
+
+        /* NAVIGATION */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(8,13,28,.96);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+        }
+
+        .nav-inner {
+            min-height: 74px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 17px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .brand-icon {
+            width: 39px;
+            height: 39px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            color: #080d1c;
+            background: linear-gradient(135deg, #7c5cff, #45e5d1);
+        }
+
+        .brand span:last-child span {
+            color: #a99aff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 19px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #bdc8db;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--cyan);
+        }
+
+        .login-btn {
+            padding: 11px 15px;
+            background: linear-gradient(135deg, #7c5cff, #5940d4);
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .menu-toggle {
+            display: none;
+            padding: 7px 11px;
+            color: white;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 20px;
+        }
+
+        /* PAGE HERO */
+
+        .hero {
+            padding: 55px 0 35px;
+            background:
+                radial-gradient(ellipse at 90% 0%, rgba(124,92,255,.17), transparent 45%),
+                radial-gradient(ellipse at 0% 80%, rgba(69,229,209,.06), transparent 40%);
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .breadcrumb a {
+            color: var(--cyan);
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 15px;
+            padding: 6px 11px;
+            color: var(--cyan);
+            background: rgba(69,229,209,.08);
+            border: 1px solid rgba(69,229,209,.18);
+            border-radius: 25px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: clamp(35px, 5vw, 54px);
+            line-height: 1.2;
+            letter-spacing: -1.4px;
+            margin-bottom: 13px;
+        }
+
+        .gradient {
+            color: #a99aff;
+        }
+
+        .hero p {
+            max-width: 650px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 11px;
+            margin-top: 23px;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            display: inline-block;
+            padding: 11px 16px;
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .primary-btn {
+            color: white;
+            background: linear-gradient(135deg, #7c5cff, #5940d4);
+            border: 0;
+        }
+
+        .secondary-btn {
+            color: white;
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+
+        /* CALENDAR LAYOUT */
+
+        .calendar-section {
+            padding: 30px 0 80px;
+        }
+
+        .calendar-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.7fr) minmax(270px, .9fr);
+            gap: 22px;
+            align-items: start;
+        }
+
+        .panel {
+            min-width: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 21px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panel-header h2 {
+            font-size: 19px;
+        }
+
+        .panel-header p {
+            color: var(--muted);
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        /* MONTH CONTROLS */
+
+        .month-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 20px 20px 14px;
+        }
+
+        .month-controls h2 {
+            font-size: 19px;
+        }
+
+        .month-buttons {
+            display: flex;
+            gap: 7px;
+        }
+
+        .icon-btn {
+            width: 37px;
+            height: 37px;
+            border-radius: 9px;
+            background: var(--surface2);
+            color: white;
+            border: 1px solid var(--border);
+        }
+
+        .icon-btn:hover {
+            border-color: var(--primary);
+        }
+
+        .today-btn {
+            padding: 0 12px;
+            height: 37px;
+            border-radius: 9px;
+            background: rgba(124,92,255,.13);
+            color: #c0b4ff;
+            border: 1px solid rgba(124,92,255,.3);
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        /* CALENDAR GRID */
+
+        .calendar-content {
+            padding: 0 17px 20px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 5px;
+        }
+
+        .weekday {
+            padding: 11px 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .day {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-width: 0;
+            min-height: 76px;
+            padding: 9px 3px 5px;
+            color: #dce4f1;
+            background: #0c1425;
+            border: 1px solid transparent;
+            border-radius: 9px;
+            text-align: center;
+        }
+
+        .day:hover {
+            border-color: var(--primary);
+        }
+
+        .day.empty {
+            background: transparent;
+            pointer-events: none;
+        }
+
+        .day-number {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .day.today {
+            border-color: var(--cyan);
+            background: rgba(69,229,209,.08);
+        }
+
+        .day.today .day-number {
+            color: var(--cyan);
+        }
+
+        .day.selected {
+            border-color: var(--primary);
+            background: rgba(124,92,255,.17);
+        }
+
+        .day.has-event::after {
+            content: "";
+            width: 5px;
+            height: 5px;
+            margin-top: 7px;
+            border-radius: 50%;
+            background: var(--cyan);
+        }
+
+        .event-count {
+            margin-top: 3px;
+            color: var(--cyan);
+            font-size: 8px;
+            line-height: 1.2;
+        }
+
+        .calendar-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 16px 2px 0;
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--cyan);
+        }
+
+        .legend-dot.purple {
+            background: var(--primary);
+        }
+
+        /* SELECTED DATE DETAILS */
+
+        .selected-date-box {
+            margin: 0 17px 18px;
+            padding: 15px;
+            background: rgba(124,92,255,.08);
+            border: 1px solid rgba(124,92,255,.2);
+            border-radius: 12px;
+        }
+
+        .selected-date-box small {
+            display: block;
+            color: var(--muted);
+            font-size: 10px;
+            margin-bottom: 4px;
+        }
+
+        .selected-date-box strong {
+            font-size: 14px;
+        }
+
+        .selected-date-events {
+            margin-top: 10px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .selected-event {
+            padding: 10px;
+            background: var(--surface2);
+            border-radius: 8px;
+            font-size: 11px;
+        }
+
+        .selected-event strong {
+            display: block;
+            font-size: 12px;
+        }
+
+        .selected-event span {
+            display: block;
+            margin-top: 3px;
+            color: var(--muted);
+        }
+
+        .no-events {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        /* UPCOMING EVENTS */
+
+        .upcoming-list {
+            padding: 8px 18px 18px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .upcoming-item {
+            display: grid;
+            grid-template-columns: 55px minmax(0, 1fr);
+            gap: 12px;
+            padding: 13px;
+            background: #0c1425;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .date-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+            background: rgba(124,92,255,.13);
+            border-radius: 9px;
+        }
+
+        .date-box strong {
+            font-size: 22px;
+            line-height: 1.2;
+        }
+
+        .date-box span {
+            color: #b9adff;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .upcoming-info h3 {
+            font-size: 12px;
+            line-height: 1.5;
+            margin-bottom: 5px;
+        }
+
+        .upcoming-info p {
+            color: var(--muted);
+            font-size: 10px;
+            margin-top: 3px;
+        }
+
+        .category-tag {
+            display: inline-block;
+            margin-top: 7px;
+            padding: 4px 7px;
+            color: var(--cyan);
+            background: rgba(69,229,209,.08);
+            border-radius: 5px;
+            font-size: 9px;
+        }
+
+        .empty-upcoming {
+            padding: 25px 10px;
+            color: var(--muted);
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .empty-upcoming span {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            padding: 25px 0;
+            background: #060a15;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer p,
+        .footer a {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer a:hover {
+            color: var(--cyan);
+        }
+
+        /* TOAST */
+
+        .toast-container {
+            position: fixed;
+            right: 15px;
+            bottom: 15px;
+            z-index: 100;
+            display: grid;
+            gap: 8px;
+        }
+
+        .toast {
+            max-width: 310px;
+            padding: 13px 16px;
+            background: #1a2740;
+            color: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.3);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+            .nav-links {
+                gap: 11px;
+            }
+
+            .nav-links a {
+                font-size: 10px;
+            }
+
+            .calendar-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .nav-inner {
+                flex-wrap: wrap;
+                padding: 12px 0;
+            }
+
+            .menu-toggle {
+                display: block;
+                margin-left: auto;
+            }
+
+            .login-btn {
+                display: none;
+            }
+
+            .nav-links {
+                display: none;
+                order: 3;
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 11px;
+                font-size: 13px;
+            }
+
+            .hero {
+                padding-top: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calendar-content {
+                padding: 0 8px 14px;
+            }
+
+            .month-controls {
+                padding: 15px 10px 12px;
+                gap: 5px;
+            }
+
+            .month-controls h2 {
+                font-size: 15px;
+            }
+
+            .month-buttons {
+                gap: 4px;
+            }
+
+            .icon-btn {
+                width: 30px;
+                height: 34px;
+            }
+
+            .today-btn {
+                height: 34px;
+                padding: 0 7px;
+                font-size: 10px;
+            }
+
+            .calendar-grid {
+                gap: 3px;
+            }
+
+            .weekday {
+                font-size: 9px;
+            }
+
+            .day {
+                min-height: 53px;
+                padding-top: 7px;
+                border-radius: 6px;
+            }
+
+            .day-number {
+                font-size: 11px;
+            }
+
+            .event-count {
+                font-size: 7px;
+            }
+
+            .selected-date-box {
+                margin: 0 8px 14px;
+            }
+
+            .panel-header {
+                padding: 17px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="container nav-inner">
+
+        <a href="index.html" class="brand">
+            <span class="brand-icon">✦</span>
+            <span>CampusConnect <span>Pro</span></span>
+        </a>
+
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+            type="button"
+        >☰</button>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="events.html">Events</a>
+            <a href="clubs.html">Clubs</a>
+            <a href="calendar.html" class="active">Calendar</a>
+            <a href="announcements.html">Notices</a>
+            <a href="achievements.html">Achievements</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <a href="student/login.html" class="login-btn">Student Login ↗</a>
+
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <div class="container">
+
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / Event Calendar
+            </div>
+
+            <div class="eyebrow">CAMPUS ACTIVITY PLANNER</div>
+
+            <h1>
+                Every Date Has<br>
+                <span class="gradient">Something to Discover.</span>
+            </h1>
+
+            <p>
+                Explore upcoming college events, check important dates
+                and plan your participation with the CampusConnect Pro
+                event calendar.
+            </p>
+
+            <div class="hero-actions">
+                <a href="#calendarSection" class="primary-btn">
+                    Open Calendar ↓
+                </a>
+
+                <a href="events.html" class="secondary-btn">
+                    Browse All Events ↗
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="calendar-section" id="calendarSection">
+        <div class="container">
+
+            <div class="calendar-layout">
+
+                <!-- MONTHLY CALENDAR -->
+                <section class="panel">
+
+                    <div class="panel-header">
+                        <h2>Campus Calendar 📅</h2>
+                        <p>Select any date to explore scheduled activities.</p>
+                    </div>
+
+                    <div class="month-controls">
+
+                        <h2 id="calendarMonth">Loading...</h2>
+
+                        <div class="month-buttons">
+                            <button
+                                type="button"
+                                class="icon-btn"
+                                id="prevMonth"
+                                aria-label="Previous month"
+                            >‹</button>
+
+                            <button
+                                type="button"
+                                class="today-btn"
+                                id="todayMonth"
+                            >Today</button>
+
+                            <button
+                                type="button"
+                                class="icon-btn"
+                                id="nextMonth"
+                                aria-label="Next month"
+                            >›</button>
+                        </div>
+
+                    </div>
+
+                    <div class="calendar-content">
+
+                        <div class="calendar-grid" id="calendarGrid">
+                            <!-- Calendar generated by JavaScript -->
+                        </div>
+
+                        <div class="calendar-legend">
+                            <span class="legend-item">
+                                <span class="legend-dot"></span>
+                                Event scheduled
+                            </span>
+
+                            <span class="legend-item">
+                                <span class="legend-dot purple"></span>
+                                Selected date
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="selected-date-box">
+                        <small>SELECTED DATE</small>
+                        <strong id="selectedDateTitle">Choose a date</strong>
+
+                        <div
+                            class="selected-date-events"
+                            id="selectedDateEvents"
+                        ></div>
+                    </div>
+
+                </section>
+
+                <!-- UPCOMING EVENTS -->
+                <aside class="panel">
+
+                    <div class="panel-header">
+                        <h2>Upcoming Events ✨</h2>
+                        <p>Scheduled campus activities.</p>
+                    </div>
+
+                    <div class="upcoming-list" id="calendarUpcomingEvents">
+                        <!-- Upcoming events generated by JavaScript -->
+                    </div>
+
+                </aside>
+
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer class="footer">
+    <div class="container footer-inner">
+
+        <p>
+            © <span id="currentYear"></span> CampusConnect Pro.
+            College Event Management Demo.
+        </p>
+
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="events.html">Events</a>
+            <a href="clubs.html">Clubs</a>
+            <a href="my-tickets.html">My Tickets</a>
+            <a href="contact.html">Contact</a>
+        </div>
+
+    </div>
+</footer>
+
+<div
+    class="toast-container"
+    id="toastContainer"
+    aria-live="polite"
+></div>
+
+<script>
+"use strict";
+
+/* NAVIGATION */
+
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", function () {
+    const open = navLinks.classList.toggle("open");
+
+    menuToggle.textContent = open ? "✕" : "☰";
+    menuToggle.setAttribute("aria-expanded", String(open));
+});
+
+navLinks.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () {
+        navLinks.classList.remove("open");
+        menuToggle.textContent = "☰";
+        menuToggle.setAttribute("aria-expanded", "false");
+    });
+});
+
+document.getElementById("currentYear").textContent =
+    new Date().getFullYear();
+
+/* DEMO EVENT DATA */
+
+const demoEvents = [
+    {
+        id: "EVT1001",
+        title: "Annual Cultural Fest",
+        category: "Cultural",
+        date: "2026-11-15",
+        time: "10:00 AM",
+        venue: "Main Auditorium",
+        description: "A celebration of campus culture, music and performances."
+    },
+    {
+        id: "EVT1002",
+        title: "Coding Competition",
+        category: "Technology",
+        date: "2026-11-20",
+        time: "11:00 AM",
+        venue: "Computer Lab",
+        description: "Show your programming and problem-solving skills."
+    },
+    {
+        id: "EVT1003",
+        title: "Innovation Challenge",
+        category: "Innovation",
+        date: "2026-11-25",
+        time: "10:30 AM",
+        venue: "Seminar Hall",
+        description: "Present creative ideas and innovative projects."
+    },
+    {
+        id: "EVT1004",
+        title: "Sports Championship",
+        category: "Sports",
+        date: "2026-12-02",
+        time: "9:00 AM",
+        venue: "Sports Ground",
+        description: "Compete in exciting campus sports activities."
+    },
+    {
+        id: "EVT1005",
+        title: "Photography Workshop",
+        category: "Workshop",
+        date: "2026-12-08",
+        time: "12:00 PM",
+        venue: "Room 208",
+        description: "Learn photography basics and creative composition."
+    },
+    {
+        id: "EVT1006",
+        title: "Tech Career Seminar",
+        category: "Seminar",
+        date: "2026-12-12",
+        time: "11:30 AM",
+        venue: "Conference Hall",
+        description: "Explore technology careers and industry skills."
+    }
+];
+
+/*
+Use events stored by the events page/admin when available.
+Otherwise, use the default demonstration events.
+*/
+
+function getEvents() {
+    try {
+        const saved = localStorage.getItem("campusconnect_events");
+
+        if (saved !== null) {
+            const parsed = JSON.parse(saved);
+
+            if (Array.isArray(parsed)) {
+                return parsed;
+            }
+        }
+    } catch (error) {
+        console.warn("Could not read saved events.", error);
+    }
+
+    return demoEvents;
+}
+
+function parseEventDate(event) {
+    const rawDate = event.date || event.eventDate || "";
+
+    if (!rawDate) {
+        return null;
+    }
+
+    const date = new Date(rawDate + "T00:00:00");
+
+    if (Number.isNaN(date.getTime())) {
+        return null;
+    }
+
+    return date;
+}
+
+function formatDateKey(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return year + "-" + month + "-" + day;
+}
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function (character) {
+        const map = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        };
+
+        return map[character];
+    });
+}
+
+/* CALENDAR STATE */
+
+const now = new Date();
+
+let displayedYear = now.getFullYear();
+let displayedMonth = now.getMonth();
+let selectedDate = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate()
+);
+
+const monthTitle = document.getElementById("calendarMonth");
+const calendarGrid = document.getElementById("calendarGrid");
+const selectedDateTitle = document.getElementById("selectedDateTitle");
+const selectedDateEvents = document.getElementById("selectedDateEvents");
+const upcomingContainer = document.getElementById("calendarUpcomingEvents");
+
+const weekdayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function getEventsForDate(date) {
+    const key = formatDateKey(date);
+
+    return getEvents().filter(function (event) {
+        const eventDate = parseEventDate(event);
+
+        return eventDate && formatDateKey(eventDate) === key;
+    });
+}
+
+/* DRAW MONTH */
+
+function renderCalendar() {
+    const events = getEvents();
+
+    monthTitle.textContent = new Date(
+        displayedYear,
+        displayedMonth,
+        1
+    ).toLocaleDateString("en-IN", {
+        month: "long",
+        year: "numeric"
+    });
+
+    calendarGrid.innerHTML = "";
+
+    weekdayNames.forEach(function (name) {
+        const weekday = document.createElement("div");
+
+        weekday.className = "weekday";
+        weekday.textContent = name;
+
+        calendarGrid.appendChild(weekday);
+    });
+
+    const firstDay = new Date(
+        displayedYear,
+        displayedMonth,
+        1
+    ).getDay();
+
+    const daysInMonth = new Date(
+        displayedYear,
+        displayedMonth + 1,
+        0
+    ).getDate();
+
+    for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement("div");
+
+        empty.className = "day empty";
+        empty.setAttribute("aria-hidden", "true");
+
+        calendarGrid.appendChild(empty);
+    }
+
+    const todayKey = formatDateKey(new Date());
+    const selectedKey = formatDateKey(selectedDate);
+
+    for (let dayNumber = 1; dayNumber <= daysInMonth; dayNumber++) {
+        const date = new Date(
+            displayedYear,
+            displayedMonth,
+            dayNumber
+        );
+
+        const key = formatDateKey(date);
+
+        const dayEvents = events.filter(function (event) {
+            const eventDate = parseEventDate(event);
+
+            return eventDate && formatDateKey(eventDate) === key;
+        });
+
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "day";
+
+        if (key === todayKey) {
+            button.classList.add("today");
+        }
+
+        if (key === selectedKey) {
+            button.classList.add("selected");
+        }
+
+        if (dayEvents.length > 0) {
+            button.classList.add("has-event");
+        }
+
+        button.setAttribute(
+            "aria-label",
+            date.toLocaleDateString("en-IN", {
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            }) + (dayEvents.length ? ", " + dayEvents.length + " event(s)" : "")
+        );
+
+        let dayContent =
+            '<span class="day-number">' + dayNumber + "</span>";
+
+        if (dayEvents.length > 0) {
+            dayContent +=
+                '<span class="event-count">' +
+                dayEvents.length +
+                (dayEvents.length === 1 ? " event" : " events") +
+                "</span>";
+        }
+
+        button.innerHTML = dayContent;
+
+        button.addEventListener("click", function () {
+            selectedDate = new Date(
+                displayedYear,
+                displayedMonth,
+                dayNumber
+            );
+
+            renderCalendar();
+            renderSelectedDate();
+        });
+
+        calendarGrid.appendChild(button);
+    }
+}
+
+/* SELECTED DATE DETAILS */
+
+function renderSelectedDate() {
+    selectedDateTitle.textContent = selectedDate.toLocaleDateString(
+        "en-IN",
+        {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        }
+    );
+
+    const events = getEventsForDate(selectedDate);
+
+    selectedDateEvents.innerHTML = "";
+
+    if (events.length === 0) {
+        selectedDateEvents.innerHTML =
+            '<p class="no-events">No events scheduled for this date.</p>';
+
+        return;
+    }
+
+    events.forEach(function (event) {
+        const item = document.createElement("div");
+
+        item.className = "selected-event";
+
+        const title = escapeHTML(event.title || event.name || "Campus Event");
+        const time = escapeHTML(event.time || event.startTime || "Time not specified");
+        const venue = escapeHTML(event.venue || event.location || "Venue to be announced");
+
+        item.innerHTML =
+            "<strong>" + title + "</strong>" +
+            "<span>🕒 " + time + "</span>" +
+            "<span>📍 " + venue + "</span>";
+
+        selectedDateEvents.appendChild(item);
+    });
+}
+
+/* UPCOMING EVENTS */
+
+function renderUpcomingEvents() {
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+
+    const events = getEvents()
+        .map(function (event) {
+            return {
+                event: event,
+                date: parseEventDate(event)
+            };
+        })
+        .filter(function (item) {
+            return item.date && item.date >= today;
+        })
+        .sort(function (a, b) {
+            return a.date - b.date;
+        })
+        .slice(0, 8);
+
+    upcomingContainer.innerHTML = "";
+
+    if (events.length === 0) {
+        upcomingContainer.innerHTML =
+            '<div class="empty-upcoming">' +
+            "<span>📭</span>" +
+            "No upcoming events found." +
+            "</div>";
+
+        return;
+    }
+
+    events.forEach(function (item) {
+        const event = item.event;
+        const date = item.date;
+
+        const card = document.createElement("article");
+
+        card.className = "upcoming-item";
+
+        const day = String(date.getDate()).padStart(2, "0");
+
+        const month = date.toLocaleDateString("en-IN", {
+            month: "short"
+        });
+
+        const title = escapeHTML(event.title || event.name || "Campus Event");
+        const time = escapeHTML(event.time || event.startTime || "Time TBA");
+        const venue = escapeHTML(event.venue || event.location || "Venue TBA");
+        const category = escapeHTML(event.category || "Campus Event");
+
+        card.innerHTML =
+            '<div class="date-box">' +
+                "<strong>" + day + "</strong>" +
+                "<span>" + month + "</span>" +
+            "</div>" +
+            '<div class="upcoming-info">' +
+                "<h3>" + title + "</h3>" +
+                "<p>🕒 " + time + "</p>" +
+                "<p>📍 " + venue + "</p>" +
+                '<span class="category-tag">' + category + "</span>" +
+            "</div>";
+
+        card.addEventListener("click", function () {
+            displayedYear = date.getFullYear();
+            displayedMonth = date.getMonth();
+
+            selectedDate = new Date(
+                date.getFullYear(),
+                date.getMonth(),
+                date.getDate()
+            );
+
+            renderCalendar();
+            renderSelectedDate();
+
+            document.getElementById("calendarSection").scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        });
+
+        upcomingContainer.appendChild(card);
+    });
+}
+
+/* MONTH BUTTONS */
+
+document.getElementById("prevMonth").addEventListener("click", function () {
+    displayedMonth--;
+
+    if (displayedMonth < 0) {
+        displayedMonth = 11;
+        displayedYear--;
+    }
+
+    renderCalendar();
+});
+
+document.getElementById("nextMonth").addEventListener("click", function () {
+    displayedMonth++;
+
+    if (displayedMonth > 11) {
+        displayedMonth = 0;
+        displayedYear++;
+    }
+
+    renderCalendar();
+});
+
+document.getElementById("todayMonth").addEventListener("click", function () {
+    const today = new Date();
+
+    displayedYear = today.getFullYear();
+    displayedMonth = today.getMonth();
+
+    selectedDate = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate()
+    );
+
+    renderCalendar();
+    renderSelectedDate();
+});
+
+/* INITIALIZE */
+
+renderCalendar();
+renderSelectedDate();
+renderUpcomingEvents();
+</script>
+
+</body>
+</html>

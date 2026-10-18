@@ -1,0 +1,727 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registrations | CampusConnect Pro</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #080d1b;
+    --card: #111a2e;
+    --border: #26334e;
+    --text: #f4f7ff;
+    --muted: #9caac4;
+    --purple: #8872ff;
+    --green: #36dda0;
+    --red: #ff8295;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+header {
+    background: #0d1527;
+    border-bottom: 1px solid var(--border);
+}
+
+nav {
+    width: min(1200px, 94%);
+    min-height: 72px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: var(--purple);
+}
+
+.nav-links {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.nav-links a:hover {
+    color: var(--green);
+}
+
+.container {
+    width: min(1200px, 94%);
+    margin: auto;
+    padding: 35px 0 55px;
+}
+
+.eyebrow {
+    color: var(--green);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+h1 {
+    font-size: clamp(27px, 4vw, 38px);
+    margin: 10px 0;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 28px 0;
+}
+
+.stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.stat span {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.stat strong {
+    font-size: 27px;
+}
+
+.panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+}
+
+.panel h2 {
+    font-size: 19px;
+    margin-bottom: 18px;
+}
+
+.toolbar {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) 180px 180px;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+input, select {
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    background: #0c1426;
+    color: white;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font: inherit;
+    font-size: 13px;
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: var(--purple);
+}
+
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 850px;
+}
+
+th, td {
+    text-align: left;
+    padding: 15px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    vertical-align: top;
+}
+
+th {
+    color: var(--muted);
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+td {
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+td strong {
+    font-size: 13px;
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 8px;
+    border-radius: 7px;
+    background: rgba(54, 221, 160, 0.1);
+    border: 1px solid rgba(54, 221, 160, 0.22);
+    color: var(--green);
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.badge.cancelled {
+    background: rgba(255, 130, 149, 0.1);
+    border-color: rgba(255, 130, 149, 0.25);
+    color: var(--red);
+}
+
+.btn {
+    display: inline-block;
+    padding: 9px 11px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.btn-primary {
+    background: var(--purple);
+    color: white;
+}
+
+.btn-secondary {
+    background: #202b43;
+    color: white;
+}
+
+.btn-danger {
+    background: #351d2a;
+    color: var(--red);
+}
+
+.actions {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+
+.empty {
+    padding: 40px 15px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.notice {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+    margin-top: 17px;
+}
+
+footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 22px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+@media (max-width: 800px) {
+    .toolbar {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .toolbar input {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 520px) {
+    nav {
+        padding: 16px 0;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .toolbar {
+        grid-template-columns: 1fr;
+    }
+
+    .toolbar input {
+        grid-column: auto;
+    }
+
+    .panel {
+        padding: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a href="../index.html" class="logo">
+            CampusConnect <span>Pro.</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="../index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="manage-events.html">Events</a>
+            <a href="manage-clubs.html">Clubs</a>
+            <a href="registrations.html">Registrations</a>
+            <a href="scan-ticket.html">Scan Ticket</a>
+        </div>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section>
+        <p class="eyebrow">ADMINISTRATION</p>
+        <h1>Student Registrations 📋</h1>
+        <p class="subtitle">
+            Search student registrations, view registration details and manage cancellations.
+        </p>
+    </section>
+
+    <section class="stats">
+        <div class="stat">
+            <span>Total Registrations</span>
+            <strong id="totalCount">0</strong>
+        </div>
+
+        <div class="stat">
+            <span>Tech Registrations</span>
+            <strong id="techCount">0</strong>
+        </div>
+
+        <div class="stat">
+            <span>Cultural & Sports</span>
+            <strong id="otherCount">0</strong>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Registration Directory</h2>
+
+        <div class="toolbar">
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search name, email or ID..."
+                aria-label="Search registrations"
+            >
+
+            <select id="clubFilter" aria-label="Filter by club">
+                <option value="all">All Clubs</option>
+                <option value="Tech">Tech Club</option>
+                <option value="Cultural">Cultural Club</option>
+                <option value="Sports">Sports Club</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <select id="sortFilter" aria-label="Sort registrations">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="name">Student Name A–Z</option>
+            </select>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Event</th>
+                        <th>Club</th>
+                        <th>Registration ID</th>
+                        <th>Registered On</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="registrationBody"></tbody>
+            </table>
+        </div>
+
+        <div class="empty" id="emptyMessage" hidden>
+            No registrations found.
+        </div>
+
+        <p class="notice">
+            Demo note: registrations are read from this browser's localStorage.
+            Cancellation removes a registration from this demo list and may not
+            synchronize with another device.
+        </p>
+    </section>
+
+</main>
+
+<footer>
+    © <span id="year"></span> CampusConnect Pro · Registration Management
+</footer>
+
+<script>
+"use strict";
+
+const REGISTRATIONS_KEY = "campusConnectRegistrations";
+const EVENTS_KEY = "campusConnectEvents";
+const LATEST_KEY = "campusConnectLatestRegistration";
+
+const body = document.getElementById("registrationBody");
+const emptyMessage = document.getElementById("emptyMessage");
+const searchInput = document.getElementById("searchInput");
+const clubFilter = document.getElementById("clubFilter");
+const sortFilter = document.getElementById("sortFilter");
+
+function readArray(key) {
+    try {
+        const value = JSON.parse(localStorage.getItem(key) || "[]");
+        return Array.isArray(value) ? value : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function readEvents() {
+    return readArray(EVENTS_KEY);
+}
+
+function readRegistrations() {
+    return readArray(REGISTRATIONS_KEY);
+}
+
+function writeRegistrations(registrations) {
+    try {
+        localStorage.setItem(
+            REGISTRATIONS_KEY,
+            JSON.stringify(registrations)
+        );
+        return true;
+    } catch (error) {
+        alert("Unable to save changes. Check browser storage.");
+        return false;
+    }
+}
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+function getEvent(registration, events) {
+    const id = String(registration.eventId || "");
+    const event = events.find(item => String(item.id) === id);
+
+    const inferredClub =
+        id.startsWith("TECH") ? "Tech" :
+        id.startsWith("CULT") ? "Cultural" :
+        id.startsWith("SPORT") ? "Sports" : "Other";
+
+    return {
+        id,
+        name: registration.eventName || (event && event.name) || "College Event",
+        club: registration.club || (event && event.club) || inferredClub
+    };
+}
+
+function formatDate(value) {
+    if (!value) return "Not available";
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return String(value);
+    }
+
+    return date.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
+}
+
+function getTimestamp(registration) {
+    const value =
+        registration.registeredAt ||
+        registration.registrationDate ||
+        registration.date;
+
+    if (!value) return 0;
+
+    const timestamp = new Date(value).getTime();
+
+    return Number.isNaN(timestamp) ? 0 : timestamp;
+}
+
+function updateStats(registrations, events) {
+    document.getElementById("totalCount").textContent =
+        registrations.length;
+
+    document.getElementById("techCount").textContent =
+        registrations.filter(registration =>
+            getEvent(registration, events).club === "Tech"
+        ).length;
+
+    document.getElementById("otherCount").textContent =
+        registrations.filter(registration => {
+            const club = getEvent(registration, events).club;
+            return club === "Cultural" || club === "Sports";
+        }).length;
+}
+
+function renderRegistrations() {
+    const registrations = readRegistrations();
+    const events = readEvents();
+
+    updateStats(registrations, events);
+
+    const query = searchInput.value.trim().toLowerCase();
+    const selectedClub = clubFilter.value;
+
+    let filtered = registrations.filter(registration => {
+        const event = getEvent(registration, events);
+
+        const searchable = [
+            registration.fullName,
+            registration.name,
+            registration.email,
+            registration.course,
+            registration.registrationId,
+            event.id,
+            event.name,
+            event.club
+        ].join(" ").toLowerCase();
+
+        return searchable.includes(query) &&
+            (selectedClub === "all" || event.club === selectedClub);
+    });
+
+    if (sortFilter.value === "name") {
+        filtered.sort((a, b) =>
+            String(a.fullName || a.name || "").localeCompare(
+                String(b.fullName || b.name || "")
+            )
+        );
+    } else if (sortFilter.value === "oldest") {
+        filtered.sort((a, b) => getTimestamp(a) - getTimestamp(b));
+    } else {
+        filtered.sort((a, b) => getTimestamp(b) - getTimestamp(a));
+    }
+
+    body.innerHTML = "";
+
+    emptyMessage.hidden = filtered.length !== 0;
+
+    filtered.forEach(registration => {
+        const event = getEvent(registration, events);
+        const name = registration.fullName || registration.name || "Student";
+        const email = registration.email || "No email";
+        const registrationId = String(
+            registration.registrationId || ""
+        );
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>
+                <strong>${escapeHTML(name)}</strong><br>
+                <span class="muted">${escapeHTML(email)}</span>
+            </td>
+
+            <td>
+                ${escapeHTML(event.name)}<br>
+                <span class="muted">${escapeHTML(event.id || "N/A")}</span>
+            </td>
+
+            <td>${escapeHTML(event.club)}</td>
+
+            <td>${escapeHTML(registrationId || "Not available")}</td>
+
+            <td>${escapeHTML(formatDate(
+                registration.registeredAt ||
+                registration.registrationDate ||
+                registration.date
+            ))}</td>
+
+            <td><span class="badge">Registered</span></td>
+
+            <td>
+                <div class="actions">
+                    <button
+                        class="btn btn-primary"
+                        type="button"
+                        data-action="ticket"
+                        data-id="${escapeHTML(registrationId)}"
+                    >Ticket</button>
+
+                    <button
+                        class="btn btn-danger"
+                        type="button"
+                        data-action="cancel"
+                        data-id="${escapeHTML(registrationId)}"
+                    >Cancel</button>
+                </div>
+            </td>
+        `;
+
+        body.appendChild(row);
+    });
+}
+
+body.addEventListener("click", function(event) {
+    const button = event.target.closest("button[data-action]");
+
+    if (!button) return;
+
+    const action = button.dataset.action;
+    const id = button.dataset.id;
+
+    const registrations = readRegistrations();
+
+    const registration = registrations.find(item =>
+        String(item.registrationId || "") === id
+    );
+
+    if (!registration) {
+        alert("Registration not found. Refresh the page and try again.");
+        renderRegistrations();
+        return;
+    }
+
+    if (action === "ticket") {
+        try {
+            localStorage.setItem(
+                LATEST_KEY,
+                JSON.stringify(registration)
+            );
+
+            window.location.href = "../student/ticket.html";
+        } catch (error) {
+            alert("Could not open the ticket. Check browser storage.");
+        }
+
+        return;
+    }
+
+    if (action === "cancel") {
+        const name = registration.fullName ||
+            registration.name ||
+            "this student";
+
+        const eventName = registration.eventName ||
+            registration.eventId ||
+            "this event";
+
+        if (!confirm(
+            "Cancel " + name + "'s registration for " + eventName + "?"
+        )) {
+            return;
+        }
+
+        const updated = registrations.filter(item =>
+            String(item.registrationId || "") !== id
+        );
+
+        if (!writeRegistrations(updated)) return;
+
+        try {
+            const latest = JSON.parse(
+                localStorage.getItem(LATEST_KEY) || "null"
+            );
+
+            if (latest && String(latest.registrationId || "") === id) {
+                if (updated.length > 0) {
+                    localStorage.setItem(
+                        LATEST_KEY,
+                        JSON.stringify(updated[updated.length - 1])
+                    );
+                } else {
+                    localStorage.removeItem(LATEST_KEY);
+                }
+            }
+        } catch (error) {
+            localStorage.removeItem(LATEST_KEY);
+        }
+
+        renderRegistrations();
+        alert("Registration cancelled successfully.");
+    }
+});
+
+searchInput.addEventListener("input", renderRegistrations);
+clubFilter.addEventListener("change", renderRegistrations);
+sortFilter.addEventListener("change", renderRegistrations);
+
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+renderRegistrations();
+
+window.addEventListener("storage", function(event) {
+    if (
+        event.key === REGISTRATIONS_KEY ||
+        event.key === EVENTS_KEY
+    ) {
+        renderRegistrations();
+    }
+});
+</script>
+
+</body>
+</html>

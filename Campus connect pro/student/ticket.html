@@ -1,0 +1,630 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Ticket | CampusConnect Pro</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #080d1b;
+    --card: #111a2e;
+    --border: #26334e;
+    --text: #f4f7ff;
+    --muted: #9caac4;
+    --purple: #8872ff;
+    --green: #36dda0;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+header {
+    background: #0d1527;
+    border-bottom: 1px solid var(--border);
+}
+
+nav {
+    width: min(1100px, 92%);
+    min-height: 72px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: var(--purple);
+}
+
+.nav-links {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.nav-links a:hover {
+    color: var(--green);
+}
+
+main {
+    width: min(850px, 92%);
+    margin: auto;
+    padding: 42px 0;
+}
+
+.eyebrow {
+    color: var(--green);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+h1 {
+    font-size: clamp(28px, 5vw, 38px);
+    margin: 10px 0;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+}
+
+.ticket {
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+}
+
+.ticket-header {
+    background: linear-gradient(120deg, #30265f, #172747);
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.ticket-brand {
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.ticket-brand span {
+    color: #c5baff;
+}
+
+.ticket-label {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: rgba(54, 221, 160, .12);
+    border: 1px solid rgba(54, 221, 160, .3);
+    color: var(--green);
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.ticket-icon {
+    font-size: 46px;
+}
+
+.ticket-body {
+    padding: 27px;
+}
+
+.club {
+    display: inline-block;
+    background: #242044;
+    color: #c5baff;
+    padding: 6px 10px;
+    border-radius: 7px;
+    font-size: 11px;
+    margin-bottom: 12px;
+}
+
+.event-name {
+    font-size: clamp(24px, 4vw, 32px);
+    margin-bottom: 8px;
+    overflow-wrap: anywhere;
+}
+
+.event-id {
+    color: var(--muted);
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px dashed #3b4965;
+    margin: 24px 0;
+}
+
+.details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+.detail-label {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    margin-bottom: 7px;
+}
+
+.detail-value {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+.registration-code {
+    margin-top: 25px;
+    padding: 18px;
+    text-align: center;
+    background: #0b1325;
+    border: 1px dashed #465477;
+    border-radius: 12px;
+}
+
+.registration-code span {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    margin-bottom: 9px;
+}
+
+.registration-code strong {
+    color: #c5baff;
+    font-size: 18px;
+    letter-spacing: 1px;
+    overflow-wrap: anywhere;
+}
+
+.code-note {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 9px;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+}
+
+.btn {
+    border: 0;
+    border-radius: 9px;
+    padding: 13px 17px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--purple);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #7259f7;
+}
+
+.btn-secondary {
+    background: #202b43;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #2b3956;
+}
+
+.empty {
+    padding: 45px 22px;
+    text-align: center;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.empty h2 {
+    margin-bottom: 12px;
+}
+
+.empty p {
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 13px;
+    margin-bottom: 22px;
+}
+
+footer {
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    text-align: center;
+    padding: 22px;
+    font-size: 12px;
+}
+
+@media (max-width: 520px) {
+    nav {
+        padding: 14px 0;
+    }
+
+    .ticket-header,
+    .ticket-body {
+        padding: 20px;
+    }
+
+    .details {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+@media print {
+    body {
+        background: white;
+        color: #111;
+    }
+
+    header,
+    footer,
+    .page-heading,
+    .actions,
+    .no-print {
+        display: none !important;
+    }
+
+    main {
+        width: 100%;
+        padding: 0;
+    }
+
+    .ticket {
+        color: #111;
+        background: white;
+        border: 1px solid #aaa;
+    }
+
+    .ticket-header {
+        background: #e8e5ff;
+        color: #111;
+    }
+
+    .ticket-header span,
+    .ticket-label,
+    .club,
+    .event-id,
+    .detail-label,
+    .registration-code span,
+    .code-note {
+        color: #333;
+    }
+
+    .registration-code {
+        background: white;
+    }
+
+    .registration-code strong {
+        color: #111;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a href="../index.html" class="logo">
+            CampusConnect <span>Pro.</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="../index.html">Home</a>
+            <a href="../events.html">Events</a>
+            <a href="../my-tickets.html">My Tickets</a>
+            <a href="dashboard.html">Dashboard</a>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <section class="page-heading">
+        <div class="eyebrow">YOUR CAMPUS PASS</div>
+        <h1>Digital Event Ticket 🎟️</h1>
+        <p class="subtitle">
+            Keep your registration details handy for the event.
+        </p>
+    </section>
+
+    <section id="ticketContainer" aria-live="polite"></section>
+</main>
+
+<footer>
+    © <span id="year"></span> CampusConnect Pro.
+    <br><br>
+    Student Event Management Platform
+</footer>
+
+<script>
+"use strict";
+
+const REGISTRATIONS_KEY = "campusConnectRegistrations";
+const LATEST_KEY = "campusConnectLatestRegistration";
+
+const eventDetails = {
+    TECH101: { name: "CodeSprint", club: "Tech", icon: "💻", venue: "Computer Lab" },
+    TECH102: { name: "Web Design Challenge", club: "Tech", icon: "🌐", venue: "Innovation Lab" },
+    TECH103: { name: "Debugging Battle", club: "Tech", icon: "🐞", venue: "Computer Lab" },
+    TECH104: { name: "Tech Quiz", club: "Tech", icon: "🧠", venue: "Seminar Hall" },
+    TECH105: { name: "Project Expo", club: "Tech", icon: "🚀", venue: "Main Auditorium" },
+
+    CULT101: { name: "Dance Fiesta", club: "Cultural", icon: "💃", venue: "Main Stage" },
+    CULT102: { name: "Singing Star", club: "Cultural", icon: "🎤", venue: "Auditorium" },
+    CULT103: { name: "Drama & Acting", club: "Cultural", icon: "🎭", venue: "Auditorium" },
+    CULT104: { name: "Fashion Walk", club: "Cultural", icon: "✨", venue: "Main Stage" },
+    CULT105: { name: "Battle of Bands", club: "Cultural", icon: "🎸", venue: "Open Stage" },
+
+    SPORT101: { name: "Cricket Championship", club: "Sports", icon: "🏏", venue: "Sports Ground" },
+    SPORT102: { name: "Football Cup", club: "Sports", icon: "⚽", venue: "Football Ground" },
+    SPORT103: { name: "Badminton Tournament", club: "Sports", icon: "🏸", venue: "Indoor Court" },
+    SPORT104: { name: "Chess Challenge", club: "Sports", icon: "♟️", venue: "Activity Room" },
+    SPORT105: { name: "Athletics Meet", club: "Sports", icon: "🏃", venue: "Athletics Track" }
+};
+
+const container = document.getElementById("ticketContainer");
+
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function(char) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[char];
+    });
+}
+
+function readRegistrations() {
+    try {
+        const data = JSON.parse(
+            localStorage.getItem(REGISTRATIONS_KEY) || "[]"
+        );
+
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function getRegistration() {
+    const params = new URLSearchParams(window.location.search);
+    const requestedId = params.get("id");
+
+    const registrations = readRegistrations();
+
+    if (requestedId) {
+        return registrations.find(function(item) {
+            return String(item.registrationId || "") === requestedId;
+        }) || null;
+    }
+
+    try {
+        const latest = JSON.parse(
+            localStorage.getItem(LATEST_KEY) || "null"
+        );
+
+        if (latest && latest.registrationId) {
+            const saved = registrations.find(function(item) {
+                return item.registrationId === latest.registrationId;
+            });
+
+            if (saved) return saved;
+        }
+    } catch (error) {
+        // Fall back to the most recent saved registration.
+    }
+
+    return registrations.length
+        ? registrations[registrations.length - 1]
+        : null;
+}
+
+function formatDate(value) {
+    if (!value) return "Not available";
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return String(value);
+    }
+
+    return date.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
+}
+
+function renderTicket() {
+    const registration = getRegistration();
+
+    if (!registration) {
+        container.innerHTML = `
+            <section class="empty">
+                <div class="empty-icon">🎟️</div>
+                <h2>No Ticket Found</h2>
+                <p>
+                    You don't have a saved registration in this browser.
+                    Register for an event first to generate your ticket.
+                </p>
+                <a class="btn btn-primary" href="register.html">
+                    Register for an Event →
+                </a>
+                <a class="btn btn-secondary" href="../events.html">
+                    Explore Events
+                </a>
+            </section>
+        `;
+        return;
+    }
+
+    const event = eventDetails[registration.eventId] || {};
+
+    const eventName = registration.eventName || event.name || "College Event";
+    const club = registration.club || event.club || "Campus";
+    const icon = event.icon || "🎟️";
+    const venue = registration.venue || event.venue || "Check event announcements";
+    const registrationId = registration.registrationId || "Not available";
+    const studentName = registration.fullName || registration.name || "Student";
+    const registeredOn = formatDate(
+        registration.registeredAt ||
+        registration.registrationDate ||
+        registration.date
+    );
+
+    container.innerHTML = `
+        <article class="ticket">
+            <div class="ticket-header">
+                <div>
+                    <div class="ticket-brand">
+                        CAMPUSCONNECT <span>PRO.</span>
+                    </div>
+                    <div class="ticket-label">✓ REGISTRATION SAVED</div>
+                </div>
+                <div class="ticket-icon">${icon}</div>
+            </div>
+
+            <div class="ticket-body">
+                <span class="club">${escapeHTML(club)} CLUB</span>
+
+                <h2 class="event-name">${escapeHTML(eventName)}</h2>
+
+                <div class="event-id">
+                    Event ID: ${escapeHTML(registration.eventId || "N/A")}
+                </div>
+
+                <hr class="divider">
+
+                <div class="details">
+                    <div>
+                        <span class="detail-label">STUDENT NAME</span>
+                        <strong class="detail-value">${escapeHTML(studentName)}</strong>
+                    </div>
+
+                    <div>
+                        <span class="detail-label">EMAIL ADDRESS</span>
+                        <strong class="detail-value">${escapeHTML(registration.email || "Not available")}</strong>
+                    </div>
+
+                    <div>
+                        <span class="detail-label">STUDENT ID</span>
+                        <strong class="detail-value">${escapeHTML(registration.studentId || "Not provided")}</strong>
+                    </div>
+
+                    <div>
+                        <span class="detail-label">COURSE / DEPARTMENT</span>
+                        <strong class="detail-value">${escapeHTML(registration.course || "Not specified")}</strong>
+                    </div>
+
+                    <div>
+                        <span class="detail-label">EVENT VENUE</span>
+                        <strong class="detail-value">${escapeHTML(venue)}</strong>
+                    </div>
+
+                    <div>
+                        <span class="detail-label">REGISTERED ON</span>
+                        <strong class="detail-value">${escapeHTML(registeredOn)}</strong>
+                    </div>
+                </div>
+
+                <div class="registration-code">
+                    <span>YOUR REGISTRATION ID</span>
+                    <strong>${escapeHTML(registrationId)}</strong>
+                    <div class="code-note">
+                        Keep this ID available when checking your registration.
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="button" class="btn btn-primary"
+                        id="printButton">
+                        🖨️ Print / Save as PDF
+                    </button>
+
+                    <a class="btn btn-secondary" href="../my-tickets.html">
+                        ← All My Tickets
+                    </a>
+                </div>
+            </div>
+        </article>
+    `;
+
+    document.getElementById("printButton").addEventListener("click", function() {
+        window.print();
+    });
+}
+
+renderTicket();
+</script>
+
+</body>
+</html>

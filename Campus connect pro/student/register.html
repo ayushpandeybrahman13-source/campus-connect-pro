@@ -1,0 +1,749 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d1b">
+    <title>Student Registration | CampusConnect Pro</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        :root {
+            --bg: #080d1b;
+            --card: #111a2e;
+            --border: #26334e;
+            --text: #f4f7ff;
+            --muted: #9caac4;
+            --purple: #8872ff;
+            --cyan: #45e5d1;
+            --green: #36dda0;
+            --red: #ff8295;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        header {
+            background: #0d1527;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
+            width: min(1100px, 92%);
+            min-height: 72px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        .logo span { color: var(--purple); }
+
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .nav-links a:hover { color: var(--cyan); }
+
+        .container {
+            width: min(1000px, 92%);
+            margin: auto;
+        }
+
+        .hero { padding: 40px 0 24px; }
+
+        .eyebrow {
+            color: var(--cyan);
+            letter-spacing: 2px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-size: clamp(29px, 5vw, 42px);
+            margin: 10px 0;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(240px, .8fr);
+            gap: 22px;
+            align-items: start;
+            margin-bottom: 45px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin: 0 0 7px;
+        }
+
+        .card-description {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin: 16px 0 7px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 9px;
+            border: 1px solid #35425e;
+            background: #0b1325;
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(136, 114, 255, .1);
+        }
+
+        input::placeholder, textarea::placeholder { color: #7785a0; }
+
+        .password-hint {
+            color: var(--muted);
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        .btn {
+            display: inline-block;
+            text-align: center;
+            border: 0;
+            border-radius: 9px;
+            padding: 13px 16px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--purple);
+            color: white;
+        }
+
+        .btn-primary:hover { background: #7259f7; }
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 23px;
+        }
+
+        .submit-btn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            display: none;
+            padding: 13px;
+            border-radius: 9px;
+            margin-top: 15px;
+            font-size: 13px;
+            overflow-wrap: anywhere;
+        }
+
+        .message.error {
+            display: block;
+            background: #351d2a;
+            border: 1px solid #713447;
+            color: #ffabb8;
+        }
+
+        .message.success {
+            display: block;
+            background: #12352e;
+            border: 1px solid #286b50;
+            color: #8bf0c7;
+        }
+
+        .message a {
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        .event-preview {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 18px;
+        }
+
+        .event-icon { font-size: 35px; }
+
+        .event-preview h3 {
+            font-size: 19px;
+            margin: 8px 0;
+        }
+
+        .event-preview p {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .event-tag {
+            display: inline-block;
+            background: #242044;
+            color: #c8bdff;
+            border-radius: 20px;
+            padding: 5px 10px;
+            font-size: 10px;
+            margin-top: 5px;
+        }
+
+        .info-list {
+            margin-top: 22px;
+            display: grid;
+            gap: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 12px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .info-item strong {
+            display: block;
+            color: var(--text);
+            margin-bottom: 3px;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .login-link a {
+            color: #c4b5fd;
+            font-weight: bold;
+        }
+
+        .note {
+            margin-top: 18px;
+            background: #17243a;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 13px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 22px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        @media (max-width: 700px) {
+            nav { padding: 15px 0; }
+            .layout { grid-template-columns: 1fr; }
+            .card { padding: 20px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a href="../index.html" class="logo">
+            CampusConnect <span>Pro.</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="../index.html">Home</a>
+            <a href="../events.html">Events</a>
+            <a href="../my-tickets.html">My Tickets</a>
+            <a href="login.html">Student Login</a>
+        </div>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <div class="eyebrow">STUDENT ACCOUNT</div>
+        <h1>Create Your Account 🎓</h1>
+        <p class="subtitle">
+            Create an account with your email and password, then register
+            for campus events and access your tickets.
+        </p>
+    </section>
+
+    <div class="layout">
+
+        <section class="card">
+            <h2>Student Registration</h2>
+            <p class="card-description">
+                Fields marked * are required.
+            </p>
+
+            <form id="registrationForm">
+
+                <label for="fullName">Full Name *</label>
+                <input
+                    type="text"
+                    id="fullName"
+                    name="fullName"
+                    placeholder="Enter your full name"
+                    maxlength="80"
+                    autocomplete="name"
+                    required
+                >
+
+                <label for="email">Email Address *</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    maxlength="150"
+                    autocomplete="email"
+                    required
+                >
+
+                <label for="password">Create Password *</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Create a password"
+                    minlength="6"
+                    maxlength="100"
+                    autocomplete="new-password"
+                    required
+                >
+                <p class="password-hint">
+                    Password must contain at least 6 characters.
+                </p>
+
+                <label for="confirmPassword">Confirm Password *</label>
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Enter the same password again"
+                    minlength="6"
+                    maxlength="100"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <label for="studentId">Student ID *</label>
+                <input
+                    type="text"
+                    id="studentId"
+                    name="studentId"
+                    placeholder="Enter your college ID"
+                    maxlength="50"
+                    required
+                >
+
+                <label for="course">Course / Department *</label>
+                <input
+                    type="text"
+                    id="course"
+                    name="course"
+                    placeholder="e.g. B.Tech CSE"
+                    maxlength="100"
+                    required
+                >
+
+                <label for="eventSelect">Select Event *</label>
+                <select id="eventSelect" name="eventId" required>
+                    <option value="">Choose an event</option>
+                    <option value="TECH101">CodeSprint</option>
+                    <option value="TECH102">Web Design Challenge</option>
+                    <option value="TECH103">Debugging Battle</option>
+                    <option value="TECH104">Tech Quiz</option>
+                    <option value="TECH105">Project Expo</option>
+                    <option value="CULT101">Dance Fiesta</option>
+                    <option value="CULT102">Singing Star</option>
+                    <option value="CULT103">Drama &amp; Acting</option>
+                    <option value="CULT104">Fashion Walk</option>
+                    <option value="CULT105">Battle of Bands</option>
+                    <option value="SPORT101">Cricket Championship</option>
+                    <option value="SPORT102">Football Cup</option>
+                    <option value="SPORT103">Badminton Tournament</option>
+                    <option value="SPORT104">Chess Challenge</option>
+                    <option value="SPORT105">Athletics Meet</option>
+                </select>
+
+                <label for="phone">Phone Number (optional)</label>
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Enter your phone number"
+                    maxlength="20"
+                    autocomplete="tel"
+                >
+
+                <label for="notes">Additional Information (optional)</label>
+                <textarea
+                    id="notes"
+                    name="notes"
+                    maxlength="500"
+                    placeholder="Any additional information..."
+                ></textarea>
+
+                <button type="submit" class="btn btn-primary submit-btn" id="submitButton">
+                    Create Account &amp; Register →
+                </button>
+
+                <div id="message" class="message" role="status" aria-live="polite"></div>
+            </form>
+
+            <p class="login-link">
+                Already have an account?
+                <a href="login.html">Login here</a>
+            </p>
+
+            <div class="note">
+                Demo project: account and event registration are stored in
+                this browser only. This is not a production authentication
+                system.
+            </div>
+        </section>
+
+        <aside class="card">
+            <h2>Selected Event</h2>
+            <p class="card-description">
+                Event information updates when you select an event.
+            </p>
+
+            <div class="event-preview" id="eventPreview">
+                <div class="event-icon">🎫</div>
+                <h3>No event selected</h3>
+                <p>Choose an event from the form to see its details here.</p>
+            </div>
+
+            <div class="info-list">
+                <div class="info-item">
+                    <span>🔐</span>
+                    <div>
+                        <strong>Student Account</strong>
+                        Create an account using your email and password.
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <span>📋</span>
+                    <div>
+                        <strong>Event Registration</strong>
+                        Your event registration will be saved after validation.
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <span>🎟️</span>
+                    <div>
+                        <strong>Digital Ticket</strong>
+                        View your saved event registration on My Tickets.
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+</main>
+
+<footer>
+    © <span id="year"></span> CampusConnect Pro.
+</footer>
+
+<!-- Paths are relative to the student/ folder. -->
+<script src="../js/main.js"></script>
+<script src="../js/auth-demo.js"></script>
+
+<script>
+"use strict";
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+const STORAGE_KEY = "campusConnectRegistrations";
+
+const eventDetails = {
+    TECH101: { name: "CodeSprint", club: "Tech", icon: "💻", venue: "Computer Lab" },
+    TECH102: { name: "Web Design Challenge", club: "Tech", icon: "🌐", venue: "Innovation Lab" },
+    TECH103: { name: "Debugging Battle", club: "Tech", icon: "🐞", venue: "Computer Lab" },
+    TECH104: { name: "Tech Quiz", club: "Tech", icon: "🧠", venue: "Seminar Hall" },
+    TECH105: { name: "Project Expo", club: "Tech", icon: "🚀", venue: "Main Auditorium" },
+    CULT101: { name: "Dance Fiesta", club: "Cultural", icon: "💃", venue: "Main Stage" },
+    CULT102: { name: "Singing Star", club: "Cultural", icon: "🎤", venue: "Auditorium" },
+    CULT103: { name: "Drama & Acting", club: "Cultural", icon: "🎭", venue: "Auditorium" },
+    CULT104: { name: "Fashion Walk", club: "Cultural", icon: "✨", venue: "Main Stage" },
+    CULT105: { name: "Battle of Bands", club: "Cultural", icon: "🎸", venue: "Open Stage" },
+    SPORT101: { name: "Cricket Championship", club: "Sports", icon: "🏏", venue: "Sports Ground" },
+    SPORT102: { name: "Football Cup", club: "Sports", icon: "⚽", venue: "Football Ground" },
+    SPORT103: { name: "Badminton Tournament", club: "Sports", icon: "🏸", venue: "Indoor Court" },
+    SPORT104: { name: "Chess Challenge", club: "Sports", icon: "♟️", venue: "Activity Room" },
+    SPORT105: { name: "Athletics Meet", club: "Sports", icon: "🏃", venue: "Athletics Track" }
+};
+
+const form = document.getElementById("registrationForm");
+const eventSelect = document.getElementById("eventSelect");
+const preview = document.getElementById("eventPreview");
+const message = document.getElementById("message");
+const submitButton = document.getElementById("submitButton");
+
+function showMessage(text, type) {
+    message.textContent = text;
+    message.className = "message " + type;
+}
+
+function readRegistrations() {
+    try {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function(char) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[char];
+    });
+}
+
+function updatePreview() {
+    const event = eventDetails[eventSelect.value];
+
+    if (!event) {
+        preview.innerHTML = `
+            <div class="event-icon">🎫</div>
+            <h3>No event selected</h3>
+            <p>Choose an event from the form to see its details here.</p>
+        `;
+        return;
+    }
+
+    preview.innerHTML = `
+        <div class="event-icon">${event.icon}</div>
+        <span class="event-tag">${escapeHTML(event.club)} Club</span>
+        <h3>${escapeHTML(event.name)}</h3>
+        <p>Event ID: ${escapeHTML(eventSelect.value)}</p>
+        <p>📍 Venue: ${escapeHTML(event.venue)}</p>
+    `;
+}
+
+function getRegistrationId() {
+    if (window.crypto && typeof window.crypto.randomUUID === "function") {
+        return "CC-" + window.crypto.randomUUID()
+            .replace(/-/g, "").slice(0, 12).toUpperCase();
+    }
+
+    return "CC-" + Date.now().toString(36).toUpperCase()
+        + Math.random().toString(36).slice(2, 7).toUpperCase();
+}
+
+const queryParams = new URLSearchParams(window.location.search);
+const requestedEvent = queryParams.get("event");
+
+if (requestedEvent && eventDetails[requestedEvent]) {
+    eventSelect.value = requestedEvent;
+}
+
+updatePreview();
+eventSelect.addEventListener("change", updatePreview);
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    message.className = "message";
+
+    const fullName = document.getElementById("fullName").value.trim();
+    const email = document.getElementById("email").value.trim().toLowerCase();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const studentId = document.getElementById("studentId").value.trim();
+    const course = document.getElementById("course").value.trim();
+    const eventId = eventSelect.value;
+    const selectedEvent = eventDetails[eventId];
+    const phone = document.getElementById("phone").value.trim();
+    const notes = document.getElementById("notes").value.trim();
+
+    if (!fullName || !email || !password || !confirmPassword ||
+        !studentId || !course || !selectedEvent) {
+        showMessage("Please complete all required fields.", "error");
+        return;
+    }
+
+    if (password.length < 6) {
+        showMessage("Password must contain at least 6 characters.", "error");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        showMessage("Passwords do not match. Please check again.", "error");
+        return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showMessage("Please enter a valid email address.", "error");
+        return;
+    }
+
+    if (!window.CampusConnect ||
+        !window.CampusAuth ||
+        typeof window.CampusAuth.register !== "function") {
+        showMessage(
+            "Account system load nahi hua. Check karo: js/main.js aur js/auth-demo.js.",
+            "error"
+        );
+        return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Creating Account...";
+
+    try {
+        // Create the student account using the existing auth-demo.js.
+        const result = window.CampusAuth.register(fullName, email, password);
+
+        if (!result || result.success !== true) {
+            showMessage(
+                result && result.message
+                    ? result.message
+                    : "Account create nahi hua. Please try again.",
+                "error"
+            );
+            return;
+        }
+
+        // Save the student's event registration in the existing storage format.
+        const registrations = readRegistrations();
+
+        const duplicate = registrations.some(function(registration) {
+            return String(registration.email || "").toLowerCase() === email &&
+                   String(registration.eventId || "") === eventId;
+        });
+
+        if (duplicate) {
+            showMessage(
+                "Account create ho gaya, lekin is email se event pehle registered hai. Login karke My Tickets check karo.",
+                "success"
+            );
+            setTimeout(function() {
+                window.location.href = "login.html";
+            }, 1800);
+            return;
+        }
+
+        const registration = {
+            registrationId: getRegistrationId(),
+            eventId: eventId,
+            eventName: selectedEvent.name,
+            club: selectedEvent.club,
+            fullName: fullName,
+            name: fullName,
+            email: email,
+            studentId: studentId,
+            course: course,
+            phone: phone,
+            notes: notes,
+            venue: selectedEvent.venue,
+            registeredAt: new Date().toISOString()
+        };
+
+        try {
+            registrations.push(registration);
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(registrations));
+            localStorage.setItem(
+                "campusConnectLatestRegistration",
+                JSON.stringify(registration)
+            );
+            localStorage.setItem(
+                "campusConnectStudent",
+                JSON.stringify({ name: fullName, email: email })
+            );
+        } catch (storageError) {
+            // Avoid leaving the newly created account with a misleading success message.
+            showMessage(
+                "Account create ho gaya, lekin event registration save nahi hui. Browser storage check karo, phir login karke dobara try karo.",
+                "error"
+            );
+            return;
+        }
+
+        showMessage(
+            "Account aur event registration dono successful! Ab login page par ja rahe hain...",
+            "success"
+        );
+
+        form.reset();
+        updatePreview();
+
+        setTimeout(function() {
+            window.location.href = "login.html";
+        }, 1800);
+
+    } catch (error) {
+        console.error("Registration error:", error);
+        showMessage("Registration failed. Please try again.", "error");
+    } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Create Account & Register →";
+    }
+});
+</script>
+
+</body>
+</html>
+```

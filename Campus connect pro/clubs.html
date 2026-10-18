@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Clubs | CampusConnect Pro</title>
+
+    <meta name="description"
+          content="Discover student clubs, explore communities and participate in campus activities with CampusConnect Pro.">
+
+    <meta name="theme-color" content="#080d1c">
+
+    <style>
+        :root {
+            --bg: #080d1c;
+            --surface: #10182a;
+            --surface2: #151f35;
+            --primary: #7c5cff;
+            --cyan: #45e5d1;
+            --text: #f8fafc;
+            --muted: #9ba8bf;
+            --border: rgba(255,255,255,.09);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .container {
+            width: min(1160px, 92%);
+            margin: auto;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(8,13,28,.94);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            min-height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            color: #080d1c;
+            background: linear-gradient(135deg, #7c5cff, #45e5d1);
+        }
+
+        .brand-name span {
+            color: #a99aff;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #bdc8db;
+            font-size: 12px;
+            font-weight: 700;
+            transition: color .2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--cyan);
+        }
+
+        .nav-button {
+            padding: 11px 16px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #7c5cff, #5940d4);
+            color: white;
+            font-size: 12px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .menu-toggle {
+            display: none;
+            padding: 8px 12px;
+            background: var(--surface);
+            color: white;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            font-size: 20px;
+        }
+
+        /* HERO */
+
+        .hero {
+            padding: 70px 0 55px;
+            background:
+                radial-gradient(ellipse at 90% 0%, rgba(124,92,255,.18), transparent 45%),
+                radial-gradient(ellipse at 0% 70%, rgba(69,229,209,.07), transparent 40%);
+        }
+
+        .breadcrumb {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 25px;
+        }
+
+        .breadcrumb a {
+            color: var(--cyan);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 7px 12px;
+            border: 1px solid rgba(69,229,209,.2);
+            border-radius: 30px;
+            background: rgba(69,229,209,.07);
+            color: var(--cyan);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 17px;
+        }
+
+        .hero h1 {
+            max-width: 800px;
+            font-size: clamp(38px, 5vw, 58px);
+            line-height: 1.15;
+            letter-spacing: -1.7px;
+            margin-bottom: 18px;
+        }
+
+        .gradient {
+            background: linear-gradient(90deg, #a99aff, #45e5d1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 650px;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.9;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .primary-button,
+        .secondary-button {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .primary-button {
+            background: linear-gradient(135deg, #7c5cff, #5940d4);
+            color: white;
+            border: none;
+        }
+
+        .secondary-button {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: white;
+        }
+
+        /* STATS */
+
+        .stats {
+            padding-bottom: 35px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background: rgba(255,255,255,.025);
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            overflow: hidden;
+        }
+
+        .stat {
+            padding: 22px;
+            text-align: center;
+            border-right: 1px solid var(--border);
+        }
+
+        .stat:last-child {
+            border-right: none;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 27px;
+        }
+
+        .stat span {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        /* CLUBS */
+
+        .clubs-section {
+            padding: 45px 0 90px;
+        }
+
+        .section-heading {
+            margin-bottom: 28px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(27px, 3vw, 38px);
+            margin-bottom: 8px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .filter-panel {
+            display: grid;
+            grid-template-columns: minmax(200px, 1fr) 230px auto;
+            gap: 12px;
+            padding: 17px;
+            margin-bottom: 25px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 10px;
+            color: var(--muted);
+            font-size: 18px;
+        }
+
+        .filter-panel input,
+        .filter-panel select {
+            width: 100%;
+            min-width: 0;
+            height: 44px;
+            padding: 0 12px;
+            outline: none;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: #0b1222;
+            color: white;
+            font-size: 12px;
+        }
+
+        .filter-panel input {
+            padding-left: 39px;
+        }
+
+        .filter-panel input:focus,
+        .filter-panel select:focus {
+            border-color: var(--primary);
+        }
+
+        .filter-panel select option {
+            background: var(--surface);
+        }
+
+        .reset-button {
+            padding: 0 16px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--surface2);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .results-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .results-line strong {
+            color: white;
+        }
+
+        .club-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .club-card {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            padding: 22px;
+            background: linear-gradient(145deg, #111a2d, #0d1425);
+            border: 1px solid var(--border);
+            border-radius: 19px;
+            transition: transform .25s, border-color .25s;
+            animation: appear .35s ease both;
+        }
+
+        .club-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(124,92,255,.65);
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .club-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .club-icon {
+            width: 65px;
+            height: 65px;
+            display: grid;
+            place-items: center;
+            border-radius: 17px;
+            font-size: 32px;
+            background: rgba(124,92,255,.14);
+            border: 1px solid rgba(124,92,255,.2);
+        }
+
+        .club-category {
+            display: inline-block;
+            padding: 6px 9px;
+            border-radius: 30px;
+            background: rgba(69,229,209,.08);
+            color: var(--cyan);
+            font-size: 9px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: .7px;
+        }
+
+        .club-card h3 {
+            font-size: 20px;
+            margin-bottom: 9px;
+        }
+
+        .club-description {
+            min-height: 66px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        .club-meta {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 14px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            color: #c6d0e0;
+            font-size: 11px;
+        }
+
+        .club-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .club-status {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .join-button {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 9px;
+            background: linear-gradient(135deg, #7c5cff, #5940d4);
+            color: white;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .join-button.joined {
+            background: rgba(69,229,209,.12);
+            border: 1px solid rgba(69,229,209,.3);
+            color: var(--cyan);
+        }
+
+        .join-button:disabled {
+            cursor: not-allowed;
+            opacity: .6;
+        }
+
+        .empty-state {
+            display: none;
+            padding: 50px 20px;
+            text-align: center;
+            border: 1px dashed var(--border);
+            border-radius: 16px;
+            color: var(--muted);
+        }
+
+        .empty-state .empty-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .empty-state h3 {
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        /* JOIN CTA */
+
+        .join-cta {
+            margin-top: 55px;
+            padding: 35px;
+            border: 1px solid rgba(124,92,255,.25);
+            border-radius: 20px;
+            background:
+                radial-gradient(ellipse at right, rgba(124,92,255,.18), transparent 55%),
+                var(--surface);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .join-cta h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .join-cta p {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            padding: 28px 0;
+            border-top: 1px solid var(--border);
+            background: #060a15;
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer p,
+        .footer-links a {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a:hover {
+            color: var(--cyan);
+        }
+
+        /* TOAST */
+
+        .toast-container {
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            z-index: 999;
+            display: grid;
+            gap: 10px;
+        }
+
+        .toast {
+            max-width: 330px;
+            padding: 14px 17px;
+            background: #18243a;
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,.3);
+            font-size: 12px;
+            animation: appear .2s ease;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 11px;
+            }
+
+            .club-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+            .nav-inner {
+                flex-wrap: wrap;
+                padding: 12px 0;
+            }
+
+            .menu-toggle {
+                display: block;
+                margin-left: auto;
+            }
+
+            .nav-button {
+                display: none;
+            }
+
+            .nav-links {
+                display: none;
+                order: 3;
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 12px;
+                border-radius: 8px;
+                font-size: 13px;
+            }
+
+            .hero {
+                padding: 48px 0 38px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .stat:last-child {
+                border-bottom: none;
+            }
+
+            .filter-panel {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .search-wrap {
+                grid-column: 1 / -1;
+            }
+
+            .join-cta {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .hero h1 {
+                font-size: 39px;
+            }
+
+            .hero p {
+                font-size: 13px;
+            }
+
+            .club-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .search-wrap {
+                grid-column: auto;
+            }
+
+            .reset-button {
+                min-height: 43px;
+            }
+
+            .results-line {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="container nav-inner">
+
+            <a href="index.html" class="brand">
+                <span class="brand-icon">✦</span>
+
+                <span class="brand-name">
+                    CampusConnect <span>Pro</span>
+                </span>
+            </a>
+
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                type="button"
+                aria-label="Toggle navigation"
+                aria-expanded="false"
+            >☰</button>
+
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="events.html">Events</a>
+                <a href="clubs.html" class="active">Clubs</a>
+                <a href="calendar.html">Calendar</a>
+                <a href="announcements.html">Notices</a>
+                <a href="achievements.html">Achievements</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <a href="student/login.html" class="nav-button">
+                Student Login ↗
+            </a>
+
+        </div>
+    </header>
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="container">
+
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a> / Student Clubs
+                </div>
+
+                <div class="hero-badge">
+                    ✦ FIND YOUR COMMUNITY
+                </div>
+
+                <h1>
+                    Find Your People.<br>
+                    <span class="gradient">Build Your Future.</span>
+                </h1>
+
+                <p>
+                    Discover student communities, explore your interests,
+                    develop new skills and connect with students who share
+                    your passion.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="#allClubs" class="primary-button">
+                        Explore Clubs ↓
+                    </a>
+
+                    <a href="student/login.html" class="secondary-button">
+                        Student Login ↗
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- STATISTICS -->
+        <section class="stats">
+            <div class="container">
+
+                <div class="stats-grid">
+
+                    <div class="stat">
+                        <strong id="totalClubs">06</strong>
+                        <span>Clubs to Explore</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong id="activeClubs">06</strong>
+                        <span>Active Communities</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong id="joinedClubs">00</strong>
+                        <span>Your Joined Clubs</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CLUB LIST -->
+        <section class="clubs-section" id="allClubs">
+            <div class="container">
+
+                <div class="section-heading">
+                    <h2>Explore Student Clubs <span class="gradient">✦</span></h2>
+
+                    <p>
+                        Find a community that matches your interests
+                        and start participating.
+                    </p>
+                </div>
+
+                <!-- FILTERS -->
+                <div class="filter-panel">
+
+                    <div class="search-wrap">
+                        <span class="search-icon">⌕</span>
+
+                        <input
+                            type="search"
+                            id="clubSearch"
+                            placeholder="Search clubs or interests..."
+                            aria-label="Search clubs"
+                        >
+                    </div>
+
+                    <select id="clubCategory" aria-label="Filter clubs by category">
+                        <option value="all">All Categories</option>
+                        <option value="technology">Technology</option>
+                        <option value="innovation">Innovation</option>
+                        <option value="cultural">Cultural</option>
+                        <option value="sports">Sports</option>
+                        <option value="photography">Photography</option>
+                        <option value="social">Social Service</option>
+                    </select>
+
+                    <button
+                        type="button"
+                        class="reset-button"
+                        id="resetFilters"
+                    >↺ Reset</button>
+
+                </div>
+
+                <div class="results-line">
+                    <span>
+                        Showing <strong id="resultsCount">6</strong> clubs
+                    </span>
+
+                    <span id="joinedSummary">You have not joined any clubs yet.</span>
+                </div>
+
+                <!-- CLUB CARDS -->
+                <div class="club-grid" id="clubsContainer">
+
+                    <article class="club-card"
+                        data-id="CLB1001"
+                        data-category="technology"
+                        data-name="coding and development club"
+                        data-search="coding programming software development web java c javascript">
+
+                        <div class="club-top">
+                            <div class="club-icon">💻</div>
+                            <span class="club-category">Technology</span>
+                        </div>
+
+                        <h3>Coding & Development Club</h3>
+
+                        <p class="club-description">
+                            Learn programming, build projects, solve coding
+                            challenges and collaborate with fellow developers.
+                        </p>
+
+                        <div class="club-meta">
+                            <span>🎯 Focus: Coding & Web Development</span>
+                            <span>👥 Community: Student Developers</span>
+                            <span>📅 Activities: Coding sessions</span>
+                        </div>
+
+                        <div class="club-bottom">
+                            <span class="club-status">Open to students</span>
+
+                            <button
+                                type="button"
+                                class="join-button"
+                                data-club-id="CLB1001"
+                            >Join Club +</button>
+                        </div>
+                    </article>
+
+                    <article class="club-card"
+                        data-id="CLB1002"
+                        data-category="innovation"
+                        data-name="robotics and innovation club"
+                        data-search="robotics innovation engineering electronics artificial intelligence technology">
+
+                        <div class="club-top">
+                            <div class="club-icon">🤖</div>
+                            <span class="club-category">Innovation</span>
+                        </div>
+
+                        <h3>Robotics & Innovation Club</h3>
+
+                        <p class="club-description">
+                            Explore robotics, electronics, automation and
+                            creative solutions to real-world problems.
+                        </p>
+
+                        <div class="club-meta">
+                            <span>🎯 Focus: Robotics & AI</span>
+                            <span>👥 Community: Innovators</span>
+                            <span>📅 Activities: Project building</span>
+                        </div>
+
+                        <div class="club-bottom">
+                            <span class="club-status">Open to students</span>
+
+                            <button
+                                type="button"
+                                class="join-button"
+                                data-club-id="CLB1002"
+                            >Join Club +</button>
+                        </div>
+                    </article>
+
+                    <article class="club-card"
+                        data-id="CLB1003"
+                        data-category="cultural"
+                        data-name="cultural and performing arts club"
+                        data-search="cultural dance music singing drama art performance">
+
+                        <div class="club-top">
+                            <div class="club-icon">🎭</div>
+                            <span class="club-category">Cultural</span>
+                        </div>
+
+                        <h3>Cultural & Performing Arts</h3>
+
+                        <p class="club-description">
+                            Express yourself through dance, music, theatre,
+                            singing and cultural performances.
+                        </p>
+
+                        <div class="club-meta">
+                            <span>🎯 Focus: Art & Performance</span>
+                            <span>👥 Community: Creative Students</span>
+                            <span>📅 Activities: Cultural events</span>
+                        </div>
+
+                        <div class="club-bottom">
+                            <span class="club-status">Open to students</span>
+
+                            <button
+                                type="button"
+                                class="join-button"
+                                data-club-id="CLB1003"
+                            >Join Club +</button>
+                        </div>
+                    </article>
+
+                    <article class="club-card"
+                        data-id="CLB1004"
+                        data-category="sports"
+                        data-name="sports and fitness club"
+                        data-search="sports fitness cricket football badminton teamwork games">
+
+                        <div class="club-top">
+                            <div class="club-icon">🏏</div>
+                            <span class="club-category">Sports</span>
+                        </div>
+
+                        <h3>Sports & Fitness Club</h3>
+
+                        <p class="club-description">
+                            Participate in sports activities, improve fitness
+                            and develop teamwork and leadership.
+                        </p>
+
+                        <div class="club-meta">
+                            <span>🎯 Focus: Sports & Fitness</span>
+                            <span>👥 Community: Sports Enthusiasts</span>
+                            <span>📅 Activities: Matches & games</span>
+                        </div>
+
+                        <div class="club-bottom">
+                            <span class="club-status">Open to students</span>
+
+                            <button
+                                type="button"
+                                class="join-button"
+                                data-club-id="CLB1004"
+                            >Join Club +</button>
+                        </div>
+                    </article>
+
+                    <article class="club-card"
+                        data-id="CLB1005"
+                        data-category="photography"
+                        data-name="photography and media club"
+                        data-search="photography media video editing camera filmmaking content creation">
+
+                        <div class="club-top">
+                            <div class="club-icon">📸</div>
+                            <span class="club-category">Photography</span>
+                        </div>
+
+                        <h3>Photography & Media Club</h3>
+
+                        <p class="club-description">
+                            Capture campus moments, learn photography,
+                            experiment with editing and create digital content.
+                        </p>
+
+                        <div class="club-meta">
+                            <span>🎯 Focus: Photography & Media</span>
+                            <span>👥 Community: Content Creators</span>
+                            <span>📅 Activities: Photo walks</span>
+                        </div>
+
+                        <div class="club-bottom">
+                            <span class="club-status">Open to students</span>
+
+                            <button
+                                type="button"
+                                class="join-button"
+                                data-club-id="CLB1005"
+                            >Join Club +</button>
+                        </div>
+                    </article>
+
+                    <article class="club-card"
+                        data-id="CLB1006"
+                        data-category="social"
+                        data-name="social service and community club"
+                        data-search="social service community volunteering environment awareness helping">
+
+                        <div class="club-top">
+                            <div class="club-icon">🌱</div>
+                            <span class="club-category">Social Service</span>
+                        </div>
+
+                        <h3>Social Service Club</h3>
+
+                        <p class="club-description">
+                            Support community initiatives, promote awareness
+                            and participate in meaningful social activities.
+                        </p>
+
+                        <div class="club-meta">
+                            <span>🎯 Focus: Community Service</span>
+                            <span>👥 Community: Volunteers</span>
+                            <span>📅 Activities: Social campaigns</span>
+                        </div>
+
+                        <div class="club-bottom">
+                            <span class="club-status">Open to students</span>
+
+                            <button
+                                type="button"
+                                class="join-button"
+                                data-club-id="CLB1006"
+                            >Join Club +</button>
+                        </div>
+                    </article>
+
+                </div>
+
+                <!-- EMPTY STATE -->
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">🔎</div>
+                    <h3>No clubs found</h3>
+                    <p>Try a different search term or category.</p>
+                </div>
+
+                <!-- CTA -->
+                <div class="join-cta">
+                    <div>
+                        <h3>Ready to get involved?</h3>
+
+                        <p>
+                            Sign in to join clubs and keep track of your
+                            campus activities.
+                        </p>
+                    </div>
+
+                    <a href="student/login.html" class="primary-button">
+                        Student Login ↗
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-inner">
+
+            <p>
+                © <span id="currentYear"></span> CampusConnect Pro.
+                College Event Management Demo.
+            </p>
+
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="events.html">Events</a>
+                <a href="calendar.html">Calendar</a>
+                <a href="my-tickets.html">My Tickets</a>
+                <a href="contact.html">Contact</a>
+            </div>
+
+        </div>
+    </footer>
+
+    <div
+        class="toast-container"
+        id="toastContainer"
+        aria-live="polite"
+    ></div>
+
+    <script>
+        "use strict";
+
+        /* MOBILE NAVIGATION */
+
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        menuToggle.addEventListener("click", function () {
+            const isOpen = navLinks.classList.toggle("open");
+
+            menuToggle.setAttribute("aria-expanded", String(isOpen));
+            menuToggle.textContent = isOpen ? "✕" : "☰";
+        });
+
+        navLinks.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                navLinks.classList.remove("open");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.textContent = "☰";
+            });
+        });
+
+        document.getElementById("currentYear").textContent =
+            new Date().getFullYear();
+
+        /* STORAGE HELPERS */
+
+        function readStorage(key, fallback) {
+            try {
+                const value = localStorage.getItem(key);
+
+                if (value === null) {
+                    return fallback;
+                }
+
+                return JSON.parse(value);
+            } catch (error) {
+                return fallback;
+            }
+        }
+
+        function saveStorage(key, value) {
+            try {
+                localStorage.setItem(key, JSON.stringify(value));
+                return true;
+            } catch (error) {
+                showToast("Unable to save data in this browser.");
+                return false;
+            }
+        }
+
+        function getCurrentStudent() {
+            return readStorage("campusconnect_current_user", null);
+        }
+
+        function getStudentKey(student) {
+            if (!student || !student.email) {
+                return "";
+            }
+
+            return String(student.email).trim().toLowerCase();
+        }
+
+        /* TOAST */
+
+        function showToast(message) {
+            const container = document.getElementById("toastContainer");
+            const toast = document.createElement("div");
+
+            toast.className = "toast";
+            toast.textContent = message;
+
+            container.appendChild(toast);
+
+            setTimeout(function () {
+                toast.remove();
+            }, 3500);
+        }
+
+        /* CLUB JOIN STORAGE */
+
+        function getJoinedClubs(student) {
+            const allMemberships = readStorage("campusconnect_club_memberships", []);
+            const studentKey = getStudentKey(student);
+
+            if (!studentKey || !Array.isArray(allMemberships)) {
+                return [];
+            }
+
+            return allMemberships.filter(function (membership) {
+                return (
+                    membership.studentKey === studentKey &&
+                    membership.status === "joined"
+                );
+            });
+        }
+
+        function isClubJoined(clubId, student) {
+            return getJoinedClubs(student).some(function (membership) {
+                return membership.clubId === clubId;
+            });
+        }
+
+        function updateClubButtons() {
+            const student = getCurrentStudent();
+
+            document.querySelectorAll(".join-button").forEach(function (button) {
+                const clubId = button.dataset.clubId;
+                const joined = isClubJoined(clubId, student);
+
+                button.textContent = joined ? "Joined ✓" : "Join Club +";
+                button.classList.toggle("joined", joined);
+            });
+
+            const joinedCount = getJoinedClubs(student).length;
+
+            document.getElementById("joinedClubs").textContent =
+                String(joinedCount).padStart(2, "0");
+
+            document.getElementById("joinedSummary").textContent =
+                joinedCount > 0
+                    ? "You have joined " + joinedCount + " club(s)."
+                    : "You have not joined any clubs yet.";
+        }
+
+        /* JOIN OR LEAVE CLUB */
+
+        document.querySelectorAll(".join-button").forEach(function (button) {
+            button.addEventListener("click", function () {
+                const student = getCurrentStudent();
+
+                if (!student || !student.email) {
+                    const goToLogin = confirm(
+                        "Please log in as a student to join a club.\n\nPress OK to open Student Login."
+                    );
+
+                    if (goToLogin) {
+                        window.location.href = "student/login.html";
+                    }
+
+                    return;
+                }
+
+                const studentKey = getStudentKey(student);
+                const clubId = button.dataset.clubId;
+
+                let memberships = readStorage(
+                    "campusconnect_club_memberships",
+                    []
+                );
+
+                if (!Array.isArray(memberships)) {
+                    memberships = [];
+                }
+
+                const existingIndex = memberships.findIndex(function (membership) {
+                    return (
+                        membership.studentKey === studentKey &&
+                        membership.clubId === clubId &&
+                        membership.status === "joined"
+                    );
+                });
+
+                const clubCard = button.closest(".club-card");
+                const clubName = clubCard.querySelector("h3").textContent;
+
+                if (existingIndex !== -1) {
+                    const leaveClub = confirm(
+                        "Do you want to leave " + clubName + "?"
+                    );
+
+                    if (!leaveClub) {
+                        return;
+                    }
+
+                    memberships[existingIndex].status = "left";
+
+                    if (saveStorage("campusconnect_club_memberships", memberships)) {
+                        updateClubButtons();
+                        showToast("You left " + clubName + ".");
+                    }
+
+                    return;
+                }
+
+                memberships.push({
+                    id: "MEM" + Date.now(),
+                    clubId: clubId,
+                    clubName: clubName,
+                    studentKey: studentKey,
+                    studentName: student.name || student.fullName || "Student",
+                    status: "joined",
+                    joinedAt: new Date().toISOString()
+                });
+
+                if (saveStorage("campusconnect_club_memberships", memberships)) {
+                    updateClubButtons();
+                    showToast("Successfully joined " + clubName + "!");
+                }
+            });
+        });
+
+        /* SEARCH AND FILTER */
+
+        const searchInput = document.getElementById("clubSearch");
+        const categorySelect = document.getElementById("clubCategory");
+        const clubsContainer = document.getElementById("clubsContainer");
+        const emptyState = document.getElementById("emptyState");
+        const resultsCount = document.getElementById("resultsCount");
+
+        function filterClubs() {
+            const search = searchInput.value.trim().toLowerCase();
+            const category = categorySelect.value;
+
+            const cards = Array.from(
+                clubsContainer.querySelectorAll(".club-card")
+            );
+
+            let visible = 0;
+
+            cards.forEach(function (card) {
+                const searchableText = (
+                    card.textContent + " " + card.dataset.search
+                ).toLowerCase();
+
+                const matchesSearch = searchableText.includes(search);
+
+                const matchesCategory =
+                    category === "all" ||
+                    card.dataset.category === category;
+
+                const show = matchesSearch && matchesCategory;
+
+                card.style.display = show ? "flex" : "none";
+
+                if (show) {
+                    visible++;
+                }
+            });
+
+            resultsCount.textContent = visible;
+
+            emptyState.style.display =
+                visible === 0 ? "block" : "none";
+        }
+
+        searchInput.addEventListener("input", filterClubs);
+        categorySelect.addEventListener("change", filterClubs);
+
+        document.getElementById("resetFilters").addEventListener("click", function () {
+            searchInput.value = "";
+            categorySelect.value = "all";
+
+            filterClubs();
+        });
+
+        /* INITIALIZE */
+
+        const clubCards = document.querySelectorAll(".club-card");
+
+        document.getElementById("totalClubs").textContent =
+            String(clubCards.length).padStart(2, "0");
+
+        document.getElementById("activeClubs").textContent =
+            String(clubCards.length).padStart(2, "0");
+
+        filterClubs();
+        updateClubButtons();
+    </script>
+
+</body>
+</html>

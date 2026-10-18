@@ -1,0 +1,453 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | CampusConnect Pro</title>
+
+    <style>
+        :root {
+            --bg: #080d1c;
+            --card: #111a2e;
+            --border: #293550;
+            --purple: #8872ff;
+            --cyan: #45e5d1;
+            --text: #f5f7ff;
+            --muted: #9ba8bf;
+            --danger: #ff8295;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(ellipse at 15% 10%, #282052 0%, transparent 42%),
+                radial-gradient(ellipse at 90% 90%, #10343b 0%, transparent 38%),
+                var(--bg);
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .navbar {
+            min-height: 75px;
+            padding: 16px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            border-bottom: 1px solid rgba(255,255,255,.08);
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: var(--purple);
+        }
+
+        .back-link {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .back-link:hover {
+            color: var(--cyan);
+        }
+
+        main {
+            flex: 1;
+            display: grid;
+            place-items: center;
+            padding: 40px 18px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 440px;
+            padding: 35px;
+            background: rgba(17,26,46,.94);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            box-shadow: 0 25px 80px rgba(0,0,0,.28);
+        }
+
+        .admin-icon {
+            width: 65px;
+            height: 65px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 23px;
+            font-size: 30px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--purple), #5140b9);
+            box-shadow: 0 10px 30px rgba(136,114,255,.2);
+        }
+
+        .eyebrow {
+            color: var(--cyan);
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+
+        .field {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            min-height: 47px;
+            padding: 13px 14px;
+            color: var(--text);
+            background: #0a1223;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(136,114,255,.1);
+        }
+
+        input::placeholder {
+            color: #65718b;
+        }
+
+        .password-wrap {
+            position: relative;
+        }
+
+        .password-wrap input {
+            padding-right: 75px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: var(--cyan);
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .remember-row {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin: 5px 0 23px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .remember-row input {
+            width: 15px;
+            min-height: 15px;
+            accent-color: var(--purple);
+        }
+
+        .login-btn {
+            width: 100%;
+            min-height: 49px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            background: linear-gradient(135deg, var(--purple), #6047d8);
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .login-btn:hover {
+            filter: brightness(1.12);
+            transform: translateY(-1px);
+        }
+
+        .message {
+            display: none;
+            margin-bottom: 18px;
+            padding: 12px;
+            border-radius: 9px;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .message.error {
+            display: block;
+            color: var(--danger);
+            background: rgba(255,130,149,.09);
+            border: 1px solid rgba(255,130,149,.2);
+        }
+
+        .message.success {
+            display: block;
+            color: var(--cyan);
+            background: rgba(69,229,209,.08);
+            border: 1px solid rgba(69,229,209,.2);
+        }
+
+        .security-note {
+            display: flex;
+            gap: 10px;
+            margin-top: 23px;
+            padding: 13px;
+            background: rgba(255,255,255,.025);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .security-note span {
+            font-size: 17px;
+        }
+
+        .demo-note {
+            margin-top: 18px;
+            color: #a99aff;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        footer {
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,.08);
+            text-align: center;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 15px 5%;
+            }
+
+            .logo {
+                font-size: 17px;
+            }
+
+            .login-card {
+                padding: 24px 20px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a class="logo" href="../index.html">
+        CampusConnect <span>Pro.</span>
+    </a>
+
+    <a class="back-link" href="../index.html">← Back to Home</a>
+</header>
+
+<main>
+    <section class="login-card">
+
+        <div class="admin-icon">🛡️</div>
+
+        <div class="eyebrow">ADMINISTRATOR PORTAL</div>
+
+        <h1>Welcome back!</h1>
+
+        <p class="subtitle">
+            Sign in to manage campus events, clubs, registrations
+            and student activities.
+        </p>
+
+        <div id="message" class="message" role="status" aria-live="polite"></div>
+
+        <form id="adminLoginForm">
+
+            <div class="field">
+                <label for="email">Admin Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter admin email"
+                    autocomplete="username"
+                    required
+                >
+            </div>
+
+            <div class="field">
+                <label for="password">Password</label>
+
+                <div class="password-wrap">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                        id="togglePassword"
+                    >SHOW</button>
+                </div>
+            </div>
+
+            <label class="remember-row">
+                <input type="checkbox" id="remember">
+                Keep me signed in on this browser
+            </label>
+
+            <button type="submit" class="login-btn">
+                Sign In to Admin Panel →
+            </button>
+
+        </form>
+
+        <div class="security-note">
+            <span>🔒</span>
+            <p>
+                Admin access is intended for authorised administrators.
+                Use your configured credentials to continue.
+            </p>
+        </div>
+
+        <p class="demo-note">
+            Demo project: the credentials below are only for local testing.
+            This page does not provide production-grade authentication.
+        </p>
+
+    </section>
+</main>
+
+<footer>
+    © <span id="year"></span> CampusConnect Pro · Admin Portal
+</footer>
+
+<script>
+"use strict";
+
+const form = document.getElementById("adminLoginForm");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const togglePassword = document.getElementById("togglePassword");
+const message = document.getElementById("message");
+
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+togglePassword.addEventListener("click", function () {
+    const isPassword = passwordInput.type === "password";
+
+    passwordInput.type = isPassword ? "text" : "password";
+    togglePassword.textContent = isPassword ? "HIDE" : "SHOW";
+});
+
+function showMessage(text, type) {
+    message.textContent = text;
+    message.className = "message " + type;
+}
+
+form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const email = emailInput.value.trim().toLowerCase();
+    const password = passwordInput.value;
+
+    /*
+      LOCAL DEMO CREDENTIALS ONLY.
+      Replace this with server-side authentication before deployment.
+    */
+
+    const demoEmail = "admin@campusconnect.com";
+    const demoPassword = "Admin@123";
+
+    if (email !== demoEmail || password !== demoPassword) {
+        showMessage(
+            "Invalid email or password. Please check your demo credentials.",
+            "error"
+        );
+        return;
+    }
+
+    const session = {
+        email: demoEmail,
+        role: "admin",
+        loggedInAt: new Date().toISOString()
+    };
+
+    try {
+        const storage = document.getElementById("remember").checked
+            ? localStorage
+            : sessionStorage;
+
+        storage.setItem(
+            "campusConnectAdminSession",
+            JSON.stringify(session)
+        );
+
+        showMessage("Login successful! Opening admin dashboard...", "success");
+
+        window.setTimeout(function () {
+            window.location.href = "dashboard.html";
+        }, 500);
+
+    } catch (error) {
+        showMessage(
+            "Browser storage is unavailable. Please enable storage and try again.",
+            "error"
+        );
+    }
+});
+</script>
+
+</body>
+</html>
+```

@@ -1,0 +1,462 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b1020">
+    <title>Login | CampusConnect Pro</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #f8fafc;
+            background:
+                radial-gradient(circle at top left, #29204e, transparent 40%),
+                #0b1020;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            padding: 20px 6%;
+            border-bottom: 1px solid #293650;
+            background: rgba(18, 26, 45, 0.9);
+        }
+
+        .brand {
+            color: #c4b5fd;
+            font-size: 22px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .main {
+            flex: 1;
+            display: grid;
+            place-items: center;
+            padding: 35px 18px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 440px;
+            padding: 32px;
+            background: #141d32;
+            border: 1px solid #33415d;
+            border-radius: 18px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .login-icon {
+            width: 58px;
+            height: 58px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            background: #302751;
+            font-size: 28px;
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            margin-bottom: 28px;
+            color: #9eabc4;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #3b4965;
+            border-radius: 9px;
+            outline: none;
+            background: #0f172a;
+            color: #fff;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.12);
+        }
+
+        .password-wrap {
+            display: flex;
+            gap: 8px;
+        }
+
+        .password-wrap input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .toggle-password {
+            padding: 0 12px;
+            border: 1px solid #3b4965;
+            border-radius: 9px;
+            background: #202b43;
+            color: #ddd6fe;
+            cursor: pointer;
+        }
+
+        .remember-row {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin: 5px 0 22px;
+            color: #cbd5e1;
+            font-size: 13px;
+        }
+
+        .remember-row input {
+            width: auto;
+            accent-color: #8b5cf6;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            border: 0;
+            border-radius: 9px;
+            background: linear-gradient(120deg, #8b5cf6, #6d28d9);
+            color: white;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            filter: brightness(1.1);
+        }
+
+        .login-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            display: none;
+            margin-bottom: 18px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .message.error {
+            display: block;
+            background: #451f2a;
+            border: 1px solid #7f3043;
+            color: #fecdd3;
+        }
+
+        .message.success {
+            display: block;
+            background: #163a30;
+            border: 1px solid #286b50;
+            color: #bbf7d0;
+        }
+
+        .bottom-text {
+            margin-top: 24px;
+            text-align: center;
+            color: #9eabc4;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .bottom-text a,
+        .back-home {
+            color: #c4b5fd;
+            text-decoration: none;
+        }
+
+        .bottom-text a:hover,
+        .back-home:hover {
+            text-decoration: underline;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 22px;
+        }
+
+        footer {
+            padding: 20px;
+            text-align: center;
+            color: #8794ad;
+            font-size: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 24px 19px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="index.html" class="brand">CampusConnect Pro</a>
+</header>
+
+<main class="main">
+    <section class="login-card">
+        <div class="login-icon">🎓</div>
+
+        <h1>Welcome Back!</h1>
+
+        <p class="subtitle">
+            Sign in to explore campus events, manage registrations
+            and view your tickets.
+        </p>
+
+        <div id="loginMessage" class="message" role="status"
+             aria-live="polite"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    autocomplete="username"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+
+                <div class="password-wrap">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        id="togglePassword"
+                        class="toggle-password"
+                        aria-label="Show password"
+                    >
+                        Show
+                    </button>
+                </div>
+            </div>
+
+            <label class="remember-row">
+                <input type="checkbox" id="rememberMe">
+                Remember email on this device
+            </label>
+
+            <button type="submit" class="login-button" id="loginButton">
+                Sign In
+            </button>
+        </form>
+
+        <div class="bottom-text">
+            Don't have an account?
+            <a href="register.html">Create Account</a>
+            <br>
+            <a href="admin/login.html">Admin Login</a>
+            <br>
+            <a href="index.html" class="back-home">← Back to Home</a>
+        </div>
+    </section>
+</main>
+
+<footer>
+    © 2026 CampusConnect Pro · Your Campus, Your Community
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/auth-demo.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("loginForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword");
+    const message = document.getElementById("loginMessage");
+    const button = document.getElementById("loginButton");
+    const rememberMe = document.getElementById("rememberMe");
+
+    // Restore remembered email only.
+    try {
+        const rememberedEmail = localStorage.getItem("cc_remembered_email");
+
+        if (rememberedEmail) {
+            emailInput.value = rememberedEmail;
+            rememberMe.checked = true;
+        }
+    } catch (error) {
+        console.warn("Remember email is unavailable.");
+    }
+
+    function showMessage(text, type) {
+        message.textContent = text;
+        message.className = "message " + type;
+    }
+
+    togglePassword.addEventListener("click", function () {
+        const hidden = passwordInput.type === "password";
+
+        passwordInput.type = hidden ? "text" : "password";
+        togglePassword.textContent = hidden ? "Hide" : "Show";
+        togglePassword.setAttribute(
+            "aria-label",
+            hidden ? "Hide password" : "Show password"
+        );
+    });
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const email = emailInput.value.trim().toLowerCase();
+        const password = passwordInput.value;
+
+        if (!email || !password) {
+            showMessage("Please enter your email and password.", "error");
+            return;
+        }
+
+        if (!window.CampusConnect) {
+            showMessage(
+                "Application load nahi hui. js/main.js ka path check karo.",
+                "error"
+            );
+            return;
+        }
+
+        /*
+         * Login is delegated to auth-demo.js.
+         * It must expose window.CampusAuth.login(email, password)
+         * and return true on success or false on failure.
+         */
+
+        const auth = window.CampusAuth;
+
+        if (!auth || typeof auth.login !== "function") {
+            showMessage(
+                "Login system connect nahi hua. auth-demo.js check karo.",
+                "error"
+            );
+            return;
+        }
+
+        button.disabled = true;
+        button.textContent = "Signing In...";
+
+        try {
+            const result = auth.login(email, password);
+
+            Promise.resolve(result)
+                .then(function (success) {
+                    if (!success) {
+                        showMessage(
+                            "Invalid email or password. Please try again.",
+                            "error"
+                        );
+                        return;
+                    }
+
+                    try {
+                        if (rememberMe.checked) {
+                            localStorage.setItem(
+                                "cc_remembered_email",
+                                email
+                            );
+                        } else {
+                            localStorage.removeItem("cc_remembered_email");
+                        }
+                    } catch (error) {
+                        console.warn("Unable to save remembered email.");
+                    }
+
+                    showMessage("Login successful! Redirecting...", "success");
+
+                    const user =
+                        window.CampusConnect.getCurrentUser();
+
+                    const destination =
+                        new URLSearchParams(window.location.search)
+                            .get("next");
+
+                    // Only allow a safe, same-origin relative destination.
+                    if (
+                        destination &&
+                        !destination.startsWith("//") &&
+                        !destination.includes(":") &&
+                        !destination.startsWith("/")
+                    ) {
+                        window.location.href = destination;
+                    } else if (
+                        ["admin", "administrator"].includes(
+                            String(user?.role || "").toLowerCase()
+                        )
+                    ) {
+                        window.location.href = "admin/dashboard.html";
+                    } else {
+                        window.location.href = "index.html";
+                    }
+                })
+                .catch(function (error) {
+                    console.error("Login error:", error);
+                    showMessage("Login failed. Please try again.", "error");
+                })
+                .finally(function () {
+                    button.disabled = false;
+                    button.textContent = "Sign In";
+                });
+        } catch (error) {
+            console.error("Login error:", error);
+            showMessage("Login failed. Please try again.", "error");
+
+            button.disabled = false;
+            button.textContent = "Sign In";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

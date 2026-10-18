@@ -1,0 +1,650 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | CampusConnect Pro</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #080d1b;
+    --card: #111a2e;
+    --border: #26334e;
+    --text: #f4f7ff;
+    --muted: #9caac4;
+    --purple: #8872ff;
+    --green: #36dda0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+header {
+    background: #0d1527;
+    border-bottom: 1px solid var(--border);
+}
+
+nav {
+    width: min(1200px, 94%);
+    min-height: 72px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: var(--purple);
+}
+
+.nav-links {
+    display: flex;
+    gap: 17px;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.nav-links a:hover {
+    color: var(--green);
+}
+
+.container {
+    width: min(1200px, 94%);
+    margin: auto;
+    padding: 35px 0 55px;
+}
+
+.welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+}
+
+.eyebrow {
+    color: var(--green);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+h1 {
+    font-size: clamp(27px, 4vw, 38px);
+    margin: 10px 0;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 15px;
+    border: 0;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.btn-primary {
+    background: var(--purple);
+    color: white;
+}
+
+.btn-secondary {
+    background: #202b43;
+    color: white;
+}
+
+.btn-danger {
+    background: #351d2a;
+    color: #ffabb8;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.stat {
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: var(--card);
+}
+
+.stat-icon {
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.stat-label {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.stat-number {
+    font-size: 30px;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 35px 0 18px;
+}
+
+.section-heading h2 {
+    font-size: 21px;
+}
+
+.quick-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.quick-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 22px;
+    transition: 0.2s;
+}
+
+.quick-card:hover {
+    border-color: var(--purple);
+    transform: translateY(-3px);
+}
+
+.quick-icon {
+    font-size: 29px;
+    margin-bottom: 15px;
+}
+
+.quick-card h3 {
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.quick-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+    min-height: 40px;
+    margin-bottom: 17px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+th, td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+}
+
+th {
+    color: var(--muted);
+    font-weight: bold;
+    background: #0e172a;
+}
+
+td {
+    color: #e5e9f6;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 9px;
+    border-radius: 20px;
+    background: #12352e;
+    color: var(--green);
+    font-size: 10px;
+}
+
+.empty {
+    padding: 30px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.notice {
+    margin-top: 25px;
+    padding: 17px;
+    border-radius: 12px;
+    background: #17243a;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.notice strong {
+    color: white;
+}
+
+footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 22px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+@media (max-width: 850px) {
+    .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .quick-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 520px) {
+    nav {
+        padding: 16px 0;
+    }
+
+    .stats, .quick-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat {
+        padding: 18px;
+    }
+
+    .quick-card {
+        padding: 19px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a href="../index.html" class="logo">
+            CampusConnect <span>Pro.</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="../index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="manage-events.html">Events</a>
+            <a href="manage-clubs.html">Clubs</a>
+            <a href="registrations.html">Registrations</a>
+        </div>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="welcome">
+        <div>
+            <p class="eyebrow">ADMIN CONTROL CENTER</p>
+            <h1>Admin Dashboard 🛡️</h1>
+            <p class="subtitle">
+                Manage campus events, clubs and student registrations from one place.
+            </p>
+        </div>
+
+        <button type="button" class="btn btn-danger" id="logoutButton">
+            Log Out
+        </button>
+    </section>
+
+    <section class="stats">
+        <article class="stat">
+            <div class="stat-icon">🎉</div>
+            <span class="stat-label">Total Events</span>
+            <strong class="stat-number" id="eventCount">0</strong>
+        </article>
+
+        <article class="stat">
+            <div class="stat-icon">🏛️</div>
+            <span class="stat-label">Campus Clubs</span>
+            <strong class="stat-number" id="clubCount">3</strong>
+        </article>
+
+        <article class="stat">
+            <div class="stat-icon">🎟️</div>
+            <span class="stat-label">Registrations</span>
+            <strong class="stat-number" id="registrationCount">0</strong>
+        </article>
+
+        <article class="stat">
+            <div class="stat-icon">👥</div>
+            <span class="stat-label">Unique Students</span>
+            <strong class="stat-number" id="studentCount">0</strong>
+        </article>
+    </section>
+
+    <section>
+        <div class="section-heading">
+            <h2>Quick Management</h2>
+        </div>
+
+        <div class="quick-grid">
+
+            <a href="manage-events.html" class="quick-card">
+                <div class="quick-icon">🎉</div>
+                <h3>Manage Events</h3>
+                <p>Add, edit and remove campus events.</p>
+                <span class="btn btn-primary">Open Events →</span>
+            </a>
+
+            <a href="manage-clubs.html" class="quick-card">
+                <div class="quick-icon">🏛️</div>
+                <h3>Manage Clubs</h3>
+                <p>View and manage Tech, Cultural and Sports clubs.</p>
+                <span class="btn btn-primary">Open Clubs →</span>
+            </a>
+
+            <a href="registrations.html" class="quick-card">
+                <div class="quick-icon">📋</div>
+                <h3>Student Registrations</h3>
+                <p>View registered students and event details.</p>
+                <span class="btn btn-primary">View Registrations →</span>
+            </a>
+
+            <a href="scan-ticket.html" class="quick-card">
+                <div class="quick-icon">📷</div>
+                <h3>Ticket Verification</h3>
+                <p>Verify a student's registration using their ticket ID.</p>
+                <span class="btn btn-primary">Verify Ticket →</span>
+            </a>
+
+            <a href="../events.html" class="quick-card">
+                <div class="quick-icon">🌐</div>
+                <h3>Public Events Page</h3>
+                <p>Preview the events page students can access.</p>
+                <span class="btn btn-secondary">View Public Page →</span>
+            </a>
+
+            <a href="../announcements.html" class="quick-card">
+                <div class="quick-icon">📢</div>
+                <h3>Announcements</h3>
+                <p>Open the campus announcements page.</p>
+                <span class="btn btn-secondary">View Announcements →</span>
+            </a>
+
+        </div>
+    </section>
+
+    <section>
+        <div class="section-heading">
+            <h2>Recent Registrations</h2>
+
+            <a href="registrations.html" class="btn btn-secondary">
+                View All →
+            </a>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Event</th>
+                        <th>Registration ID</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="recentRegistrations"></tbody>
+            </table>
+
+            <div class="empty" id="emptyMessage" hidden>
+                No student registrations found yet.
+            </div>
+        </div>
+    </section>
+
+    <div class="notice">
+        <strong>Demo mode:</strong>
+        This dashboard reads registration and event data from your browser's
+        local storage. Data from another browser or device will not appear here.
+        Admin login is a frontend demonstration and does not provide production
+        access control.
+    </div>
+
+</main>
+
+<footer>
+    © <span id="year"></span> CampusConnect Pro · Admin Dashboard
+</footer>
+
+<script>
+"use strict";
+
+const REGISTRATIONS_KEY = "campusConnectRegistrations";
+const ADMIN_KEY = "campusConnectAdmin";
+const EVENTS_KEY = "campusConnectEvents";
+
+const defaultEvents = [
+    { id: "TECH101", name: "CodeSprint", club: "Tech" },
+    { id: "TECH102", name: "Web Design Challenge", club: "Tech" },
+    { id: "TECH103", name: "Debugging Battle", club: "Tech" },
+    { id: "TECH104", name: "Tech Quiz", club: "Tech" },
+    { id: "TECH105", name: "Project Expo", club: "Tech" },
+
+    { id: "CULT101", name: "Dance Fiesta", club: "Cultural" },
+    { id: "CULT102", name: "Singing Star", club: "Cultural" },
+    { id: "CULT103", name: "Drama & Acting", club: "Cultural" },
+    { id: "CULT104", name: "Fashion Walk", club: "Cultural" },
+    { id: "CULT105", name: "Battle of Bands", club: "Cultural" },
+
+    { id: "SPORT101", name: "Cricket Championship", club: "Sports" },
+    { id: "SPORT102", name: "Football Cup", club: "Sports" },
+    { id: "SPORT103", name: "Badminton Tournament", club: "Sports" },
+    { id: "SPORT104", name: "Chess Challenge", club: "Sports" },
+    { id: "SPORT105", name: "Athletics Meet", club: "Sports" }
+];
+
+function readArray(key) {
+    try {
+        const value = JSON.parse(localStorage.getItem(key) || "[]");
+        return Array.isArray(value) ? value : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function(char) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[char];
+    });
+}
+
+function getEventCatalog() {
+    const savedEvents = readArray(EVENTS_KEY);
+
+    if (savedEvents.length === 0) {
+        return defaultEvents;
+    }
+
+    return savedEvents;
+}
+
+function getEventInfo(registration, catalog) {
+    const id = String(registration.eventId || "");
+    const event = catalog.find(item => String(item.id || "") === id);
+
+    return {
+        id: id || "N/A",
+        name: registration.eventName ||
+              (event && event.name) ||
+              "College Event",
+        club: registration.club ||
+              (event && event.club) ||
+              (
+                  id.startsWith("TECH") ? "Tech" :
+                  id.startsWith("CULT") ? "Cultural" :
+                  id.startsWith("SPORT") ? "Sports" : "Other"
+              )
+    };
+}
+
+function renderDashboard() {
+    const registrations = readArray(REGISTRATIONS_KEY);
+    const catalog = getEventCatalog();
+
+    document.getElementById("eventCount").textContent =
+        catalog.length;
+
+    document.getElementById("registrationCount").textContent =
+        registrations.length;
+
+    const uniqueStudents = new Set(
+        registrations.map(function(item) {
+            return String(
+                item.email ||
+                item.studentEmail ||
+                item.fullName ||
+                item.name ||
+                item.registrationId ||
+                ""
+            ).trim().toLowerCase();
+        }).filter(Boolean)
+    );
+
+    document.getElementById("studentCount").textContent =
+        uniqueStudents.size;
+
+    const tbody = document.getElementById("recentRegistrations");
+    const emptyMessage = document.getElementById("emptyMessage");
+
+    if (registrations.length === 0) {
+        tbody.innerHTML = "";
+        emptyMessage.hidden = false;
+        return;
+    }
+
+    emptyMessage.hidden = true;
+
+    tbody.innerHTML = registrations.slice().reverse().slice(0, 5)
+        .map(function(item) {
+            const event = getEventInfo(item, catalog);
+
+            return `
+                <tr>
+                    <td>${escapeHTML(item.fullName || item.name || "Student")}</td>
+                    <td>${escapeHTML(event.name)}</td>
+                    <td>${escapeHTML(item.registrationId || "Not available")}</td>
+                    <td><span class="status">Registered</span></td>
+                </tr>
+            `;
+        }).join("");
+}
+
+function isAdminLoggedIn() {
+    try {
+        const localSession = JSON.parse(
+            localStorage.getItem(ADMIN_KEY) || "null"
+        );
+
+        const sessionSession = JSON.parse(
+            sessionStorage.getItem(ADMIN_KEY) || "null"
+        );
+
+        return Boolean(
+            (localSession && localSession.loggedIn === true) ||
+            (sessionSession && sessionSession.loggedIn === true)
+        );
+    } catch (error) {
+        return false;
+    }
+}
+
+document.getElementById("logoutButton").addEventListener("click", function() {
+    if (!confirm("Are you sure you want to log out?")) {
+        return;
+    }
+
+    localStorage.removeItem(ADMIN_KEY);
+    sessionStorage.removeItem(ADMIN_KEY);
+
+    window.location.href = "login.html";
+});
+
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+renderDashboard();
+
+window.addEventListener("storage", function(event) {
+    if (
+        event.key === REGISTRATIONS_KEY ||
+        event.key === EVENTS_KEY
+    ) {
+        renderDashboard();
+    }
+});
+</script>
+
+</body>
+</html>
